@@ -75,27 +75,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="js\bg.js" />
-    <Content Include="js\davis.js" />
-    <Content Include="js\effect.js" />
-    <Content Include="js\interface.js" />
-    <Content Include="main.html" />
-    <Content Include="se\001.mp3" />
-    <Content Include="se\006.mp3" />
-    <Content Include="se\007.mp3" />
-    <Content Include="se\012.mp3" />
-    <Content Include="se\016.mp3" />
-    <Content Include="se\017.mp3" />
-    <Content Include="se\031.mp3" />
-    <Content Include="se\095.mp3" />
-    <Content Include="sys\castle.png" />
-    <Content Include="sys\davis_0.png" />
-    <Content Include="sys\davis_1.png" />
-    <Content Include="sys\davis_2.png" />
-    <Content Include="sys\spark1.png" />
-    <Content Include="sys\spark2.png" />
-    <Content Include="sys\spark3.png" />
-    <Content Include="sys\spark4.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
