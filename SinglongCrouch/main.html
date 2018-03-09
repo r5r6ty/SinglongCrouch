@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title id="tt">超屌格斗游戏！</title>
 </head>
@@ -169,7 +170,7 @@
             var cjoystickD = document.getElementById("joystickD");
             var ctxjoystickD = cjoystickD.getContext("2d");
 
-            DrawJoystickD(ctxjoystickD, ctxjoystickD.width / 2, ctxjoystickD.height / 2);
+            DrawJoystickD(ctxjoystickD, 100,100);
         }
 
         function DrawJoystickD(ctx, x, y) {
