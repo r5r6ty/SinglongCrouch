@@ -1,318 +1,291 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-<title id = "tt">超屌格斗游戏！</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title id="tt">超屌格斗游戏！</title>
 </head>
 
 <body onload="createdavis()">
-<div style="background:#c3c3c3;position: absolute;width:280px;" >
-<div id="demo"></div>
-<div id="demo10"></div>
-<div id="demo11"></div>
-<div id="demo12"></div>
-<div id="demo14"></div>
-<div id="demo2"></div>
-<div id="demo3"></div>
-<div id="demo4"></div>
-<div id="demo5"></div>
-<div id="demo6"></div>
-<div id="demo7"></div>
-<div id="demo8"></div>
-<div id="demo9"></div>
-<div id="demo13"></div>
-<div>P1键位：上下左右=WSAD，轻拳=J</div>
-<div>P2键位：上下左右=↑↓←→，轻拳=数字键盘1</div>
-<div>出招表：</div>
-<div>跳跃中+轻拳=踢！下蹲中+轻拳=超级无敌庐山升龙霸！</div>
-<div></div>
-</div>
-<canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:black;"></canvas>
+    <div style="background:#c3c3c3;position: absolute;width:280px;">
+        <div id="demo"></div>
+        <div id="demo10"></div>
+        <div id="demo11"></div>
+        <div id="demo12"></div>
+        <div id="demo14"></div>
+        <div id="demo2"></div>
+        <div id="demo3"></div>
+        <div id="demo4"></div>
+        <div id="demo5"></div>
+        <div id="demo6"></div>
+        <div id="demo7"></div>
+        <div id="demo8"></div>
+        <div id="demo9"></div>
+        <div id="demo13"></div>
+        <div>P1键位：上下左右=WSAD，轻拳=J</div>
+        <div>P2键位：上下左右=↑↓←→，轻拳=数字键盘1</div>
+        <div>出招表：</div>
+        <div>跳跃中+轻拳=踢！下蹲中+轻拳=超级无敌庐山升龙霸！</div>
+        <div></div>
+    </div>
+    <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:black;"></canvas>
 
 
-<div id="dragdiv" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;bottom:0" >
-<div>TEST</div>
-<div></div>
-<table border="0">
-<tr>
-  <td><button id="t1" onClick="p1hpmax()">p1满血</button></td>
-  <td><button id="t2" onClick="p2hpmax()">p2满血</button></td>
-</tr>
-<tr>
-  <td><button id="t3" onClick="addp1()">加入玩家1</button></td>
-  <td><button id="t4" onClick="addp2()">加入玩家2</button></td>
-</tr>
-</table>
-</div>
+    <div id="dragdiv" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;bottom:0">
+        <div>TEST</div>
+        <div></div>
+        <table border="0">
+            <tr>
+                <td><button id="t1" onClick="p1hpmax()">p1满血</button></td>
+                <td><button id="t2" onClick="p2hpmax()">p2满血</button></td>
+            </tr>
+            <tr>
+                <td><button id="t3" onClick="addp1()">加入玩家1</button></td>
+                <td><button id="t4" onClick="addp2()">加入玩家2</button></td>
+            </tr>
+        </table>
+    </div>
 
-<div id="framediv" style="position: absolute;left: 50%;width: 800px;margin-left: -400px;background:#ffff00;width:800px;height:600px;top: 0px">
-<canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;left: 0;"></canvas>
-<canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
-<canvas id="cvs2" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
-<canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;left: 0;"></canvas>
-</div> 
+    <div id="framediv" style="position: absolute;left: 50%;width: 800px;margin-left: -400px;background:#ffff00;width:800px;height:600px;top: 0px">
+        <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;left: 0;"></canvas>
+        <canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+        <canvas id="cvs2" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+        <canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;left: 0;"></canvas>
+    </div>
 
-<div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0" >
-<div>TEST</div>
-<div></div>
-<table border="0">
-<tr>
-  <td></td>
-  <td><button id="tiup" onClick="iup()">↑</button></td>
-  <td></td>
-</tr>
-<tr>
-  <td><button id="tileft" onClick="ileft()">←</button></td>
-  <td><button id="tia" onClick="ia()">A</button></td>
-  <td><button id="tiright" onClick="iright()">→</button></td>
-</tr>
-<tr>
-  <td></td>
-  <td><button id="tidown" onClick="idown()">↓</button></td>
-  <td></td>
-</tr>
-</table>
-</div>
+    <div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
+        <div>TEST</div>
+        <div></div>
+        <table border="0">
+            <tr>
+                <td></td>
+                <td><button id="tiup" onClick="iup()">↑</button></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button id="tileft" onClick="ileft()">←</button></td>
+                <td><button id="tia" onClick="ia()">A</button></td>
+                <td><button id="tiright" onClick="iright()">→</button></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button id="tidown" onClick="idown()">↓</button></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 
-<!-- onmousemove="cnvs_getCoordinates(event)"-->
+    <!-- onmousemove="cnvs_getCoordinates(event)"-->
 
-<div id="hidden" style="visibility:hidden;">
-<img id="davis0"
-     src="sys/davis_0.png"
-     onload="itemLoaded(this,10,7,1,100,100);">
-<img id="davis1"
-     src="sys/davis_1.png"
-     onload="itemLoaded(this,10,7,1,100,100);">
-<img id="davis2"
-     src="sys/davis_2.png"
-     onload="itemLoaded(this,10,4,1,100,100);">
-<img id="spark1"
-     src="sys/spark1.png"
-     onload="itemLoaded(this,5,2,0,100,100);">
-<img id="spark2"
-     src="sys/spark2.png"
-     onload="itemLoaded(this,5,3,0,100,100);">
-<img id="spark3"
-     src="sys/spark3.png"
-     onload="itemLoaded(this,5,2,0,100,100);">
-<img id="spark4"
-     src="sys/spark4.png"
-     onload="itemLoaded(this,5,2,0,100,100);">
-<img id="castle"
-     src="sys/castle.png"
-     onload="itemLoaded(this,1,1,0,300,300);">
-</div>
+    <div id="hidden" style="visibility:hidden;">
+        <img id="davis0"
+             src="sys/davis_0.png"
+             onload="itemLoaded(this,10,7,1,100,100);" />
+        <img id="davis1"
+             src="sys/davis_1.png"
+             onload="itemLoaded(this,10,7,1,100,100);" />
+        <img id="davis2"
+             src="sys/davis_2.png"
+             onload="itemLoaded(this,10,4,1,100,100);" />
+        <img id="spark1"
+             src="sys/spark1.png"
+             onload="itemLoaded(this,5,2,0,100,100);" />
+        <img id="spark2"
+             src="sys/spark2.png"
+             onload="itemLoaded(this,5,3,0,100,100);" />
+        <img id="spark3"
+             src="sys/spark3.png"
+             onload="itemLoaded(this,5,2,0,100,100);" />
+        <img id="spark4"
+             src="sys/spark4.png"
+             onload="itemLoaded(this,5,2,0,100,100);" />
+        <img id="castle"
+             src="sys/castle.png"
+             onload="itemLoaded(this,1,1,0,300,300);" />
+    </div>
 
-<audio  id="001" src="se/001.mp3"  ></audio>
-<audio  id="006" src="se/006.mp3"  ></audio>
-<audio  id="007" src="se/007.mp3"  ></audio>
-<audio  id="012" src="se/012.mp3"  ></audio>
-<audio  id="016" src="se/016.mp3"  ></audio>
-<audio  id="017" src="se/017.mp3"  ></audio>
-<audio  id="031" src="se/031.mp3"  ></audio>
-<audio  id="095" src="se/095.mp3"  ></audio>
+    <audio id="001" src="se/001.mp3"></audio>
+    <audio id="006" src="se/006.mp3"></audio>
+    <audio id="007" src="se/007.mp3"></audio>
+    <audio id="012" src="se/012.mp3"></audio>
+    <audio id="016" src="se/016.mp3"></audio>
+    <audio id="017" src="se/017.mp3"></audio>
+    <audio id="031" src="se/031.mp3"></audio>
+    <audio id="095" src="se/095.mp3"></audio>
 
 </body>
 
 <script type="text/javascript">
-function p1hpmax()
-{
-g_player1.hp = g_player1.maxhp;
-}
-function p2hpmax()
-{
-g_player2.hp = g_player2.maxhp;
-}
+    function p1hpmax() {
+        g_player1.hp = g_player1.maxhp;
+    }
+    function p2hpmax() {
+        g_player2.hp = g_player2.maxhp;
+    }
 
-var iiup = true;
-function iup()
-{
-	if(iiup)
-	{
-	keysDown[87] = true;
-	iiup = false;
-	}
-	else
-	{
-	delete keysDown[87];
-	iiup = true;
-	}
-}
+    var iiup = true;
+    function iup() {
+        if (iiup) {
+            keysDown[87] = true;
+            iiup = false;
+        }
+        else {
+            delete keysDown[87];
+            iiup = true;
+        }
+    }
 
-var iidown = true;
-function idown()
-{
-	if(iidown)
-	{
-	keysDown[83] = true;
-	iidown = false;
-	}
-	else
-	{
-	delete keysDown[83];
-	iidown = true;
-	}
-}
+    var iidown = true;
+    function idown() {
+        if (iidown) {
+            keysDown[83] = true;
+            iidown = false;
+        }
+        else {
+            delete keysDown[83];
+            iidown = true;
+        }
+    }
 
-var iileft = true;
-function ileft()
-{
-	if(iileft)
-	{
-	keysDown[65] = true;
-	iileft = false;
-	}
-	else
-	{
-	delete keysDown[65];
-	iileft = true;
-	}
-}
+    var iileft = true;
+    function ileft() {
+        if (iileft) {
+            keysDown[65] = true;
+            iileft = false;
+        }
+        else {
+            delete keysDown[65];
+            iileft = true;
+        }
+    }
 
-var iiright = true;
-function iright()
-{
-	if(iiright)
-	{
-	keysDown[68] = true;
-	iiright = false;
-	}
-	else
-	{
-	delete keysDown[68];
-	iiright = true;
-	}
-}
+    var iiright = true;
+    function iright() {
+        if (iiright) {
+            keysDown[68] = true;
+            iiright = false;
+        }
+        else {
+            delete keysDown[68];
+            iiright = true;
+        }
+    }
 
-var iia = true;
-function ia()
-{
-	if(iia)
-	{
-	keysDown[74] = true;
-	iia = false;
-	}
-	else
-	{
-	delete keysDown[74];
-	iia = true;
-	}
-}
-function addp1()
-{
-g_player1 = new davis(player1,0,0,0,0,1,"jumping");
-object.push(g_player1);//载入玩家1；
-g_player1.direction = 1;
-}
-function addp2()
-{
-g_player2 = new davis(player2,400,0,0,0,1,"jumping");
-object.push(g_player2);//载入玩家1；
-g_player2.direction = -1;
-}
+    var iia = true;
+    function ia() {
+        if (iia) {
+            keysDown[74] = true;
+            iia = false;
+        }
+        else {
+            delete keysDown[74];
+            iia = true;
+        }
+    }
+    function addp1() {
+        g_player1 = new davis(player1, 0, 0, 0, 0, 1, "jumping");
+        object.push(g_player1);//载入玩家1；
+        g_player1.direction = 1;
+    }
+    function addp2() {
+        g_player2 = new davis(player2, 400, 0, 0, 0, 1, "jumping");
+        object.push(g_player2);//载入玩家1；
+        g_player2.direction = -1;
+    }
 </script>
 
 <script type="text/javascript">
-var gametitle = "超屌格斗游戏！";
-var cbg=document.getElementById("cvsbg");
-var ctxbg=cbg.getContext("2d");
-var c=document.getElementById("cvs");
-var ctx=c.getContext("2d");
-var c2=document.getElementById("cvs2");
-var ctx2=c2.getContext("2d");
-var cif=document.getElementById("interface");
-var ctxif=cif.getContext("2d");
-var object = new Array();
-var object2 = new Array();
-var objectif = new Array();
-var objectbg = new Array();
-var previous = [];
-var stats = document.getElementById("demo");
-var mainloop = true;
-var intervalID = -1;
-var requestId;
-var clear = 0;
-var GameFPS;
-var groundvalue = 550;
-var gamespace = 5;
+    var gametitle = "超屌格斗游戏！";
+    var cbg = document.getElementById("cvsbg");
+    var ctxbg = cbg.getContext("2d");
+    var c = document.getElementById("cvs");
+    var ctx = c.getContext("2d");
+    var c2 = document.getElementById("cvs2");
+    var ctx2 = c2.getContext("2d");
+    var cif = document.getElementById("interface");
+    var ctxif = cif.getContext("2d");
+    var object = new Array();
+    var object2 = new Array();
+    var objectif = new Array();
+    var objectbg = new Array();
+    var previous = [];
+    var stats = document.getElementById("demo");
+    var mainloop = true;
+    var intervalID = -1;
+    var requestId;
+    var clear = 0;
+    var GameFPS;
+    var groundvalue = 550;
+    var gamespace = 5;
 
-var p1hpgage = {x: 50,y: 50,w: 300,h: 20}
-var p2hpgage = {x: 450,y: 50,w: 300,h: 20}
+    var p1hpgage = { x: 50, y: 50, w: 300, h: 20 }
+    var p2hpgage = { x: 450, y: 50, w: 300, h: 20 }
 
-var visualswitch = false;
-var visualobject;
-var visualX = 0;
-var visualY = 0;
-//var focusrate = 1;
-//var rangeXY = 0;
+    var visualswitch = false;
+    var visualobject;
+    var visualX = 0;
+    var visualY = 0;
+    //var focusrate = 1;
+    //var rangeXY = 0;
 
-document.documentElement.style.overflow='hidden';
-document.body.style.overflow='hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
 
-var move=function(e)
-{
-e.preventDefault && e.preventDefault();
-return false;
-}
-var keyFunc=function(e)
-{
-if(37<=e.keyCode && e.keyCode<=40)
-{
-return move(e);
-}
-}
-document.body.onkeydown=keyFunc;
+    var move = function (e) {
+        e.preventDefault && e.preventDefault();
+        return false;
+    }
+    var keyFunc = function (e) {
+        if (37 <= e.keyCode && e.keyCode <= 40) {
+            return move(e);
+        }
+    }
+    document.body.onkeydown = keyFunc;
 
-function computeFPS(){
+    function computeFPS() {
 
         if (previous.length > 60) {
             previous.splice(0, 1);
         }
         var start = (new Date).getTime();
         previous.push(start);
-		var sum = 0;
-		
+        var sum = 0;
+
         for (var id = 0; id < previous.length - 1; id++) {
             sum += previous[id + 1] - previous[id];
         }
 
         var diff = 1000.0 / (sum / previous.length);
-		GameFPS = diff.toFixed();
-		if(clear >= 1)
-		{
-		clear = 0 ;
-		for (var ic=0; ic<object.length; ic++)
-		if (object[ic] == undefined)
-		{
-		object.splice(ic,1);
-		}
-		for (var ic2=0; ic2<object2.length; ic2++)
-		if (object2[ic2] == undefined)
-		{
-		object2.splice(ic2,1);
-		}
-		for (var icbg=0; icbg<objectbg.length; icbg++)
-		if (objectbg[icbg] == undefined)
-		{
-		objectbg.splice(icbg,1);
-		}
-		for (var icif=0; icif<objectif.length; icif++)
-		if (objectif[icif] == undefined)
-		{
-		objectif.splice(icif,1);
-		}
-//		for (var ic=0; ic<object.length; ic++)
-//		if (object[ic] == undefined)
-//		{
-//		object.splice(ic,1);
-//		}
-		}
-		clear += 1 / GameFPS;
-		document.getElementById("tt").innerHTML=gametitle + "FPS: " + GameFPS + " / " + clear.toFixed();
-}
+        GameFPS = diff.toFixed();
+        if (clear >= 1) {
+            clear = 0;
+            for (var ic = 0; ic < object.length; ic++)
+                if (object[ic] == undefined) {
+                    object.splice(ic, 1);
+                }
+            for (var ic2 = 0; ic2 < object2.length; ic2++)
+                if (object2[ic2] == undefined) {
+                    object2.splice(ic2, 1);
+                }
+            for (var icbg = 0; icbg < objectbg.length; icbg++)
+                if (objectbg[icbg] == undefined) {
+                    objectbg.splice(icbg, 1);
+                }
+            for (var icif = 0; icif < objectif.length; icif++)
+                if (objectif[icif] == undefined) {
+                    objectif.splice(icif, 1);
+                }
+            //		for (var ic=0; ic<object.length; ic++)
+            //		if (object[ic] == undefined)
+            //		{
+            //		object.splice(ic,1);
+            //		}
+        }
+        clear += 1 / GameFPS;
+        document.getElementById("tt").innerHTML = gametitle + "FPS: " + GameFPS + " / " + clear.toFixed();
+    }
 
-function QueueNewFrame() {
+    function QueueNewFrame() {
         if (window.requestAnimationFrame)
             requestId = window.requestAnimationFrame(renderingLoop);
         else if (window.msRequestAnimationFrame)
@@ -323,1076 +296,1011 @@ function QueueNewFrame() {
             requestId = window.mozRequestAnimationFrame(renderingLoop);
         else if (window.oRequestAnimationFrame)
             requestId = window.oRequestAnimationFrame(renderingLoop);
-        else
-        {
+        else {
             function QueueNewFrame() {
             };
-            intervalID = window.setInterval(renderingLoop, 1000/60);
+            intervalID = window.setInterval(renderingLoop, 1000 / 60);
         }
-};
+    };
 
-var mouse={centerX:0,centerY:0};
-function cnvs_getCoordinates(e)
-{
+    var mouse = { centerX: 0, centerY: 0 };
+    function cnvs_getCoordinates(e) {
 
-//Math.pow(mouse.x - g_player1,2)
-//if ()
-var x1 = c.offsetParent.offsetLeft;
-var y1 = c.offsetParent.offsetTop;
-var x2 = c.offsetLeft;
-var y2 = c.offsetTop;
-var sl = document.documentElement.scrollLeft;
-var st = document.documentElement.scrollTop;
-mouse.centerX=e.clientX - x1 - x2 +sl;
-mouse.centerY=e.clientY - y1 - y2 +st;
+        //Math.pow(mouse.x - g_player1,2)
+        //if ()
+        var x1 = c.offsetParent.offsetLeft;
+        var y1 = c.offsetParent.offsetTop;
+        var x2 = c.offsetLeft;
+        var y2 = c.offsetTop;
+        var sl = document.documentElement.scrollLeft;
+        var st = document.documentElement.scrollTop;
+        mouse.centerX = e.clientX - x1 - x2 + sl;
+        mouse.centerY = e.clientY - y1 - y2 + st;
 
-document.getElementById("demo4").innerHTML="Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
-}
-
-
-
-function drawpic(o,canvas)
-{
-var canvas = canvas;
-canvas.save();
-//canvas.scale(focusrate, focusrate);
-canvas.translate(-visualX, -visualY);
-canvas.globalAlpha = o.Alpha;
-	if(o.direction == 1)
-	{
-	canvas.drawImage(o.pic, o.centerX - o.myX, o.centerY - o.myY); 
-	}
-	else
-	{
-	canvas.translate(c.width, 0);
-	canvas.scale(-1, 1);
-        //画图
-
-	canvas.drawImage(o.pic, -1 * o.centerX - o.myX + c.width, o.centerY - o.myY); 
-      //翻转回来
-
-	canvas.translate(c.width, 0); 
-	canvas.scale(-1, 1);
-	}
+        document.getElementById("demo4").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
+    }
 
 
 
-if(o.cln_switch)
-{
-canvas.beginPath();
-canvas.strokeStyle="blue";
-canvas.moveTo(o.cx,o.cy);
-canvas.lineTo(o.cx + o.cw,o.cy);
-canvas.lineTo(o.cx + o.cw,o.cy + o.ch);
-canvas.lineTo(o.cx,o.cy + o.ch);
-canvas.closePath();
-canvas.stroke();
-}
+    function drawpic(o, canvas) {
+        var canvas = canvas;
+        canvas.save();
+        //canvas.scale(focusrate, focusrate);
+        canvas.translate(-visualX, -visualY);
+        canvas.globalAlpha = o.Alpha;
+        if (o.direction == 1) {
+            canvas.drawImage(o.pic, o.centerX - o.myX, o.centerY - o.myY);
+        }
+        else {
+            canvas.translate(c.width, 0);
+            canvas.scale(-1, 1);
+            //画图
 
-if(o.itr_switch)
-{
-canvas.beginPath();
-canvas.strokeStyle="red";
-canvas.moveTo(o.ix,o.iy);
-canvas.lineTo(o.ix + o.iw,o.iy);
-canvas.lineTo(o.ix + o.iw,o.iy + o.ih);
-canvas.lineTo(o.ix,o.iy + o.ih);
-canvas.closePath();
-canvas.stroke();
-}
+            canvas.drawImage(o.pic, -1 * o.centerX - o.myX + c.width, o.centerY - o.myY);
+            //翻转回来
 
-if(o.bdy_switch)
-{
-canvas.beginPath();
-canvas.strokeStyle="green";
-canvas.moveTo(o.bx,o.by);
-canvas.lineTo(o.bx + o.bw,o.by);
-canvas.lineTo(o.bx + o.bw,o.by + o.bh);
-canvas.lineTo(o.bx,o.by + o.bh);
-canvas.closePath();
-canvas.stroke();
-}
+            canvas.translate(c.width, 0);
+            canvas.scale(-1, 1);
+        }
 
 
-canvas.beginPath();
-canvas.strokeStyle="yellow";
-canvas.arc(o.centerX,o.centerY,1,0,2*Math.PI,true);
-canvas.stroke();
 
-canvas.beginPath();
-canvas.strokeStyle="purple";
-canvas.moveTo(gamespace,groundvalue);
-canvas.lineTo(gamebg.bgwidth - gamespace,groundvalue);
-canvas.stroke();
+        if (o.cln_switch) {
+            canvas.beginPath();
+            canvas.strokeStyle = "blue";
+            canvas.moveTo(o.cx, o.cy);
+            canvas.lineTo(o.cx + o.cw, o.cy);
+            canvas.lineTo(o.cx + o.cw, o.cy + o.ch);
+            canvas.lineTo(o.cx, o.cy + o.ch);
+            canvas.closePath();
+            canvas.stroke();
+        }
 
-canvas.restore();
-}
+        if (o.itr_switch) {
+            canvas.beginPath();
+            canvas.strokeStyle = "red";
+            canvas.moveTo(o.ix, o.iy);
+            canvas.lineTo(o.ix + o.iw, o.iy);
+            canvas.lineTo(o.ix + o.iw, o.iy + o.ih);
+            canvas.lineTo(o.ix, o.iy + o.ih);
+            canvas.closePath();
+            canvas.stroke();
+        }
 
-
-//j 74 k 75 l 76
-//1 96 2 97 3 98
-var player1 = {
-	up: 87,
-	down: 83,
-	left: 65,
-	right: 68,
-	a: 74,
-	b: 75,
-	c: 76
-};
-
-var player2 = {
-	up: 38,
-	down: 40,
-	left: 37,
-	right: 39,
-	a: 97,
-	b: 98,
-	c: 99
-};
-
-//g_player1 = new davis(250,250,0,0,1);
-//object.push(g_player1);
+        if (o.bdy_switch) {
+            canvas.beginPath();
+            canvas.strokeStyle = "green";
+            canvas.moveTo(o.bx, o.by);
+            canvas.lineTo(o.bx + o.bw, o.by);
+            canvas.lineTo(o.bx + o.bw, o.by + o.bh);
+            canvas.lineTo(o.bx, o.by + o.bh);
+            canvas.closePath();
+            canvas.stroke();
+        }
 
 
-//window.cancelAnimationFrame(requestId);//减速fps
-//QueueNewFrame();//加速fps
-function kdown(event) { 
-   if (event.keyCode==32){//space
+        canvas.beginPath();
+        canvas.strokeStyle = "yellow";
+        canvas.arc(o.centerX, o.centerY, 1, 0, 2 * Math.PI, true);
+        canvas.stroke();
+
+        canvas.beginPath();
+        canvas.strokeStyle = "purple";
+        canvas.moveTo(gamespace, groundvalue);
+        canvas.lineTo(gamebg.bgwidth - gamespace, groundvalue);
+        canvas.stroke();
+
+        canvas.restore();
+    }
+
+
+    //j 74 k 75 l 76
+    //1 96 2 97 3 98
+    var player1 = {
+        up: 87,
+        down: 83,
+        left: 65,
+        right: 68,
+        a: 74,
+        b: 75,
+        c: 76
+    };
+
+    var player2 = {
+        up: 38,
+        down: 40,
+        left: 37,
+        right: 39,
+        a: 97,
+        b: 98,
+        c: 99
+    };
+
+    //g_player1 = new davis(250,250,0,0,1);
+    //object.push(g_player1);
+
+
+    //window.cancelAnimationFrame(requestId);//减速fps
+    //QueueNewFrame();//加速fps
+    function kdown(event) {
+        if (event.keyCode == 32) {//space
+
+        }
+        if (event.keyCode == 87) {//W
+
+        }
+        if (event.keyCode == 83) {//S
+        }
+        if (event.keyCode == 65) {//A
+        }
+        if (event.keyCode == 68) {//D;
+
+        }
+    }
+    function kup(event) {
+        if (event.keyCode == 87) {//W
+            //      g_player1.up(false);
+        }
+        if (event.keyCode == 83) {//S
+            //      g_player1.down(false);
+        }
+        if (event.keyCode == 65) {//A
+            //      g_player1.left(false);
+            //	g_player1.framec = 0;
+            //	g_player1.counter = 0;
+            //	g_player1.state = "standing";
+        }
+        if (event.keyCode == 68) {//D
+            //      g_player1.right(false);
+            //	g_player1.framec = 0;
+            //	g_player1.counter = 0;
+            //	g_player1.state = "standing";
+        }
+    }
+    document.onkeydown = kdown;
+    document.onkeyup = kup;
+
+    function skillkeydown(o, s, c, key) {
+        if (key in keysDown) {
+            o.counter = c - 1;
+            o.state = s;
+        }
+    }
+
+    function skillkeyup(o, s, c, key) {
+        if (!(key in keysDown)) {
+            o.counter = c - 1;
+            o.state = s;
+        }
+    }
+
+    var holdkey = function () {
+        if (32 in keysDown) { // Player holding space
+
+            //   var xx = 0;
+            //   var yy = 0;
+            //while (xx == 0 && yy == 0)
+            //  {
+            //   var xx = 10*Math.random()-5;
+            //   var yy = 10*Math.random()-5;
+            //  }
+            //
+            //object.push(new Shot(g_player1.centerX,g_player1.centerY,xx,yy,0,0.5));
+
+        }
+        if (87 in keysDown) { // Player holding W
+
+        }
+        if (83 in keysDown) { // Player holding S
+        }
+        if (65 in keysDown) { // Player holding A
+
+            //if(g_player1.direction != -1)
+            //{
+            //	g_player1.direction = -1;
+            //}
+            //	g_player1.state = "walking";
+        }
+        if (68 in keysDown) { // Player holding D
+            //if(g_player1.direction != 1)
+            //{
+            //	g_player1.direction = 1;
+            //}
+            //	g_player1.state = "walking";
+        }
+
+    };
+
+    isTouchDevice();
+
+    // Handle keyboard controls
+    var keysDown = {};
+    addEventListener("keydown", function (e) {
+        keysDown[e.keyCode] = true;
+    }, false);
+    addEventListener("keyup", function (e) {
+        delete keysDown[e.keyCode];
+    }, false);
+
+    //html5 新增 touch 事件
+    //禁用手机默认的触屏滚动行为
+    document.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    }, false);
+    //touchstart事件
+    function touchSatrtFunc(evt) {
+        try {
+            //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+
+            var touch = evt.touches[0]; //获取第一个触点
+            var x = Number(touch.pageX); //页面触点X坐标
+            var y = Number(touch.pageY); //页面触点Y坐标
+            //记录触点初始位置
+            startX = x;
+            startY = y;
+
+
+        } catch (e) {
+            alert('touchSatrtFunc：' + e.message);
+        }
+    }
+
+    //touchmove事件，这个事件无法获取坐标
+    function touchMoveFunc(evt) {
+        try {
+            //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+            var touch = evt.touches[0]; //获取第一个触点
+            var x = Number(touch.pageX); //页面触点X坐标
+            var y = Number(touch.pageY); //页面触点Y坐标
+
+
+            //document.getElementById("version").innerHTML = "原:"+startY+"   "+"现:"+y;
+            //判断滑动方向
+
+            if (y - startY > 100) {
+                swipeDown();
+            } else if (y - startY < -100) {
+                swipeUp();
+            }
+        } catch (e) {
+            alert('touchMoveFunc：' + e.message);
+        }
+    }
+
+    //touchend事件
+    function touchEndFunc(evt) {
+        try {
+            //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+
+
+        } catch (e) {
+            alert('touchEndFunc：' + e.message);
+        }
+    }
+
+    //绑定事件
+    function bindEvent() {
+        document.addEventListener('touchstart', touchSatrtFunc, false);
+        document.addEventListener('touchmove', touchMoveFunc, false);
+        document.addEventListener('touchend', touchEndFunc, false);
+    }
+
+    //判断是否支持触摸事件
+    function isTouchDevice() {
+        //document.getElementById("version").innerHTML = navigator.appVersion;
+
+        try {
+            document.createEvent("TouchEvent");
+            //alert("支持TouchEvent事件！");
+
+            bindEvent(); //绑定事件
+        } catch (e) {
+            alert("不支持TouchEvent事件！" + e.message);
+        }
+    }
+
+    function cased(o, a, b) {
+        if (o.counter >= a && o.counter <= b) {
+            return o.counter;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function frameplay(o, p, acx, acy, myX, myY) {
+        o.itr_switch = false;
+        o.cln_switch = false;
+        o.bdy_switch = false;
+        o.pic = document.getElementById(p);
+        o.myX = myX;
+        o.myY = myY;
+        o.dvy += acy;
+
+        if (o.dvy < 0 || o.ag == "a") {
+            o.dvx += o.direction * acx;
+        }
+        else {
+
+            if (o.dvx > o.direction * acx) {
+                if (o.dvx - o.vx <= o.direction * acx) {
+                    o.vx = 0;
+                    o.dvx = o.direction * acx;
+                }
+                else {
+                    o.dvx -= o.vx;
+                    o.vx += gx;
+                }
+            }
+            else if (o.dvx < o.direction * acx) {
+                if (o.dvx + o.vx >= o.direction * acx) {
+                    o.vx = 0;
+                    o.dvx = o.direction * acx;
+                }
+                else {
+                    o.dvx += o.vx;
+                    o.vx += gx;
+                }
+            }
+            else {
+                o.vx = 0;
+            }
+        }
+        o.centerX += o.dvx;
+        o.centerY += o.dvy;
+        if (o.ag == "a" && o.status == "character") {
+            o.centerY += o.vy;
+            o.vy += gy;
+        }
+    }
+
+    function nextjstate(o, s, f1, f2) {
+        if (o.counter >= f1) {
+            o.state = s;
+            o.counter = f2 - 1;
+        }
+    }
+
+    function cln(o, x, y, w, h) {
+        o.cln_switch = true;
+
+        if (o.status == "character") {
+            if (o.direction == "1") {
+                var tx = o.centerX + x;
+            }
+            else {
+                var tx = o.centerX - x;
+            }
+            var ty = o.centerY + y;
+            o.cx = tx - w / 2;
+            o.cy = ty - h / 2;
+            o.cw = w;
+            o.ch = h;
+
+            var maxl = o.tmidpointX - 400 + 5;
+            var maxr = o.tmidpointX + 400 - 5;
+            //定义两人最多有多宽！
+
+            if (o.centerX < gamespace) {
+                o.centerX = gamespace;
+            }
+            else {
+                if (o.centerX < maxl) {
+                    o.centerX = maxl;
+                }
+            }
+            if (o.centerX > gamebg.bgwidth - gamespace) {
+                o.centerX = gamebg.bgwidth - gamespace;
+            }
+            else {
+                if (o.centerX > maxr) {
+                    o.centerX = maxr;
+                }
+            }
+
+            for (var i = 0; i < object.length; i++) {
+                if (object[i] != undefined && object[i].cx != undefined && object[i].cy != undefined && object[i].cw != undefined && object[i].ch != undefined && object[i].identity != o.identity) {
+                    if (detection(o.cx, o.cy, o.cx + o.cw, o.cy + o.ch, object[i].cx, object[i].cy, object[i].cx + object[i].cw, object[i].cy + object[i].ch)) {
+                        if (o.direction == "1") {
+                            if (o.centerX > object[i].centerX) {
+                                o.centerX = object[i].centerX + object[i].cw / 2 + o.cw / 2;
+                            }
+                            else {
+                                o.centerX = object[i].centerX - object[i].cw / 2 - o.cw / 2;
+                            }
+                            //							o.centerX += object[i].dvx/2;
+                            if (o.centerX >= maxl || o.centerX >= gamespace) {
+                                object[i].centerX += o.dvx / 2;
+                            }
+                        }
+                        else {
+                            if (o.centerX < object[i].centerX) {
+                                o.centerX = object[i].centerX - object[i].cw / 2 - o.cw / 2;
+                            }
+                            else {
+                                o.centerX = object[i].centerX + object[i].cw / 2 + o.cw / 2;
+                            }
+                            if (o.centerX <= maxr || o.centerX <= gamebg.bgwidth - gamespace) {
+                                object[i].centerX += o.dvx / 2;
+                            }
+                        }
+                        if (o.centerX < gamespace) {
+                            o.centerX = gamespace;
+                        }
+                        else {
+                            if (o.centerX < maxl) {
+                                o.centerX = maxl;
+                            }
+                        }
+                        if (o.centerX > gamebg.bgwidth.width - gamespace) {
+                            o.centerX = gamebg.bgwidth - gamespace;
+                        }
+                        else {
+                            if (o.centerX > maxr) {
+                                o.centerX = maxr;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        if (o.direction == "1") {
+            var tx = o.centerX + x;
+        }
+        else {
+            var tx = o.centerX - x;
+        }
+        var ty = o.centerY + y;
+        o.cx = tx - w / 2;
+        o.cy = ty - h / 2;
+        o.cw = w;
+        o.ch = h;
+    }
+
+    function bdy(o, x, y, w, h) {
+        o.bdy_switch = true;
+        if (o.direction == "1") {
+            o.bx = o.centerX - o.myX + x;
+        }
+        else {
+            o.bx = o.centerX + o.myX - x - w;
+        }
+        o.bw = w;
+        o.by = o.centerY - o.myY + y;
+        o.bh = h;
+    }
+
+    var attackdelay = 10;
+    function itr(o, x, y, w, h, a, acx, acy, fall, injury)//this，x，y，w，h，第几帧，攻击间隔，横向击飞，纵向击飞，击飞值，伤害
+    {
+        o.itr_switch = true;
+        if (o.direction == "1") {
+            o.ix = o.centerX - o.myX + x;
+        }
+        else {
+            o.ix = o.centerX + o.myX - x - w;
+        }
+        o.iw = w;
+        o.iy = o.centerY - o.myY + y;
+        o.ih = h;
+
+
+
+        for (var i = 0; i < object.length; i++) {
+            if (object[i] != undefined && object[i].bx != undefined && object[i].by != undefined && object[i].bw != undefined && object[i].bh != undefined && object[i].identity != o.identity && o.attacking && object[i].bdy_switch && o.itr_switch)//this.status //
+            {
+                if (detection(o.ix, o.iy, o.ix + o.iw, o.iy + o.ih, object[i].bx, object[i].by, object[i].bx + object[i].bw, object[i].by + object[i].bh)) {
+                    o.attacking = false;
+                    o.arest = a;
+                    o.attackcounter = 0;
+                    o.pre_state = o.state;
+
+                    if (o.ix >= object[i].bx) {
+                        this.sx = o.ix;
+                        o.sx = this.sx;
+                    }
+                    else {
+                        this.sx = object[i].bx;
+                        o.sx = this.sx;
+                    }
+
+                    if (o.ix + o.iw <= object[i].bx + object[i].bw) {
+                        this.sw = o.ix + o.iw - this.sx;
+                        o.sw = this.sw;
+                    }
+                    else {
+                        this.sw = object[i].bx + object[i].bw - this.sx;
+                        o.sw = this.sw;
+                    }
+
+                    if (o.iy >= object[i].by) {
+                        this.sy = o.iy;
+                        o.sy = this.sy;
+                    }
+                    else {
+                        this.sy = object[i].by;
+                        o.sy = this.sy;
+                    }
+
+                    if (o.iy + o.ih <= object[i].by + object[i].bh) {
+                        this.sh = o.iy + o.ih - this.sy;
+                        o.sh = this.sh;
+                    }
+                    else {
+                        this.sh = object[i].by + object[i].bh - this.sy;
+                        o.sh = this.sh;
+                    }
+                    this.sparkx = this.sx + this.sw / 2;
+                    this.sparky = this.sy + this.sh / 2;
+
+                    object2.push(new adelay(this, o, object[i], acx, acy, fall, injury));
+                    //this.hit();
+                    //o.exist = false;
+                }
+            }
+            //	document.getElementById("demo2").innerHTML=g_player1.hp + ":" + g_player2.hp;
+
+        }
+        //   o.myBodyX= o.w - o.x;
+        //   o.myBodyY= o.h - o.y;
+    }
+
+    function adelay(o, o1, o2, acx, acy, fall, injury) {
+        this.g = o1;
+        this.t = o2;
+        this.cX = this.t.centerX;
+        this.cY = this.t.centerY;
+        this.fall = fall;
+        this.injury = injury;
+        this.dvx = this.g.direction * acx;
+        this.dvy = acy;
+        this.counteradelay = 0;
+        this.sx = o.sparkx;
+        this.sy = o.sparky;
+    }
+
+    adelay.prototype.render = function () {
+        if (this.counteradelay >= attackdelay) {
+            this.t.dvx += this.dvx;
+            this.t.dvy += this.dvy;
+            mainloop = true;
+            if (this.t.centerX <= gamespace || this.t.centerX >= gamebg.bgwidth - gamespace) {
+                this.g.dvx -= this.dvx;
+            }
+            return false;
+        }
+        else {
+            this.t.vx = 0;
+            this.t.vy = 0;
+            this.t.dvx = 0;
+            this.t.dvy = 0;
+            this.t.centerX = this.cX;
+            this.t.centerY = this.cY;
+            if (this.counteradelay == 1) {
+
+                this.t.fall += this.fall;
+                this.t.vf = 0;
+                this.t.hp -= this.injury;
+
+                if (this.t.fall >= 0 && this.t.fall < 25) {
+                    this.t.state = "injured1";
+                }
+                else if (this.t.fall >= 25 && this.t.fall < 50) {
+                    this.t.state = "injured2";
+                }
+                else if (this.t.fall >= 50 && this.t.fall < 70) {
+                    this.t.state = "faint";
+                }
+                else if (this.t.fall >= 70) {
+                    this.t.state = "fallingf";
+                }
+                else {
+                }
+
+                if (this.dvy == 0 && this.t.fall >= 70) {
+                    this.dvy = -1;
+                }
+                else if (this.t.fall <= 70 && this.t.hp <= 0) {
+                    this.t.fall = 70;
+                    this.t.state = "fallingf";
+                    if (this.dvy == 0) {
+                        this.dvy = -1;
+                    }
+                }
+
+                if (this.t.fall >= 70) {
+                    object2.push(new effect(this.g, this.sx, this.sy, 0, 0, 1, "spark2"));
+                }
+                else {
+                    object2.push(new effect(this.g, this.sx, this.sy, 0, 0, 1, "spark1"));
+                }
+
+                this.t.counter = 0;
+                this.g.hits += 1;
+                mainloop = false;
+
+                ctx.clearRect(0, 0, c.width, c.height);
+                for (var i1 = 0; i1 < object.length; i1++) {
+                    if (object[i1] != undefined) {
+                        switch (this.t.state) {
+                            case "injured1":
+                                this.t.injured1();
+                                break;
+                            case "injured2":
+                                this.t.injured2();
+                                break;
+                            case "faint":
+                                this.t.faint();
+                                break;
+                            case "fallingf":
+                                this.t.fallingf();
+                                break;
+                        }
+                        drawpic(object[i1], ctx);
+                    }
+                }
+            }
+            this.counteradelay += 1;
+            return true;
+        }
+    }
+
+
+    //		this.dvx = this.dvxa;
+    //		this.dvy += this.dvya;
+    //		this.hp -= this.hpa;
+    //		this.counter = this.countera;
+    //		this.state = this.statea;
+    //		this.delay = false;
+    //		this.delays = 0;
+
+
+
+    //function mybdy(id,r)
+    //{
+    //id.bx = id.centerX - r;
+    //id.bw = id.centerX + r;
+    //id.by = id.centerY - r;
+    //id.bh = id.centerY + r;
+    //}
+    //
+    //function myitr(id,r)
+    //{
+    //id.ix = id.centerX - r;
+    //id.iw = id.centerX + r;
+    //id.iy = id.centerY - r;
+    //id.ih = id.centerY + r;
+    //}
+
+
+
+
+    //function hpdetection(o)
+    //{
+    //if(o.hp <= 0)
+    //{
+    //o.death();
+    //o.exist = false;
+    //}
+    //}
+
+
+
+    function sound(o, f, s) {
+        if (o.counter == f) {
+            objectif.push(new playsound(document.getElementById(s)));
+        }
+    }
+
+
+
+    function playsound(p) {
+
+        this.counterA = 0;
+        this.audio = document.createElement("audio");
+        this.audio.src = p.src;
+        this.counterB = p.duration;
+        this.audio.autoplay = true;
+        c.appendChild(this.audio);
 
     }
-   if (event.keyCode==87){//W
+    playsound.prototype.render = function () {
+
+        if (this.audio.ended || this.counterA >= this.counterB + 10) {
+            c.removeChild(this.audio);
+            return false;
+        }
+        else {
+            this.counterA += 1 / GameFPS;
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+
+
+    function nextstate(o, s, f1, f2) {
+        if (o.counter >= f1) {
+            o.state = s;
+            o.counter = f2 - 1;
+        }
+    }
+
+    function disappearance(o, f) {
+        if (o.counter >= f + 1) {
+            o.exist = false;
+        }
+    }
+
+    var gy = 1;
+    var gx = 0.5;
+    var gf = 0.01;
+    function gravitation() {
 
     }
-   if (event.keyCode==83){//S
+
+
+
+
+    //function itemLoaded(item)
+    //{
+    //g_player1 = new davis(this,250,250,0,0,0,1);
+    //object.push(g_player1);
+    //
+    //}
+    var cload = document.getElementById("cvsload");
+    var ctxload = cload.getContext("2d");
+
+    //var c3=document.getElementById("cvs3");
+    //var ctx3=c3.getContext("2d");
+
+    function itemLoaded(name, r, c, l, sw, sh) {
+        var picwidth = (name.width - l * r) / r;
+        var picheight = (name.height - l * c) / c;
+        cload.width = picwidth * sw / 100;
+        cload.height = picheight * sh / 100;
+        var i = 0;
+        for (var y = 0; y < c; y++) {
+            for (var x = 0; x < r; x++) {
+                var h = document.getElementById("hidden");
+                var image = document.createElement("img");
+                image.id = name.id + "_" + i;
+                image.style.position = "absolute";
+                ctxload.drawImage(name, x * (picwidth + l), y * (picheight + l), picwidth, picheight, 0, 0, picwidth * sw / 100, picheight * sh / 100);
+                image.src = cload.toDataURL("image/png");
+                ctxload.clearRect(0, 0, cload.width, cload.height);
+                h.appendChild(image);
+                i += 1;
+            }
+        }
+        h.removeChild(name);
     }
-   if (event.keyCode==65){//A
+
+    var g_player1;
+    var g_player2;
+    function createdavis() {
+
+        g_p1_hpgage = new ifobj(this, p1hpgage.x, p1hpgage.y, 0, 0, 1, "p1_hp")
+        objectif.push(g_p1_hpgage);
+
+        g_p2_hpgage = new ifobj(this, p2hpgage.x, p2hpgage.y, 0, 0, 1, "p2_hp")
+        objectif.push(g_p2_hpgage);
+        //载入血条
+
+        gamebg = new bg(this, 0, 888, 0, 0, 1, "castle1412")
+        objectbg.push(gamebg);//载入场景；
+
+        g_player1 = new davis(player1, 100, 300, 0, 0, 1, "jumping");
+        object.push(g_player1);//载入玩家1；
+        g_player1.direction = 1;
+
+        g_player2 = new davis(player2, 200, 300, 0, 0, 1, "jumping");
+        object.push(g_player2);//载入玩家2；
+        g_player2.direction = -1;
+
+        g_p1_hits = new ifobj(g_player1, 100, 200, 0, 0, 1, "hit_counter")
+        objectif.push(g_p1_hits);//载入comob计数；
+
+        g_p2_hits = new ifobj(g_player2, 700, 200, 0, 0, 1, "hit_counter")
+        objectif.push(g_p2_hits);//载入comob计数；
+
+        document.body.removeChild(document.getElementById("cvsload"));
     }
-   if (event.keyCode==68){//D;
 
+
+
+
+
+    function detection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+        if (ax1 < bx1) {
+            if (ax2 < bx1)
+                return false;
+            else {
+                if (ay1 < by1) {
+                    if (ay2 < by1)
+                        return false;
+                    else
+                        return true;
+                }
+                else {
+                    if (ay1 > by2)
+                        return false;
+                    else
+                        return true;
+                }
+            }
+        }
+        else {
+            if (ax1 > bx2)
+                return false;
+            else {
+                if (ay1 < by1) {
+                    if (ay2 < by1)
+                        return false;
+                    else
+                        return true;
+                }
+                else {
+                    if (ay1 > by2)
+                        return false;
+                    else
+                        return true;
+
+                }
+            }
+        }
     }
-}
-function kup(event) { 
-   if (event.keyCode==87){//W
-//      g_player1.up(false);
+
+
+
+
+    function renderingLoop() {
+        if (!visualswitch) {
+            if (!visualobject) {
+                for (var v = 0; v < object.length; v++) {
+                    if (object[v] != undefined) {
+                        if (object[v].status == "character") {
+                            visualobject = object[v];
+                        }
+                    }
+                }
+            }
+            else {
+                if (visualobject.target != "null" && !visualswitch) {
+                    visualswitch = true;
+                }
+                var cx = visualobject.tmidpointX;
+                var cy = visualobject.tmidpointY;
+                visualX = (cx - cif.width / 2);
+                visualY = (cy - cif.height / 2);
+                if (visualX < 0) {
+                    visualX = 0;
+                }
+                else if (visualX > gamebg.bgwidth - 800) {
+                    visualX = gamebg.bgwidth - 800;
+                }
+                if (visualY > 0) {
+                    visualY = 0;
+                }
+                document.getElementById("demo12").innerHTML = "p1与p2之间中点：" + "(" + cx + "," + cy + ")";
+            }
+        }
+        else {
+            //rangeXY = Math.sqrt(Math.pow((visualobject.centerX - visualobject.target.centerX),2) + Math.pow((visualobject.centerY - visualobject.target.centerY),2))
+            //if(rangeXY > 800)
+            //{
+            //	rangeXY = 800;
+            //}
+            //focusrate = 1 - rangeXY * 0.1/800;
+            var cx = visualobject.tmidpointX;
+            var cy = visualobject.tmidpointY;
+            //var cxleft = 450;
+            //var cxright = 1740 - 450;
+            //if(cx >= cxright)
+            //{
+            //var cx1 = visualobject.tmidpointX - cxright - 450;
+            //	cx = cxright + 50 + cx1*(50/450);
+            //}
+            //if(cx <= cxleft)
+            //{
+            //var cx2 = visualobject.tmidpointX - cxleft - 450;
+            //	cx = cxleft + 50 + cx2*(50/450);
+            //}
+            //if(cx >= gamebg.bgwidth - 5 - 450)
+            //{
+            //var ppp = gamebg.bgwidth - 5 - cx;
+            //var lll = 795 - ppp;
+            //}
+            //else
+            //{
+            //var lll = 400;
+            //}
+
+            visualX = (cx - cif.width / 2);
+            visualY = (cy - cif.height / 2);
+            if (visualX < 0) {
+                visualX = 0;
+            }
+            else if (visualX > gamebg.bgwidth - 800) {
+                visualX = gamebg.bgwidth - 800;
+            }
+            if (visualY > 0) {
+                visualY = 0;
+            }
+            //if(visualY > 0)
+            //{
+            //visualY = 0;
+            //}
+            document.getElementById("demo12").innerHTML = "p1与p2之间中点：" + "(" + cx + "," + cy + ")";// + "距离：" + rangeXY + "缩放倍率：" + focusrate + "/ppp/" + ppp;
+        }
+
+        ctxbg.clearRect(0, 0, cbg.width, cbg.height);
+        for (var ibg = 0; ibg < objectbg.length; ibg++) {
+            //判断object[ibg]是否存在，是就绘制，否就删除
+            if (objectbg[ibg] != undefined) {
+                if (!objectbg[ibg].render()) {
+                    delete objectbg[ibg];
+                }
+            }
+        }
+
+        if (mainloop) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            for (var i1 = 0; i1 < object.length; i1++) {
+                //判断object[i1]是否存在，是就绘制，否就删除
+                if (object[i1] != undefined) {
+                    if (!object[i1].render()) {
+                        delete object[i1];
+                    }
+                }
+
+            }
+        }
+
+        ctx2.clearRect(0, 0, c2.width, c2.height);
+        for (var i2 = 0; i2 < object2.length; i2++) {
+            //判断object2[i2]是否存在，是就绘制，否就删除
+            if (object2[i2] != undefined) {
+                if (!object2[i2].render()) {
+                    delete object2[i2];
+                }
+            }
+        }
+
+        ctxif.clearRect(0, 0, cif.width, cif.height);
+        for (var iif = 0; iif < objectif.length; iif++) {
+            //判断objectif[iif]是否存在，是就绘制，否就删除
+            if (objectif[iif] != undefined) {
+                if (!objectif[iif].render()) {
+                    delete objectif[iif];
+                }
+            }
+        }
+
+
+        stats.innerHTML = "object数量：" + object.length;
+        document.getElementById("demo10").innerHTML = "object2数量：" + object2.length;
+        document.getElementById("demo11").innerHTML = "objectbg数量：" + objectbg.length;
+        document.getElementById("demo14").innerHTML = "objectif数量：" + objectif.length;
+
+        //mainloop
+
+        //holdkey();
+        computeFPS();
+        QueueNewFrame();
     }
-   if (event.keyCode==83){//S
-//      g_player1.down(false);
-    }
-   if (event.keyCode==65){//A
-//      g_player1.left(false);
-//	g_player1.framec = 0;
-//	g_player1.counter = 0;
-//	g_player1.state = "standing";
-    }
-   if (event.keyCode==68){//D
-//      g_player1.right(false);
-//	g_player1.framec = 0;
-//	g_player1.counter = 0;
-//	g_player1.state = "standing";
-    }
-}
-document.onkeydown = kdown;
-document.onkeyup = kup;
 
-function skillkeydown(o,s,c,key)
-{
-if (key in keysDown)
-	{
-	o.counter = c - 1;
-	o.state = s;
-	}
-}
 
-function skillkeyup(o,s,c,key)
-{
-if (!(key in keysDown))
-	{
-	o.counter = c - 1;
-	o.state = s;
-	}
-}
 
-var holdkey = function () {  
-    if (32 in keysDown) { // Player holding space  
 
-//   var xx = 0;
-//   var yy = 0;
-//while (xx == 0 && yy == 0)
-//  {
-//   var xx = 10*Math.random()-5;
-//   var yy = 10*Math.random()-5;
-//  }
-//
-//object.push(new Shot(g_player1.centerX,g_player1.centerY,xx,yy,0,0.5));
 
-    }  
-    if (87 in keysDown) { // Player holding W
-
-    }  
-    if (83 in keysDown) { // Player holding S 
-    }  
-    if (65 in keysDown) { // Player holding A 
-
-//if(g_player1.direction != -1)
-//{
-//	g_player1.direction = -1;
-//}
-//	g_player1.state = "walking";
-    }  
-    if(68 in  keysDown) { // Player holding D
-//if(g_player1.direction != 1)
-//{
-//	g_player1.direction = 1;
-//}
-//	g_player1.state = "walking";
-    }  
-
-};
-
-
-    // Handle keyboard controls  
-    var keysDown = {};  
-    addEventListener("keydown", function (e) {  
-         keysDown[e.keyCode] = true;  
-    }, false);  
-    addEventListener("keyup", function (e) {  
-         delete keysDown[e.keyCode];  
-    }, false);  
-
-function cased(o,a,b)
-{
-	if(o.counter >= a && o.counter <= b)
-	{
-		return o.counter;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-function frameplay(o,p,acx,acy,myX,myY)
-{
-o.itr_switch = false;
-o.cln_switch = false;
-o.bdy_switch = false;
-		o.pic = document.getElementById(p);
-		o.myX = myX;
-		o.myY = myY;
-		o.dvy += acy;
-
-if(o.dvy < 0 || o.ag == "a")
-{
-		o.dvx += o.direction * acx;
-}
-else
-{
-
-	if(o.dvx > o.direction * acx)
-	{
-		if(o.dvx - o.vx <= o.direction * acx)
-		{
-			o.vx = 0;
-			o.dvx = o.direction * acx;
-		}
-		else
-		{
-			o.dvx -= o.vx;
-			o.vx += gx;
-		}
-	}
-	else if(o.dvx < o.direction * acx)
-	{
-		if(o.dvx + o.vx >= o.direction * acx)
-		{
-			o.vx = 0;
-			o.dvx = o.direction * acx;
-		}
-		else
-		{
-			o.dvx += o.vx;
-			o.vx += gx;
-		}
-	}
-	else
-	{
-			o.vx = 0;
-	}
-}
-o.centerX += o.dvx;
-o.centerY += o.dvy;
-if(o.ag == "a" && o.status == "character")
-{
-	o.centerY += o.vy;
-	o.vy += gy;
-}
-}
-
-function nextjstate(o,s,f1,f2)
-{
-if(o.counter >= f1)
-{
-	o.state = s;
-	o.counter = f2 - 1;
-}
-}
-
-function cln(o,x,y,w,h)
-{
-o.cln_switch = true;
-
-	if(o.status == "character")
-	{
-if(o.direction == "1")
-{
-	var tx = o.centerX + x;
-}
-else
-{
-	var tx = o.centerX - x;
-}
-	var ty = o.centerY + y;
-o.cx = tx - w/2;
-o.cy = ty - h/2;
-o.cw = w;
-o.ch = h;
-
-var maxl = o.tmidpointX - 400 + 5;
-var maxr = o.tmidpointX + 400 - 5;
-//定义两人最多有多宽！
-
-if(o.centerX < gamespace)
-{
-	o.centerX = gamespace;
-}
-else
-{
-	if(o.centerX < maxl)
-	{
-	o.centerX = maxl;
-	}
-}
-if(o.centerX > gamebg.bgwidth - gamespace)
-{
-	o.centerX = gamebg.bgwidth - gamespace;
-}
-else
-{
-	if(o.centerX > maxr)
-	{
-	o.centerX = maxr;
-	}
-}
-
-for (var i=0; i<object.length; i++)
-{
-	if (object[i] != undefined && object[i].cx != undefined && object[i].cy != undefined && object[i].cw != undefined && object[i].ch != undefined && object[i].identity != o.identity)
-	{
-		if (detection(o.cx, o.cy, o.cx + o.cw, o.cy + o.ch, object[i].cx, object[i].cy, object[i].cx + object[i].cw, object[i].cy + object[i].ch))
-		{
-			if(o.direction == "1")
-			{
-						if(o.centerX > object[i].centerX)
-						{
-							o.centerX = object[i].centerX + object[i].cw/2 + o.cw/2;
-						}
-						else
-						{
-							o.centerX = object[i].centerX - object[i].cw/2 - o.cw/2;
-						}
-//							o.centerX += object[i].dvx/2;
-						if(o.centerX >= maxl || o.centerX >= gamespace)
-						{
-							object[i].centerX += o.dvx/2;
-						}
-			}
-			else
-			{
-						if(o.centerX < object[i].centerX)
-						{
-							o.centerX = object[i].centerX - object[i].cw/2 - o.cw/2;
-						}
-						else
-						{
-							o.centerX = object[i].centerX + object[i].cw/2 + o.cw/2;
-						}
-						if(o.centerX <= maxr || o.centerX <= gamebg.bgwidth - gamespace)
-						{
-							object[i].centerX += o.dvx/2;
-						}
-			}
-if(o.centerX < gamespace)
-{
-	o.centerX = gamespace;
-}
-else
-{
-	if(o.centerX < maxl)
-	{
-	o.centerX = maxl;
-	}
-}
-if(o.centerX > gamebg.bgwidth.width - gamespace)
-{
-	o.centerX = gamebg.bgwidth - gamespace;
-}
-else
-{
-	if(o.centerX > maxr)
-	{
-	o.centerX = maxr;
-	}
-}
-		}
-	}	
-}
-
-	}
-
-if(o.direction == "1")
-{
-	var tx = o.centerX + x;
-}
-else
-{
-	var tx = o.centerX - x;
-}
-	var ty = o.centerY + y;
-o.cx = tx - w/2;
-o.cy = ty - h/2;
-o.cw = w;
-o.ch = h;
-}
-
-function bdy(o,x,y,w,h)
-{
-o.bdy_switch = true;
-if(o.direction == "1")
-{
-	o.bx = o.centerX - o.myX + x;
-}
-else
-{
-	o.bx = o.centerX + o.myX - x - w;
-}
-	o.bw = w;
-	o.by = o.centerY - o.myY + y;
-	o.bh = h;
-}
-
-var attackdelay = 10;
-function itr(o,x,y,w,h,a,acx,acy,fall,injury)//this，x，y，w，h，第几帧，攻击间隔，横向击飞，纵向击飞，击飞值，伤害
-{
-o.itr_switch = true;
-if(o.direction == "1")
-{
-	o.ix = o.centerX - o.myX + x;
-}
-else
-{
-	o.ix = o.centerX + o.myX - x - w;
-}
-	o.iw = w;
-	o.iy = o.centerY - o.myY + y;
-	o.ih = h;
-
-
-
-for (var i=0; i<object.length; i++)
-{
-	if (object[i] != undefined && object[i].bx != undefined && object[i].by != undefined && object[i].bw != undefined && object[i].bh != undefined && object[i].identity != o.identity && o.attacking && object[i].bdy_switch && o.itr_switch)//this.status // 
-	{
-		if (detection(o.ix, o.iy, o.ix + o.iw, o.iy + o.ih, object[i].bx, object[i].by, object[i].bx + object[i].bw, object[i].by + object[i].bh))
-		{
-		o.attacking = false;
-		o.arest = a;
-		o.attackcounter = 0;
-		o.pre_state = o.state;
-
-if(o.ix >= object[i].bx)
-{
-	this.sx = o.ix;
-	o.sx = this.sx;
-}
-else
-{
-	this.sx = object[i].bx;
-	o.sx = this.sx;
-}
-
-if(o.ix + o.iw <= object[i].bx + object[i].bw)
-{
-	this.sw = o.ix + o.iw - this.sx;
-	o.sw = this.sw;
-}
-else
-{
-	this.sw = object[i].bx + object[i].bw - this.sx;
-	o.sw = this.sw;
-}
-
-if(o.iy >= object[i].by)
-{
-	this.sy = o.iy;
-	o.sy = this.sy;
-}
-else
-{
-	this.sy = object[i].by;
-	o.sy = this.sy;
-}
-
-if(o.iy + o.ih <= object[i].by + object[i].bh)
-{
-	this.sh = o.iy + o.ih - this.sy;
-	o.sh = this.sh;
-}
-else
-{
-	this.sh = object[i].by + object[i].bh - this.sy;
-	o.sh = this.sh;
-}
-this.sparkx = this.sx + this.sw/2;
-this.sparky = this.sy + this.sh/2;
-
-		object2.push(new adelay(this,o,object[i],acx,acy,fall,injury));
-//this.hit();
-//o.exist = false;
-		}
-	}
-//	document.getElementById("demo2").innerHTML=g_player1.hp + ":" + g_player2.hp;
-	
-}
-//   o.myBodyX= o.w - o.x;
-//   o.myBodyY= o.h - o.y;
-}
-
-function adelay(o,o1,o2,acx,acy,fall,injury)
-{
-		this.g = o1;
-		this.t = o2;
-		this.cX = this.t.centerX;
-		this.cY = this.t.centerY;
-		this.fall = fall;
-		this.injury = injury;
-		this.dvx = this.g.direction * acx;
-		this.dvy = acy;
-		this.counteradelay = 0;
-this.sx = o.sparkx;
-this.sy = o.sparky;
-}
-
-adelay.prototype.render = function()
-{
-	if(this.counteradelay >= attackdelay)
-	{
-		this.t.dvx += this.dvx;
-		this.t.dvy += this.dvy;
-		mainloop = true;
-	if(this.t.centerX <= gamespace || this.t.centerX >= gamebg.bgwidth - gamespace)
-	{
-		this.g.dvx -= this.dvx;
-	}
-		return false;
-	}
-	else
-	{
-		this.t.vx = 0;
-		this.t.vy = 0;
-		this.t.dvx = 0;
-		this.t.dvy = 0;
-		this.t.centerX = this.cX;
-		this.t.centerY = this.cY;
-		if(this.counteradelay == 1)
-		{
-
-		this.t.fall += this.fall;
-		this.t.vf = 0;
-		this.t.hp -= this.injury;
-		
-if(this.t.fall >= 0 && this.t.fall < 25)
-{
-		this.t.state = "injured1";
-}
-else if(this.t.fall >= 25 && this.t.fall < 50)
-{
-		this.t.state = "injured2";
-}
-else if(this.t.fall >= 50 && this.t.fall < 70)
-{
-		this.t.state = "faint";
-}
-else if(this.t.fall >= 70)
-{
-		this.t.state = "fallingf";
-}
-else
-{
-}
-
-		if(this.dvy == 0 && this.t.fall >= 70)
-		{
-			this.dvy = -1;
-		}
-		else if(this.t.fall <= 70 && this.t.hp <= 0)
-		{
-			this.t.fall = 70;
-			this.t.state = "fallingf";
-			if(this.dvy == 0)
-			{
-			this.dvy = -1;
-			}
-		}
-		
-		if(this.t.fall >= 70)
-		{
-		object2.push(new effect(this.g,this.sx,this.sy,0,0,1,"spark2"));
-		}
-		else
-		{
-		object2.push(new effect(this.g,this.sx,this.sy,0,0,1,"spark1"));
-		}
-
-		this.t.counter = 0;
-		this.g.hits += 1;
-		mainloop = false;
-
-		ctx.clearRect(0,0,c.width,c.height);
-			for (var i1=0; i1<object.length; i1++)
-			{
-				if (object[i1] != undefined)
-				{
-					switch(this.t.state)
-					{
-						case "injured1":
-							this.t.injured1();
-							break;
-						case "injured2":
-							this.t.injured2();
-							break;
-						case "faint":
-							this.t.faint();
-							break;
-						case "fallingf":
-							this.t.fallingf();
-							break;
-					}
-				drawpic(object[i1],ctx);
-				}
-			}
-		}
-		this.counteradelay += 1;
-		return true;
-	}
-}
-
-
-//		this.dvx = this.dvxa;
-//		this.dvy += this.dvya;
-//		this.hp -= this.hpa;
-//		this.counter = this.countera;
-//		this.state = this.statea;
-//		this.delay = false;
-//		this.delays = 0;
-
-
-
-//function mybdy(id,r)
-//{
-//id.bx = id.centerX - r;
-//id.bw = id.centerX + r;
-//id.by = id.centerY - r;
-//id.bh = id.centerY + r;
-//}
-//
-//function myitr(id,r)
-//{
-//id.ix = id.centerX - r;
-//id.iw = id.centerX + r;
-//id.iy = id.centerY - r;
-//id.ih = id.centerY + r;
-//}
-
-
-
-
-//function hpdetection(o)
-//{
-//if(o.hp <= 0)
-//{
-//o.death();
-//o.exist = false;
-//}
-//}
-
-
-
-function sound(o,f,s)
-{
-if(o.counter == f)
-{
-objectif.push(new playsound(document.getElementById(s)));
-}
-}
-
-
-
-function playsound(p) 
-{
-
-	this.counterA = 0;
-	this.audio = document.createElement("audio");
-	this.audio.src = p.src;
-	this.counterB = p.duration;
-	this.audio.autoplay = true;
-    c.appendChild(this.audio);
-
-} 
-playsound.prototype.render = function()
-{
-
-	if (this.audio.ended || this.counterA >= this.counterB + 10)
-	{
-	c.removeChild(this.audio);
-	return false;
-	}
-	else
-	{
-	this.counterA += 1 / GameFPS;
-	return true;
-	}
-
-return false;
-}		
-
-
-
-
-
-function nextstate(o,s,f1,f2)
-{
-if(o.counter >= f1)
-{
-	o.state = s;
-	o.counter = f2 - 1;
-}
-}
-
-function disappearance(o,f)
-{
-if(o.counter >= f + 1)
-{
-	o.exist = false;
-}
-}
-
-var gy = 1;
-var gx = 0.5;
-var gf = 0.01;
-function gravitation()
-{
-
-}
-
-
-
-
-//function itemLoaded(item)
-//{
-//g_player1 = new davis(this,250,250,0,0,0,1);
-//object.push(g_player1);
-//
-//}
-var cload=document.getElementById("cvsload");
-var ctxload=cload.getContext("2d");
-
-//var c3=document.getElementById("cvs3");
-//var ctx3=c3.getContext("2d");
-
-function itemLoaded(name,r,c,l,sw,sh)
-{
-var picwidth = (name.width - l*r)/r;
-var picheight = (name.height - l*c)/c;
-cload.width = picwidth * sw/100;
-cload.height = picheight * sh/100;
-var i = 0;
-for(var y=0; y<c; y++)
-{
-for(var x=0; x<r; x++)
-{
-var h = document.getElementById("hidden");
-var image = document.createElement("img");
-image.id = name.id + "_" + i;
-image.style.position = "absolute";
-ctxload.drawImage(name,x*(picwidth + l),y*(picheight + l),picwidth,picheight,0,0,picwidth * sw/100,picheight * sh/100);
-image.src = cload.toDataURL("image/png");  
-ctxload.clearRect(0,0,cload.width,cload.height);
-h.appendChild(image);
-i += 1;
-}
-}
-h.removeChild(name);
-}
-
-var g_player1;
-var g_player2;
-function createdavis()
-{
-
-g_p1_hpgage = new ifobj(this,p1hpgage.x,p1hpgage.y,0,0,1,"p1_hp")
-objectif.push(g_p1_hpgage);
-
-g_p2_hpgage = new ifobj(this,p2hpgage.x,p2hpgage.y,0,0,1,"p2_hp")
-objectif.push(g_p2_hpgage);
-//载入血条
-
-gamebg = new bg(this,0,888,0,0,1,"castle1412")
-objectbg.push(gamebg);//载入场景；
-
-g_player1 = new davis(player1,100,300,0,0,1,"jumping");
-object.push(g_player1);//载入玩家1；
-g_player1.direction = 1;
-
-g_player2 = new davis(player2,200,300,0,0,1,"jumping");
-object.push(g_player2);//载入玩家2；
-g_player2.direction = -1;
-
-g_p1_hits = new ifobj(g_player1,100,200,0,0,1,"hit_counter")
-objectif.push(g_p1_hits);//载入comob计数；
-
-g_p2_hits = new ifobj(g_player2,700,200,0,0,1,"hit_counter")
-objectif.push(g_p2_hits);//载入comob计数；
-
-document.body.removeChild(document.getElementById("cvsload"));
-}
-
-
-
-
-
-function detection(ax1,ay1,ax2,ay2, bx1,by1,bx2,by2)
-{
-if ( ax1 < bx1 )
-{
-if ( ax2 < bx1 )
-return false;
-else
-{
-if (ay1 < by1)
-{
-if (ay2 < by1)
-return false;
-else
-return true;
-}
-else
-{
-if ( ay1 > by2 )
-return false;
-else
-return true;
-}
-}
-}
-else
-{
-if (ax1 > bx2)
-return false;
-else
-{
-if ( ay1 < by1 )
-{
-if (ay2 < by1)
- return false;
-else
-return true;
-}
-else
-{
-if (ay1 > by2)
-return false;
-else
-return true;
-
-}
-}
-}
-}
-
-
-
-
-function renderingLoop()
-{
-if(!visualswitch)
-{
-	if(!visualobject)
-	{
-for (var v=0; v<object.length; v++)
-{
-	if (object[v] != undefined)
-	{
-		if(object[v].status == "character")
-		{
-		visualobject = object[v];
-		}
-	}
-}
-	}
-	else
-	{
-		if(visualobject.target != "null" && !visualswitch)
-		{
-		visualswitch = true;
-		}
-		var cx = visualobject.tmidpointX;
-		var cy = visualobject.tmidpointY;
-		visualX = (cx - cif.width/2);
-		visualY = (cy - cif.height/2);
-		if(visualX < 0)
-		{
-		visualX = 0;
-		}
-		else if(visualX > gamebg.bgwidth - 800)
-		{
-		visualX = gamebg.bgwidth - 800;
-		}
-		if(visualY > 0)
-		{
-		visualY = 0;
-		}
-		document.getElementById("demo12").innerHTML="p1与p2之间中点：" + "(" + cx + "," + cy + ")";
-	}
-}
-else
-{
-//rangeXY = Math.sqrt(Math.pow((visualobject.centerX - visualobject.target.centerX),2) + Math.pow((visualobject.centerY - visualobject.target.centerY),2))
-//if(rangeXY > 800)
-//{
-//	rangeXY = 800;
-//}
-//focusrate = 1 - rangeXY * 0.1/800;
-var cx = visualobject.tmidpointX;
-var cy = visualobject.tmidpointY;
-//var cxleft = 450;
-//var cxright = 1740 - 450;
-//if(cx >= cxright)
-//{
-//var cx1 = visualobject.tmidpointX - cxright - 450;
-//	cx = cxright + 50 + cx1*(50/450);
-//}
-//if(cx <= cxleft)
-//{
-//var cx2 = visualobject.tmidpointX - cxleft - 450;
-//	cx = cxleft + 50 + cx2*(50/450);
-//}
-//if(cx >= gamebg.bgwidth - 5 - 450)
-//{
-//var ppp = gamebg.bgwidth - 5 - cx;
-//var lll = 795 - ppp;
-//}
-//else
-//{
-//var lll = 400;
-//}
-
-visualX = (cx - cif.width/2);
-visualY = (cy - cif.height/2);
-if(visualX < 0)
-{
-visualX = 0;
-}
-else if(visualX > gamebg.bgwidth - 800)
-{
-visualX = gamebg.bgwidth - 800;
-}
-if(visualY > 0)
-{
-visualY = 0;
-}
-//if(visualY > 0)
-//{
-//visualY = 0;
-//}
-document.getElementById("demo12").innerHTML="p1与p2之间中点：" + "(" + cx + "," + cy + ")";// + "距离：" + rangeXY + "缩放倍率：" + focusrate + "/ppp/" + ppp;
-}
-
-ctxbg.clearRect(0,0,cbg.width,cbg.height);
-	for (var ibg=0; ibg<objectbg.length; ibg++)
-	{
-//判断object[ibg]是否存在，是就绘制，否就删除
-if (objectbg[ibg] != undefined)
-{
-	if(!objectbg[ibg].render())
-	{
-	delete objectbg[ibg];
-	}
-}
-	}
-
-		if(mainloop)
-		{
-ctx.clearRect(0,0,c.width,c.height);
-	for (var i1=0; i1<object.length; i1++)
-	{
-//判断object[i1]是否存在，是就绘制，否就删除
-if (object[i1] != undefined)
-{
-	if(!object[i1].render())
-	{
-	delete object[i1];
-	}
-}
-
-	}
-		}
-
-ctx2.clearRect(0,0,c2.width,c2.height);
-for (var i2=0; i2<object2.length; i2++)
-{
-	//判断object2[i2]是否存在，是就绘制，否就删除
-	if (object2[i2] != undefined)
-	{
-	if(!object2[i2].render())
-	{
-	delete object2[i2];
-	}
-	}
-}
-
-ctxif.clearRect(0,0,cif.width,cif.height);
-for (var iif=0; iif<objectif.length; iif++)
-{
-	//判断objectif[iif]是否存在，是就绘制，否就删除
-	if (objectif[iif] != undefined)
-	{
-	if(!objectif[iif].render())
-	{
-	delete objectif[iif];
-	}
-	}
-}	
-
-
-stats.innerHTML = "object数量：" + object.length;
-document.getElementById("demo10").innerHTML= "object2数量：" + object2.length;
-document.getElementById("demo11").innerHTML= "objectbg数量：" + objectbg.length;
-document.getElementById("demo14").innerHTML= "objectif数量：" + objectif.length;
-
-//mainloop
-
-//holdkey();
-computeFPS();
-QueueNewFrame();
-}
-
-
-
-
-
-//setInterval(update, 1);
-QueueNewFrame();
+    //setInterval(update, 1);
+    QueueNewFrame();
 </script>
 <script src="js/effect.js"></script>
 <script src="js/davis.js"></script>
