@@ -47,11 +47,11 @@
         </table>
     </div>
 
-    <div id="framediv" style="position: absolute;background:#ffff00;width:800px;height:600px;top: 0px;left:50%;margin-left:-400px">
-        <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
-        <canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-        <canvas id="cvs2" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-        <canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;"></canvas>
+    <div id="framediv" style="position: absolute;width:800px;height:600px;top: 0px;left:50%">
+        <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;left:-400px;"></canvas>
+        <canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left:-400px;"></canvas>
+        <canvas id="cvs2" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left:-400px;"></canvas>
+        <canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;left:-400px;"></canvas>
     </div>
 
     <div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
@@ -86,11 +86,6 @@
     </div>
 
     <!-- onmousemove="cnvs_getCoordinates(event)"-->
-
-    <script src="js/effect.js"></script>
-    <script src="js/davis.js"></script>
-    <script src="js/bg.js"></script>
-    <script src="js/interface.js"></script>
 
     <script type="text/javascript">
         function p1hpmax() {
@@ -1293,6 +1288,11 @@
         //setInterval(update, 1);
         QueueNewFrame();
     </script>
+
+    <script src="js/effect.js"></script>
+    <script src="js/davis.js"></script>
+    <script src="js/bg.js"></script>
+    <script src="js/interface.js"></script>
 
     <div id="hidden" style="visibility:hidden;">
         <img id="davis0"
