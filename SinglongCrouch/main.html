@@ -1,9 +1,22 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
+    <meta name="viewport" content="width=980px,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title id="tt">超屌格斗游戏！</title>
+    <style>
+        <!--
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        -->
+    </style>
 </head>
 
 <body onload="createdavis()">
@@ -30,7 +43,7 @@
         <div>跳跃中+轻拳=踢！下蹲中+轻拳=超级无敌庐山升龙霸！</div>
         <div></div>
     </div>
-    <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:black;"></canvas>
+    <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;"></canvas>
 
 
     <div id="dragdiv" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
@@ -48,7 +61,7 @@
         </table>
     </div>
 
-    <div style="width:50%;margin:0px auto;border:1px solid gray;">
+    <div style="width:800px;margin:0px auto;border:1px solid gray;">
         <div>SinglongCrouch</div>
         <div>
             <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
