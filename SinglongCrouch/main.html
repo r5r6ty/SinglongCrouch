@@ -59,8 +59,8 @@
         <canvas id="joystickD" width=256 height=256 style="border:0px solid #c3c3c3;"></canvas>
     </div>
 
-    <div id="joystick_button" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;bottom:0">
-        <div>joystick_button</div>
+    <div id="joystick_buttonA" style="position:fixed;right:0;bottom:0">
+        <canvas id="joystickBA" width=128 height=128 style="border:0px solid #c3c3c3;"></canvas>
     </div>
 
     <!-- onmousemove="cnvs_getCoordinates(event)"-->
@@ -108,6 +108,8 @@
         var ctxif = cif.getContext("2d");
         var jsD = document.getElementById("joystickD");
         var ctxjsD = jsD.getContext("2d");
+        var jsBA = document.getElementById("joystickBA");
+        var ctxjsBA = jsBA.getContext("2d");
         var object = new Array();
         var object2 = new Array();
         var objectif = new Array();
@@ -445,9 +447,21 @@
                 startX = x;
                 startY = y;
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 128);
-                {
-                    DrawJoystickD(ctxjsD, x, y);
+                var jdx = document.getElementById("joystick_directiion").offsetLeft;
+                var jdy = ocument.getElementById("joystick_directiion").offsetTop;
+                cx = x - jdx;
+                cy = y - jdy;
+                if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
+                    DrawJoystickD(ctxjsD, cx, cy);
+                }
+
+                var jax = document.getElementById("joystick_buttonA").offsetLeft;
+                var jay = document.getElementById("joystick_buttonA").offsetTop;
+                cx_a = x - jax;
+                cy_a = y - jay;
+
+                if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
+                    DrawJoystickBA(jsBA);
                 }
 
             } catch (e) {
@@ -460,12 +474,11 @@
             try {
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
                 var touch = evt.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX) - document.getElementById("joystick_directiion").offsetLeft; //页面触点X坐标
-                var y = Number(touch.pageY) - document.getElementById("joystick_directiion").offsetTop; //页面触点Y坐标
+                var x = Number(touch.pageX) //页面触点X坐标
+                var y = Number(touch.pageY) //页面触点Y坐标
 
 
                 document.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
-                document.getElementById("TouchDeviceCoordinates").innerHTML = jsD.clientLeft + ", " + jsD.clientTop + ", " + jsD.offsetLeft + ", " + jsD.offsetTop;
                 //判断滑动方向
 
                 //if (y - startY > 100) {
@@ -473,17 +486,21 @@
                 //} else if (y - startY < -100) {
                 //    swipeUp();
                 //}
+                
+                var jdx = document.getElementById("joystick_directiion").offsetLeft;
+                var jdy = ocument.getElementById("joystick_directiion").offsetTop;
+                cx = x - jdx;
+                cy = y - jdy;
+                if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 128);
-                {
-                    DrawJoystickD(ctxjsD, x, y);
+                    DrawJoystickD(ctxjsD, cx, y);
 
-                    if (x < jsD.width / 2) {
+                    if (cx < jsD.width / 2) {
                         keysDown[65] = true;
                     } else {
                         delete keysDown[65];
                     }
-                    if (x > jsD.width / 2) {
+                    if (cx > jsD.width / 2) {
                         keysDown[68] = true;
                     } else {
                         delete keysDown[68];
@@ -499,7 +516,27 @@
                     } else {
                         delete keysDown[83];
                     }
+                } else {
+                    delete keysDown[65];
+                    delete keysDown[68];
+                    delete keysDown[87];
+                    delete keysDown[83];
                 }
+
+                var jax = document.getElementById("joystick_buttonA").offsetLeft;
+                var jay = document.getElementById("joystick_buttonA").offsetTop;
+                cx_a = x - jax;
+                cy_a = y - jay;
+
+                if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
+                    DrawJoystickBA(jsBA);
+
+                    keysDown[74] = true;
+                } else {
+                    delete keysDown[74];
+                }
+
+
             } catch (e) {
                 alert('touchMoveFunc：' + e.message);
             }
@@ -516,6 +553,7 @@
                 delete keysDown[68];
                 delete keysDown[87];
                 delete keysDown[83];
+                delete keysDown[74];
 
             } catch (e) {
                 alert('touchEndFunc：' + e.message);
@@ -555,6 +593,17 @@
             ctx.fillStyle = "black";
             ctx.arc(x, y, ctx.canvas.height / 4, 0, 2 * Math.PI, true);
             ctx.fill();
+        }
+
+        function DrawJoystickBA(ctx) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.arc(ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.height / 2, 0, 2 * Math.PI, true);
+            ctx.stroke();
+
+            ctx.font = ctx.canvas.height / 4 + "px Georgia";
+            ctx.fillText("A", ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.width / 2, ctx.canvas.height / 2);
         }
 
         function cased(o, a, b) {
