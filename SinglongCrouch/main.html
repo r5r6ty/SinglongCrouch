@@ -504,13 +504,13 @@
                     } else {
                         delete keysDown[65];
                     }
-                    if ((kakudo <= -45 && kakudo >= 0) || (kakudo >= 0 && kakudo <= 45)) {// right
+                    if ((kakudo <= 45 && kakudo >= 0) || (kakudo >= -45 && kakudo <= 0)) {// right
                         keysDown[68] = true;
                     } else {
                         delete keysDown[68];
                     }
 
-                    if (kakudo <= 45 && kakudo >= 135) {// up
+                    if (kakudo <= 135 && kakudo >= 45) {// up
                         keysDown[87] = true;
                     } else {
                         delete keysDown[87];
