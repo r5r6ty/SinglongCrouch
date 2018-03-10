@@ -135,6 +135,8 @@
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
+        document.getElementById("TouchDeviceCoordinates").innerHTML = "wa" + document.getElementById("joystick_directiion").offsetTop;
+
 
         var move = function (e) {
             e.preventDefault && e.preventDefault();
@@ -437,8 +439,8 @@
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 
                 var touch = evt.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX) - document.getElementById("joystick_directiion").clientLeft; //页面触点X坐标
-                var y = Number(touch.pageY) - document.getElementById("joystick_directiion").clientTop; //页面触点Y坐标
+                var x = Number(touch.pageX) - document.getElementById("joystick_directiion").offsetLeft; //页面触点X坐标
+                var y = Number(touch.pageY) - document.getElementById("joystick_directiion").offsetTop; //页面触点Y坐标
                 //记录触点初始位置
                 startX = x;
                 startY = y;
@@ -458,8 +460,8 @@
             try {
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
                 var touch = evt.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX) - document.getElementById("joystick_directiion").clientLeft; //页面触点X坐标
-                var y = Number(touch.pageY) - document.getElementById("joystick_directiion").clientTop; //页面触点Y坐标
+                var x = Number(touch.pageX) - document.getElementById("joystick_directiion").offsetLeft; //页面触点X坐标
+                var y = Number(touch.pageY) - document.getElementById("joystick_directiion").offsetTop; //页面触点Y坐标
 
 
                 document.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
