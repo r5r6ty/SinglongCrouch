@@ -499,28 +499,27 @@
 
                     var atan2 = Math.atan2(cy - jsD.height / 2, cx - jsD.width / 2);
                     var kakudo = 180 * atan2 / Math.PI
-                    if ((kakudo <= 180 && kakudo >= 135) || (kakudo >= -180 && kakudo <= -135)) {// left
+                    if ((kakudo <= 180 && kakudo >= 120) || (kakudo >= -180 && kakudo <= -120)) {// left
                         keysDown[65] = true;
                     } else {
                         delete keysDown[65];
                     }
-                    if ((kakudo <= 45 && kakudo >= 0) || (kakudo >= -45 && kakudo <= 0)) {// right
+                    if ((kakudo <= 60 && kakudo >= 0) || (kakudo >= -60 && kakudo <= 0)) {// right
                         keysDown[68] = true;
                     } else {
                         delete keysDown[68];
                     }
 
-                    if (kakudo <= 135 && kakudo >= 45) {// up
+                    if (kakudo <= -30 && kakudo >= -150) {// up
                         keysDown[87] = true;
                     } else {
                         delete keysDown[87];
                     }
-                    if (kakudo <= -45 && kakudo >= -135) {// down
+                    if (kakudo <= 150 && kakudo >= 30) {// down
                         keysDown[83] = true;
                     } else {
                         delete keysDown[83];
                     }
-                    document.getElementById("TouchDeviceCoordinates").innerHTML = atan2 + " , " + kakudo + "do!";
                 } else {
                     delete keysDown[65];
                     delete keysDown[68];
