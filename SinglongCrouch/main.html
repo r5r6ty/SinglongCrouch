@@ -461,7 +461,7 @@
                 cy_a = y - jay;
 
                 if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
-                    DrawJoystickBA(jsBA);
+                    DrawJoystickBA(ctxjsBA);
                 }
 
             } catch (e) {
@@ -577,6 +577,7 @@
 
                 bindEvent(); //绑定事件
                 DrawJoystickD(ctxjsD, jsD.width / 2, jsD.height / 2);
+                DrawJoystickBA(ctxjsBA);
             } catch (e) {
                 document.getElementById("version").innerHTML = "不支持TouchEvent事件！" + e.message;
             }
