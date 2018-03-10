@@ -137,8 +137,6 @@
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
-        document.getElementById("TouchDeviceCoordinates").innerHTML = "wa" + document.getElementById("joystick_directiion").offsetTop;
-
 
         var move = function (e) {
             e.preventDefault && e.preventDefault();
@@ -522,7 +520,7 @@
                     } else {
                         delete keysDown[83];
                     }
-                    document.getElementById("version").innerHTML = atan2 + " , " + kakudo + "do!";
+                    document.getElementById("TouchDeviceCoordinates").innerHTML = atan2 + " , " + kakudo + "do!";
                 } else {
                     delete keysDown[65];
                     delete keysDown[68];
