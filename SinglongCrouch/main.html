@@ -61,7 +61,7 @@
         </table>
     </div>
 
-    <div style="width:800px;margin:0px auto;border:1px solid gray;">
+    <div style="position:absolute;left:50%">
         <div>SinglongCrouch</div>
         <div>
             <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
@@ -529,7 +529,7 @@
                 startX = x;
                 startY = y;
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)));
+                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 0);
                 {
                     DrawJoystickD(ctxjsD, x, y);
                 }
@@ -557,7 +557,7 @@
                 //    swipeUp();
                 //}
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)));
+                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 0);
                 {
                     DrawJoystickD(ctxjsD, x, y);
 
