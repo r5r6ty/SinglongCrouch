@@ -60,7 +60,7 @@
     </div>
 
     <div id="joystick_buttonA" style="position:fixed;right:0;bottom:0">
-        <canvas id="joystickBA" width=128 height=128 style="border:0px solid #c3c3c3;"></canvas>
+        <canvas id="joystickBA" width=256 height=256 style="border:0px solid #c3c3c3;"></canvas>
     </div>
 
     <!-- onmousemove="cnvs_getCoordinates(event)"-->
@@ -493,7 +493,7 @@
                 cy = y - jdy;
                 if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
 
-                    DrawJoystickD(ctxjsD, cx, y);
+                    DrawJoystickD(ctxjsD, cx, cy);
 
                     if (cx < jsD.width / 2) {
                         keysDown[65] = true;
@@ -506,12 +506,12 @@
                         delete keysDown[68];
                     }
 
-                    if (y < jsD.height / 2) {
+                    if (cy < jsD.height / 2) {
                         keysDown[87] = true;
                     } else {
                         delete keysDown[87];
                     }
-                    if (y > jsD.height / 2) {
+                    if (cy > jsD.height / 2) {
                         keysDown[83] = true;
                     } else {
                         delete keysDown[83];
@@ -603,7 +603,9 @@
             ctx.arc(ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.height / 2, 0, 2 * Math.PI, true);
             ctx.stroke();
 
-            ctx.font = ctx.canvas.height / 4 + "px Georgia";
+            ctx.font = ctx.canvas.height / 2 + "px Georgia";    
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
             ctx.fillText("A", ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.width / 2, ctx.canvas.height / 2);
         }
 
