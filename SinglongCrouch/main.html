@@ -437,35 +437,38 @@
         function touchSatrtFunc(evt) {
             try {
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+                for (var i = 0; i < evt.touches.length; i++) {
+                    var touch = evt.touches[0]; //获取第一个触点
+                    var x = Number(touch.pageX); //页面触点X坐标
+                    var y = Number(touch.pageY); //页面触点Y坐标
+                    //记录触点初始位置
+                    startX = x;
+                    startY = y;
 
-                var touch = evt.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX); //页面触点X坐标
-                var y = Number(touch.pageY); //页面触点Y坐标
-                //记录触点初始位置
-                startX = x;
-                startY = y;
+                    var jdx = document.getElementById("joystick_directiion").offsetLeft;
+                    var jdy = document.getElementById("joystick_directiion").offsetTop;
+                    var cx = x - jdx;
+                    var cy = y - jdy;
+                    if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
+                        DrawJoystickD(ctxjsD, cx, cy);
+                        continue;
+                    }
 
-                var jdx = document.getElementById("joystick_directiion").offsetLeft;
-                var jdy = document.getElementById("joystick_directiion").offsetTop;
-                var cx = x - jdx;
-                var cy = y - jdy;
-                if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
-                    DrawJoystickD(ctxjsD, cx, cy);
+                    var jax = document.getElementById("joystick_buttonA").offsetLeft;
+                    var jay = document.getElementById("joystick_buttonA").offsetTop;
+                    var cx_a = x - jax;
+                    var cy_a = y - jay;
+
+                    if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
+                        DrawJoystickBA(ctxjsBA);
+
+                        keysDown[74] = true;
+
+                        continue;
+                    } else {
+                        delete keysDown[74];
+                    }
                 }
-
-                var jax = document.getElementById("joystick_buttonA").offsetLeft;
-                var jay = document.getElementById("joystick_buttonA").offsetTop;
-                var cx_a = x - jax;
-                var cy_a = y - jay;
-
-                if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
-                    DrawJoystickBA(ctxjsBA);
-
-                    keysDown[74] = true;
-                } else {
-                    delete keysDown[74];
-                }
-
             } catch (e) {
                 alert('touchSatrtFunc：' + e.message);
             }
@@ -475,71 +478,74 @@
         function touchMoveFunc(evt) {
             try {
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
-                var touch = evt.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX) //页面触点X坐标
-                var y = Number(touch.pageY) //页面触点Y坐标
+                for (var i = 0; i < evt.touches.length; i++) {
+                    var touch = evt.touches[i]; //获取第一个触点
+
+                    var x = Number(touch.pageX) //页面触点X坐标
+                    var y = Number(touch.pageY) //页面触点Y坐标
 
 
-                document.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
-                //判断滑动方向
+                    document.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
+                    //判断滑动方向
 
-                //if (y - startY > 100) {
-                //    swipeDown();
-                //} else if (y - startY < -100) {
-                //    swipeUp();
-                //}
-                
-                var jdx = document.getElementById("joystick_directiion").offsetLeft;
-                var jdy = document.getElementById("joystick_directiion").offsetTop;
-                var cx = x - jdx;
-                var cy = y - jdy;
-                if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
+                    //if (y - startY > 100) {
+                    //    swipeDown();
+                    //} else if (y - startY < -100) {
+                    //    swipeUp();
+                    //}
 
-                    DrawJoystickD(ctxjsD, cx, cy);
+                    var jdx = document.getElementById("joystick_directiion").offsetLeft;
+                    var jdy = document.getElementById("joystick_directiion").offsetTop;
+                    var cx = x - jdx;
+                    var cy = y - jdy;
+                    if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
 
-                    var atan2 = Math.atan2(cy - jsD.height / 2, cx - jsD.width / 2);
-                    var kakudo = 180 * atan2 / Math.PI
-                    if ((kakudo <= 180 && kakudo >= 120) || (kakudo >= -180 && kakudo <= -120)) {// left
-                        keysDown[65] = true;
+                        DrawJoystickD(ctxjsD, cx, cy);
+
+                        var atan2 = Math.atan2(cy - jsD.height / 2, cx - jsD.width / 2);
+                        var kakudo = 180 * atan2 / Math.PI
+                        if ((kakudo <= 180 && kakudo >= 120) || (kakudo >= -180 && kakudo <= -120)) {// left
+                            keysDown[65] = true;
+                        } else {
+                            delete keysDown[65];
+                        }
+                        if ((kakudo <= 60 && kakudo >= 0) || (kakudo >= -60 && kakudo <= 0)) {// right
+                            keysDown[68] = true;
+                        } else {
+                            delete keysDown[68];
+                        }
+
+                        if (kakudo <= -30 && kakudo >= -150) {// up
+                            keysDown[87] = true;
+                        } else {
+                            delete keysDown[87];
+                        }
+                        if (kakudo <= 150 && kakudo >= 30) {// down
+                            keysDown[83] = true;
+                        } else {
+                            delete keysDown[83];
+                        }
+                        continue;
                     } else {
                         delete keysDown[65];
-                    }
-                    if ((kakudo <= 60 && kakudo >= 0) || (kakudo >= -60 && kakudo <= 0)) {// right
-                        keysDown[68] = true;
-                    } else {
                         delete keysDown[68];
-                    }
-
-                    if (kakudo <= -30 && kakudo >= -150) {// up
-                        keysDown[87] = true;
-                    } else {
                         delete keysDown[87];
-                    }
-                    if (kakudo <= 150 && kakudo >= 30) {// down
-                        keysDown[83] = true;
-                    } else {
                         delete keysDown[83];
                     }
-                } else {
-                    delete keysDown[65];
-                    delete keysDown[68];
-                    delete keysDown[87];
-                    delete keysDown[83];
+
+                    //var jax = document.getElementById("joystick_buttonA").offsetLeft;
+                    //var jay = document.getElementById("joystick_buttonA").offsetTop;
+                    //var cx_a = x - jax;
+                    //var cy_a = y - jay;
+
+                    //if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
+                    //    DrawJoystickBA(ctxjsBA);
+
+                    //    keysDown[74] = true;
+                    //} else {
+                    //    delete keysDown[74];
+                    //}
                 }
-
-                //var jax = document.getElementById("joystick_buttonA").offsetLeft;
-                //var jay = document.getElementById("joystick_buttonA").offsetTop;
-                //var cx_a = x - jax;
-                //var cy_a = y - jay;
-
-                //if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
-                //    DrawJoystickBA(ctxjsBA);
-
-                //    keysDown[74] = true;
-                //} else {
-                //    delete keysDown[74];
-                //}
-
 
             } catch (e) {
                 alert('touchMoveFunc：' + e.message);
