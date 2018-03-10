@@ -449,16 +449,16 @@
 
                 var jdx = document.getElementById("joystick_directiion").offsetLeft;
                 var jdy = document.getElementById("joystick_directiion").offsetTop;
-                cx = x - jdx;
-                cy = y - jdy;
+                var cx = x - jdx;
+                var cy = y - jdy;
                 if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
                     DrawJoystickD(ctxjsD, cx, cy);
                 }
 
                 var jax = document.getElementById("joystick_buttonA").offsetLeft;
                 var jay = document.getElementById("joystick_buttonA").offsetTop;
-                cx_a = x - jax;
-                cy_a = y - jay;
+                var cx_a = x - jax;
+                var cy_a = y - jay;
 
                 if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
                     DrawJoystickBA(ctxjsBA);
@@ -489,8 +489,8 @@
                 
                 var jdx = document.getElementById("joystick_directiion").offsetLeft;
                 var jdy = document.getElementById("joystick_directiion").offsetTop;
-                cx = x - jdx;
-                cy = y - jdy;
+                var cx = x - jdx;
+                var cy = y - jdy;
                 if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
 
                     DrawJoystickD(ctxjsD, cx, cy);
@@ -525,8 +525,8 @@
 
                 var jax = document.getElementById("joystick_buttonA").offsetLeft;
                 var jay = document.getElementById("joystick_buttonA").offsetTop;
-                cx_a = x - jax;
-                cy_a = y - jay;
+                var cx_a = x - jax;
+                var cy_a = y - jay;
 
                 if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
                     DrawJoystickBA(jsBA);
@@ -548,6 +548,7 @@
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 
                 DrawJoystickD(ctxjsD, jsD.width / 2, jsD.height / 2);
+                DrawJoystickBA(jsBA);
 
                 delete keysDown[65];
                 delete keysDown[68];
