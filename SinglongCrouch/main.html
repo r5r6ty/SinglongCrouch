@@ -499,23 +499,24 @@
 
                     DrawJoystickD(ctxjsD, cx, cy);
 
-                    if (cx < jsD.width / 2) {
+                    var kakudo = 180 * Math.atan2(cy, cx) / Math.PI
+                    if ((kakudo <= 180 && kakudo >= 135) || (kakudo >= -180 && kakudo <= -135)) {// left
                         keysDown[65] = true;
                     } else {
                         delete keysDown[65];
                     }
-                    if (cx > jsD.width / 2) {
+                    if ((kakudo <= -45 && kakudo >= 0) || (kakudo >= 0 && kakudo <= 45)) {// right
                         keysDown[68] = true;
                     } else {
                         delete keysDown[68];
                     }
 
-                    if (cy < jsD.height / 2) {
+                    if (kakudo <= 45 && kakudo >= 135) {// up
                         keysDown[87] = true;
                     } else {
                         delete keysDown[87];
                     }
-                    if (cy > jsD.height / 2) {
+                    if (kakudo <= -45 && kakudo >= -135) {// down
                         keysDown[83] = true;
                     } else {
                         delete keysDown[83];
