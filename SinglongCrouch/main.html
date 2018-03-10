@@ -529,7 +529,7 @@
                 var cy_a = y - jay;
 
                 if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
-                    DrawJoystickBA(jsBA);
+                    DrawJoystickBA(ctxjsBA);
 
                     keysDown[74] = true;
                 } else {
@@ -548,7 +548,7 @@
                 //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 
                 DrawJoystickD(ctxjsD, jsD.width / 2, jsD.height / 2);
-                DrawJoystickBA(jsBA);
+                DrawJoystickBA(ctxjsBA);
 
                 delete keysDown[65];
                 delete keysDown[68];
