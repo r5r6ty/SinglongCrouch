@@ -1,26 +1,12 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
-    <meta name="viewport" content="width=980px,initial-scale=1.0" />
-    <!--<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title id="tt">超屌格斗游戏！</title>
-    <style>
-        <!--
-        * {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        -->
-    </style>
 </head>
 
 <body onload="createdavis()">
-    <div style="background:#c3c3c3;position: absolute;width:280px;">
+    <div style="background:#c3c3c3;position: absolute;width:280px;right:0">
         <div id="demo"></div>
         <div id="demo10"></div>
         <div id="demo11"></div>
@@ -46,7 +32,7 @@
     <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;"></canvas>
 
 
-    <div id="dragdiv" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
+    <div id="dragdiv" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:50%">
         <div>TEST</div>
         <div></div>
         <table border="0">
@@ -61,37 +47,12 @@
         </table>
     </div>
 
-    <div style="text-align: center;">
-        <div>SinglongCrouch</div>
-        <div>
-            <canvas id="cvsbg" width="800" height="600" style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
-            <canvas id="cvs" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-            <canvas id="cvs2" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-            <canvas id="interface" width="800" height="600" style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;"></canvas>
-        </div>
+    <div id="framediv" style="position: absolute;left: 50%;margin-left: -400px;background:#ffff00;width:800px;height:600px;top: 0px">
+        <canvas id="cvsbg" width="800" height="600" style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
+        <canvas id="cvs" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
+        <canvas id="cvs2" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
+        <canvas id="interface" width="800" height="600" style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;"></canvas>
     </div>
-
-    <!--<div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
-        <div>TEST</div>
-        <div></div>
-        <table border="0">
-            <tr>
-                <td></td>
-                <td><button id="tiup" onClick="iup()">↑</button></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><button id="tileft" onClick="ileft()">←</button></td>
-                <td><button id="tia" onClick="ia()">A</button></td>
-                <td><button id="tiright" onClick="iright()">→</button></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button id="tidown" onClick="idown()">↓</button></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>-->
 
     <div id="joystick_directiion" style="position:fixed;left:0;bottom:0">
         <canvas id="joystickD" width=256 height=256 style="border:0px solid #c3c3c3;"></canvas>
@@ -110,54 +71,6 @@
         function p2hpmax() {
             g_player2.hp = g_player2.maxhp;
         }
-
-        //var iiup = true;
-        //function iup() {
-        //    if (iiup) {
-        //        keysDown[87] = true;
-        //        iiup = false;
-        //    }
-        //    else {
-        //        delete keysDown[87];
-        //        iiup = true;
-        //    }
-        //}
-
-        //var iidown = true;
-        //function idown() {
-        //    if (iidown) {
-        //        keysDown[83] = true;
-        //        iidown = false;
-        //    }
-        //    else {
-        //        delete keysDown[83];
-        //        iidown = true;
-        //    }
-        //}
-
-        //var iileft = true;
-        //function ileft() {
-        //    if (iileft) {
-        //        keysDown[65] = true;
-        //        iileft = false;
-        //    }
-        //    else {
-        //        delete keysDown[65];
-        //        iileft = true;
-        //    }
-        //}
-
-        //var iiright = true;
-        //function iright() {
-        //    if (iiright) {
-        //        keysDown[68] = true;
-        //        iiright = false;
-        //    }
-        //    else {
-        //        delete keysDown[68];
-        //        iiright = true;
-        //    }
-        //}
 
         //var iia = true;
         //function ia() {
@@ -621,6 +534,7 @@
                 document.getElementById("version").innerHTML = "支持TouchEvent事件！";
 
                 bindEvent(); //绑定事件
+                DrawJoystickD(ctxjsD, jsD.width / 2, jsD.height / 2);
             } catch (e) {
                 document.getElementById("version").innerHTML = "不支持TouchEvent事件！" + e.message;
             }
