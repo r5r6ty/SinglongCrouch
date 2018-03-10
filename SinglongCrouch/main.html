@@ -451,8 +451,38 @@
                     var cx = x - jdx;
                     var cy = y - jdy;
                     if (Math.sqrt((cx - jsD.width / 2) * (cx - jsD.width / 2) + (cy - jsD.height / 2) * (cy - jsD.height / 2)) <= jsD.height / 2) {
+
                         DrawJoystickD(ctxjsD, cx, cy);
+
+                        var atan2 = Math.atan2(cy - jsD.height / 2, cx - jsD.width / 2);
+                        var kakudo = 180 * atan2 / Math.PI
+                        if ((kakudo <= 180 && kakudo >= 120) || (kakudo >= -180 && kakudo <= -120)) {// left
+                            keysDown[65] = true;
+                        } else {
+                            delete keysDown[65];
+                        }
+                        if ((kakudo <= 60 && kakudo >= 0) || (kakudo >= -60 && kakudo <= 0)) {// right
+                            keysDown[68] = true;
+                        } else {
+                            delete keysDown[68];
+                        }
+
+                        if (kakudo <= -30 && kakudo >= -150) {// up
+                            keysDown[87] = true;
+                        } else {
+                            delete keysDown[87];
+                        }
+                        if (kakudo <= 150 && kakudo >= 30) {// down
+                            keysDown[83] = true;
+                        } else {
+                            delete keysDown[83];
+                        }
                         continue;
+                    } else {
+                        delete keysDown[65];
+                        delete keysDown[68];
+                        delete keysDown[87];
+                        delete keysDown[83];
                     }
 
                     var jax = document.getElementById("joystick_buttonA").offsetLeft;
