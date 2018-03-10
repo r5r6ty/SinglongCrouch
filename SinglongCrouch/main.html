@@ -462,6 +462,10 @@
 
                 if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
                     DrawJoystickBA(ctxjsBA);
+
+                    keysDown[74] = true;
+                } else {
+                    delete keysDown[74];
                 }
 
             } catch (e) {
@@ -523,18 +527,18 @@
                     delete keysDown[83];
                 }
 
-                var jax = document.getElementById("joystick_buttonA").offsetLeft;
-                var jay = document.getElementById("joystick_buttonA").offsetTop;
-                var cx_a = x - jax;
-                var cy_a = y - jay;
+                //var jax = document.getElementById("joystick_buttonA").offsetLeft;
+                //var jay = document.getElementById("joystick_buttonA").offsetTop;
+                //var cx_a = x - jax;
+                //var cy_a = y - jay;
 
-                if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
-                    DrawJoystickBA(ctxjsBA);
+                //if (Math.sqrt((cx_a - jsBA.width / 2) * (cx_a - jsBA.width / 2) + (cy_a - jsBA.height / 2) * (cy_a - jsBA.height / 2)) <= jsBA.height / 2) {
+                //    DrawJoystickBA(ctxjsBA);
 
-                    keysDown[74] = true;
-                } else {
-                    delete keysDown[74];
-                }
+                //    keysDown[74] = true;
+                //} else {
+                //    delete keysDown[74];
+                //}
 
 
             } catch (e) {
@@ -604,7 +608,7 @@
             ctx.arc(ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.height / 2, 0, 2 * Math.PI, true);
             ctx.stroke();
 
-            ctx.font = ctx.canvas.height / 2 + "px Georgia";    
+            ctx.font = ctx.canvas.height / 2 + "px Arial";    
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
             ctx.fillText("A", ctx.canvas.width / 2, ctx.canvas.height / 2, ctx.canvas.width / 2, ctx.canvas.height / 2);
