@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title id="tt">超屌格斗游戏！</title>
 </head>
 
@@ -57,7 +58,7 @@
         </div>  
     </div>
 
-    <div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
+    <!--<div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
         <div>TEST</div>
         <div></div>
         <table border="0">
@@ -77,11 +78,10 @@
                 <td></td>
             </tr>
         </table>
-    </div>
+    </div>-->
 
-    <div id="joystick_directiion" style="border:1px solid #c3c3c3;text-align:center;position:fixed;left:0;bottom:0">
-        <div>joystick_directiion</div>
-        <canvas id="joystickD" width=256 height=256 style="border:0px solid #c3c3c3;" onload="JoystickDLoad()"></canvas>
+    <div id="joystick_directiion" style="position:fixed;left:0;bottom:0">
+        <canvas id="joystickD" width=256 height=256 style="border:0px solid #c3c3c3;" onclick="JoystickDReset()"></canvas>
     </div>
 
     <div id="joystick_button" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;bottom:0">
@@ -98,65 +98,65 @@
             g_player2.hp = g_player2.maxhp;
         }
 
-        var iiup = true;
-        function iup() {
-            if (iiup) {
-                keysDown[87] = true;
-                iiup = false;
-            }
-            else {
-                delete keysDown[87];
-                iiup = true;
-            }
-        }
+        //var iiup = true;
+        //function iup() {
+        //    if (iiup) {
+        //        keysDown[87] = true;
+        //        iiup = false;
+        //    }
+        //    else {
+        //        delete keysDown[87];
+        //        iiup = true;
+        //    }
+        //}
 
-        var iidown = true;
-        function idown() {
-            if (iidown) {
-                keysDown[83] = true;
-                iidown = false;
-            }
-            else {
-                delete keysDown[83];
-                iidown = true;
-            }
-        }
+        //var iidown = true;
+        //function idown() {
+        //    if (iidown) {
+        //        keysDown[83] = true;
+        //        iidown = false;
+        //    }
+        //    else {
+        //        delete keysDown[83];
+        //        iidown = true;
+        //    }
+        //}
 
-        var iileft = true;
-        function ileft() {
-            if (iileft) {
-                keysDown[65] = true;
-                iileft = false;
-            }
-            else {
-                delete keysDown[65];
-                iileft = true;
-            }
-        }
+        //var iileft = true;
+        //function ileft() {
+        //    if (iileft) {
+        //        keysDown[65] = true;
+        //        iileft = false;
+        //    }
+        //    else {
+        //        delete keysDown[65];
+        //        iileft = true;
+        //    }
+        //}
 
-        var iiright = true;
-        function iright() {
-            if (iiright) {
-                keysDown[68] = true;
-                iiright = false;
-            }
-            else {
-                delete keysDown[68];
-                iiright = true;
-            }
-        }
+        //var iiright = true;
+        //function iright() {
+        //    if (iiright) {
+        //        keysDown[68] = true;
+        //        iiright = false;
+        //    }
+        //    else {
+        //        delete keysDown[68];
+        //        iiright = true;
+        //    }
+        //}
 
-        var iia = true;
-        function ia() {
-            if (iia) {
-                keysDown[74] = true;
-                iia = false;
-            }
-            else {
-                delete keysDown[74];
-                iia = true;
-            }
-        }
+        //var iia = true;
+        //function ia() {
+        //    if (iia) {
+        //        keysDown[74] = true;
+        //        iia = false;
+        //    }
+        //    else {
+        //        delete keysDown[74];
+        //        iia = true;
+        //    }
+        //}
         function addp1() {
             g_player1 = new davis(player1, 0, 0, 0, 0, 1, "jumping");
             object.push(g_player1);//载入玩家1；
@@ -168,17 +168,21 @@
             g_player2.direction = -1;
         }
 
-        function JoystickDLoad() {
-            var cjoystickD = document.getElementById("joystickD");
-            var ctxjoystickD = cjoystickD.getContext("2d");
+        function JoystickDReset() {
+            var ctxjoystickD = document.getElementById("joystickD").getContext("2d");
 
-            DrawJoystickD(ctxjoystickD, 100,100);
+            DrawJoystickD(ctxjoystickD, ctxjoystickD.canvas.width / 2, ctxjoystickD.canvas.height / 2);
         }
 
         function DrawJoystickD(ctx, x, y) {
             ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.arc(x, y, 128, 0, 2 * Math.PI, true);
+            ctx.stroke();
+
+            ctx.beginPath();
             ctx.fillStyle = "black";
-            ctx.arc(x, y, ctx.height / 2, 0, 2 * Math.PI, true);
+            ctx.arc(x, y, ctx.canvas.height / 4, 0, 2 * Math.PI, true);
             ctx.fill();
         }
     </script>
