@@ -514,7 +514,7 @@
         isTouchDevice();
         //html5 新增 touch 事件
         //禁用手机默认的触屏滚动行为
-        jsD.addEventListener('touchmove', function (event) {
+        document.addEventListener('touchmove', function (event) {
             event.preventDefault();
         }, false);
         //touchstart事件
@@ -546,7 +546,7 @@
                 var y = Number(touch.pageY); //页面触点Y坐标
 
 
-                jsD.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
+                document.getElementById("version").innerHTML = "原:" + startY + "   " + "现:" + y;
                 //判断滑动方向
 
                 //if (y - startY > 100) {
@@ -597,9 +597,9 @@
 
         //绑定事件
         function bindEvent() {
-            jsD.addEventListener('touchstart', touchSatrtFunc, false);
-            jsD.addEventListener('touchmove', touchMoveFunc, false);
-            jsD.addEventListener('touchend', touchEndFunc, false);
+            document.addEventListener('touchstart', touchSatrtFunc, false);
+            document.addEventListener('touchmove', touchMoveFunc, false);
+            document.addEventListener('touchend', touchEndFunc, false);
         }
 
         //判断是否支持触摸事件
@@ -607,7 +607,7 @@
             document.getElementById("version").innerHTML = navigator.appVersion;
 
             try {
-                jsD.createEvent("TouchEvent");
+                document.createEvent("TouchEvent");
                 document.getElementById("version").innerHTML = "支持TouchEvent事件！";
 
                 bindEvent(); //绑定事件
@@ -617,6 +617,7 @@
         }
 
         function DrawJoystickD(ctx, x, y) {
+            ctx.clearRect(0, 0, c.canvas.width, c.canvas.height);
             ctx.beginPath();
             ctx.strokeStyle = "black";
             ctx.arc(x, y, 128, 0, 2 * Math.PI, true);
