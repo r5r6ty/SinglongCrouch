@@ -61,14 +61,14 @@
         </table>
     </div>
 
-    <div style="position:absolute;left:50%">
+    <div style="text-align: center;">
         <div>SinglongCrouch</div>
         <div>
-            <canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
-            <canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-            <canvas id="cvs2" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;"></canvas>
-            <canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;"></canvas>
-        </div>  
+            <canvas id="cvsbg" width="800" height="600" style="border:0px solid #c3c3c3;background:gray;position:absolute;"></canvas>
+            <canvas id="cvs" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
+            <canvas id="cvs2" width="800" height="600" style="border:0px solid #c3c3c3;position:absolute;"></canvas>
+            <canvas id="interface" width="800" height="600" style="border:0px solid #c3c3c3;cursor:crosshair;position:absolute;"></canvas>
+        </div>
     </div>
 
     <!--<div id="dragdiv2" style="border:1px solid #c3c3c3;text-align:center;position:fixed;right:0;top:0">
@@ -529,7 +529,7 @@
                 startX = x;
                 startY = y;
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 0);
+                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 128);
                 {
                     DrawJoystickD(ctxjsD, x, y);
                 }
@@ -557,7 +557,7 @@
                 //    swipeUp();
                 //}
 
-                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 0);
+                if (Math.sqrt((x - ctx.canvas.width / 2) * (x - ctx.canvas.width / 2) + (y - ctx.canvas.height / 2) * (y - ctx.canvas.height / 2)) <= 128);
                 {
                     DrawJoystickD(ctxjsD, x, y);
 
