@@ -326,7 +326,7 @@ interfaceobject.prototype.gametitle = function()
 	{
 	case cased(this,0,0):
 
-		drawtext(ctxif,"A FTG GAME WITH SUPER DIAO",this.centerX,this.centerY,"50px Verdana","red","center","middle",1);
+		drawtext(ctxif,gametitle,this.centerX,this.centerY,"50px Verdana","red","center","middle",1);
 
 		break;
 	}

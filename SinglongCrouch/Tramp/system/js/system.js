@@ -1,79 +1,3 @@
-var gametitle = "超屌格斗游戏！";
-var gamesize = { width: 1280, height: 720 }
-var cload = document.getElementById("cvsload");
-var ctxload = cload.getContext("2d");
-var cbg = document.getElementById("cvsbg");
-var ctxbg = cbg.getContext("2d");
-var c = document.getElementById("cvs");
-var ctx = c.getContext("2d");
-var cif = document.getElementById("interface");
-var ctxif = cif.getContext("2d");
-var totaldata = document.getElementById('hidden').children.length;
-var loadeddata = 0;
-var object = new Array();
-var objectif = new Array();
-var objectbg = new Array();
-var previous = [];
-var mainloop = true;
-var intervalID = -1;
-var requestId;
-var clear = 0;
-var GameFPS;
-//var groundvalue = 1180;
-var groundvalue = 720;
-var gamespace = 50;
-
-var vg = 1;
-var vf = 0.1;
-
-var p1hpgage = { x: 50, y: 50, w: 500, h: 20 }
-var p2hpgage = { x: 1230, y: 50, w: 500, h: 20 }
-
-var visualswitch = false;
-var visualobject;
-var visualX = 0;
-var visualY = 0;
-//var focusrate = 1;
-//var rangeXY = 0;
-var pregp = "";
-var nowgp = "";
-
-document.documentElement.style.overflow = 'hidden';
-document.body.style.overflow = 'hidden';
-//取消滚动条
-
-var player1 = {
-    up: 87,
-    down: 83,
-    left: 65,
-    right: 68,
-    a: 74,
-    b: 75,
-    c: 76
-};
-
-var player2 = {
-    up: 38,
-    down: 40,
-    left: 37,
-    right: 39,
-    a: 97,
-    b: 98,
-    c: 99
-};
-//按键设置
-
-//var picdata = new Array(
-//
-//);
-//var audiodata = new Array(
-//
-//);
-
-var ctest = document.getElementById("cvstest");
-var ctxtest = ctest.getContext("2d");
-
-var mouse = { centerX: 0, centerY: 0 };
 function cnvs_getCoordinates(e) {
 
     //Math.pow(mouse.x - g_player1,2)
@@ -135,11 +59,7 @@ function cnvs_getCoordinates(e) {
     document.getElementById("demo5").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
 }
 
-var ctestswitch = 0;
-var c1x = 0;
-var c1y = 0;
-var c2x = 0;
-var c2y = 0;
+
 function ctestcc() {
 
     if (ctestswitch == 0) {
@@ -157,7 +77,7 @@ function ctestcc() {
     document.getElementById("demo111").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
 }
 
-var gameplay = 0;
+
 function ssstop() {
     gameplay = 2;
 }
@@ -171,7 +91,7 @@ function gggoonstop() {
 }
 
 
-objectif.push(new mainphase("g_nowloading", "gamephasecontroller"));//载入Nowloading
+
 
 function mainphase(g, s) {
     pregp = nowgp;
@@ -230,6 +150,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     pushtocanvas(objectif, ctxif, nld);//载入进度条
                     break;
                 case "g_title":
+                            deck();
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
                     pushtocanvas(objectif, ctxif, gt);//载入游戏标题
                     var psb = new interfaceobject(this, 640, 370, 0, 0, 1, "pressstartbutton");
@@ -700,29 +621,15 @@ function skillkeyup(o, s, c, key) {
     }
 }
 
-var keysDown = {};
-addEventListener("keydown", function (e) {
-    keysDown[e.keyCode] = true;
-}, false);
-addEventListener("keyup", function (e) {
-    delete keysDown[e.keyCode];
-}, false);
-
-
-
 function sound(o, f, s) {
     if (o.counter == f) {
         objectif.push(new playsound(document.getElementById(s)));
     }
 }
 
-function picloader(name, r, c, l, sw, sh) {
-
-    loadeddata += 1;
-    var picwidth = (name.width - l * r) / r;
-    var picheight = (name.height - l * c) / c;
-    cload.width = picwidth * sw / 100;
-    cload.height = picheight * sh / 100;
+function picloader(name, r, c, l) {
+    cload.width = name.width / r - l;
+    cload.height = name.height / c - l;
     var i = 0;
     for (var y = 0; y < c; y++) {
         for (var x = 0; x < r; x++) {
@@ -730,15 +637,15 @@ function picloader(name, r, c, l, sw, sh) {
             var image = document.createElement("img");
             image.id = name.id + "_" + i;
             image.style.position = "absolute";
-            ctxload.drawImage(name, x * (picwidth + l), y * (picheight + l), picwidth, picheight, 0, 0, picwidth * sw / 100, picheight * sh / 100);
+            ctxload.drawImage(name, x * (cload.width + l), y * (cload.height + l), cload.width, cload.height, 0, 0, cload.width, cload.height);
             image.src = cload.toDataURL("image/png");
             ctxload.clearRect(0, 0, cload.width, cload.height);
             h.appendChild(image);
             i += 1;
         }
     }
+    loadeddata += i;
     h.removeChild(name);
-
 }
 
 function audioloader(name) {
@@ -783,12 +690,12 @@ function renderingLoop() {
         if (gameplay == 1) {
             gameplay = 2;
         }
-
     }
 
     document.getElementById("demo").innerHTML = "object数量：" + object.length;
     document.getElementById("demo11").innerHTML = "objectbg数量：" + objectbg.length;
     document.getElementById("demo14").innerHTML = "objectif数量：" + objectif.length;
+
 
     //mainloop
 
@@ -796,10 +703,3 @@ function renderingLoop() {
     computeFPS();
     QueueNewFrame();
 }
-
-
-
-
-
-//setInterval(update, 1);
-QueueNewFrame();
