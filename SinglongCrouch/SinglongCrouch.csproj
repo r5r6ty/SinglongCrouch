@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,6 +97,12 @@
     <Content Include="sys\spark2.png" />
     <Content Include="sys\spark3.png" />
     <Content Include="sys\spark4.png" />
+    <Content Include="Tramp\main.html" />
+    <Content Include="Tramp\system\js\interface.js" />
+    <Content Include="Tramp\system\js\system.js" />
+    <Content Include="Tramp\system\pic\tramp.png" />
+    <Content Include="Tramp\system\se\cancel.mp3" />
+    <Content Include="Tramp\system\se\ok.mp3" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

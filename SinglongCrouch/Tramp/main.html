@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>超屌格斗游戏！</title>
+</head>
+
+<body>
+
+    <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#ffff00;width:1280px;height:720px;top: 0px">
+        <canvas id="cvsblack" width=1280 height=720 style="border:0px solid #c3c3c3;background:black;position:absolute;left: 0;"></canvas>
+        <canvas id="cvsbg" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+        <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+        <canvas id="interface" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:crosshair;"></canvas>
+
+        <div id="bstate" style="font-size:10px;line-height:20px;position: absolute;left: 50%;margin-left: -640px;background:#ffff00;height:20px;top: 700px">
+        </div>
+
+    </div>
+
+    <div style="position: absolute;background:#ffff00;top: 45%;left: 0%;">
+        <div>
+            <button id="playstop" onClick="ssstop()">▎▎</button>
+            <button id="playgoon" onClick="gggoon()"> ▶ </button>
+            <button id="playgoonstop" onClick="gggoonstop()">▎▶</button>
+        </div>
+        <div id="xywh">blank</div>
+        <canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;" onmousemove="cnvs_getCoordinates(event)" onclick="ctestcc()"></canvas>
+    </div>
+
+    <div id="divframe" style="position: absolute;background:#ffff00;top: 20%;left: 0%;">
+        <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
+        <div id="demo"></div>
+        <div id="demo10"></div>
+        <div id="demo11"></div>
+        <div id="demo12"></div>
+        <div id="demo14"></div>
+        <div id="demo2"></div>
+        <div id="demo3"></div>
+        <div id="demo4"></div>
+        <div id="demo5"></div>
+        <div id="demo6"></div>
+        <div id="demo7"></div>
+        <div id="demo8"></div>
+        <div id="demo9"></div>
+        <div id="demo13"></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div id="hidden" style="position: absolute;visibility:hidden;">
+        <img id="tramp"
+             src="system/pic/tramp.png"
+             onload="picloader(this,13,5,1,81,125)">
+        <!--<img id="arrow"
+             src="system/pic/arrow.png"
+             onload="picloader(this,1,2,0,25,25);">
+        <img id="character_s"
+             src="system/pic/character_s.png"
+             onload="picloader(this,2,1,1,100,100);">
+
+        <img id="davis0"
+             src="system/pic/davis_0.png"
+             onload="picloader(this,10,7,1,100,100);">
+        <img id="davis1"
+             src="system/pic/davis_1.png"
+             onload="picloader(this,10,7,1,100,100);">
+        <img id="davis2"
+             src="system/pic/davis_2.png"
+             onload="picloader(this,10,4,1,100,100);">
+        <img id="spark1"
+             src="system/pic/spark1.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="spark2"
+             src="system/pic/spark2.png"
+             onload="picloader(this,5,3,0,100,100);">
+        <img id="spark3"
+             src="system/pic/spark3.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="spark4"
+             src="system/pic/spark4.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="castle"
+             src="system/pic/castle.png"
+             onload="picloader(this,1,1,0,300,300);">
+        <img id="standing"
+             src="system/pic/standing.png"
+             onload="picloader(this,20,1,0,100,100);">-->
+
+        <audio id="ok"
+               src="system/se/ok.mp3"
+               onloadeddata="audioloader()"></audio>
+        <audio id="cancel"
+               src="system/se/cancel.mp3"
+               onloadeddata="audioloader()"></audio>
+    </div>
+    <!--<audio id="ticktack" src="system/se/ticktack.mp3" oncanplaythrough="audioloader();"></audio>
+
+    <audio id="001" src="system/se/001.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="006" src="system/se/006.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="007" src="system/se/007.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="012" src="system/se/012.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="016" src="system/se/016.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="017" src="system/se/017.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="031" src="system/se/031.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="095" src="system/se/095.mp3" oncanplaythrough="audioloader();"></audio>-->
+
+    <script src="system/js/system.js" charset="gbk"></script>
+    <script src="system/js/interface.js" charset="gbk"></script>
+    <!--<script src="system/js/bg.js" charset="gbk"></script>
+
+    <script src="system/js/beta.js" charset="gbk"></script>-->
+
+</body>
+
+</html>
