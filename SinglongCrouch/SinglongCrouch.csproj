@@ -97,13 +97,13 @@
     <Content Include="sys\spark2.png" />
     <Content Include="sys\spark3.png" />
     <Content Include="sys\spark4.png" />
-    <Content Include="Tramp\main.html" />
-    <Content Include="Tramp\system\js\card.js" />
-    <Content Include="Tramp\system\js\interface.js" />
-    <Content Include="Tramp\system\js\system.js" />
-    <Content Include="Tramp\system\pic\poker.png" />
-    <Content Include="Tramp\system\se\cancel.mp3" />
-    <Content Include="Tramp\system\se\ok.mp3" />
+    <Content Include="Poker\main.html" />
+    <Content Include="Poker\system\js\card.js" />
+    <Content Include="Poker\system\js\interface.js" />
+    <Content Include="Poker\system\js\system.js" />
+    <Content Include="Poker\system\pic\poker.png" />
+    <Content Include="Poker\system\se\cancel.mp3" />
+    <Content Include="Poker\system\se\ok.mp3" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
