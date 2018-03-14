@@ -123,32 +123,35 @@ interfaceobject.prototype.nowloading = function()
 {
 	switch(this.counter)
 	{
-	case cased(this,0,0):
+	    case cased(this,0,0):
 
-	this.myX = 250;
-	this.myY = 5;
-ctxif.fillStyle="red";
-ctxif.textAlign="left";
-ctxif.fillText("Now loading..."+loadeddata/totaldata*100+"%"+"("+loadeddata+"/"+totaldata+")",this.centerX- this.myX,this.centerY - 10);
-ctxif.beginPath();
-ctxif.rect(this.centerX - this.myX,this.centerY - this.myY,500,10);
-ctxif.strokeStyle="red";
-ctxif.fill();
-ctxif.stroke();
-ctxif.beginPath();
-ctxif.fillStyle="red";
-ctxif.fillRect(this.centerX - this.myX,this.centerY - this.myY,500 * loadeddata/totaldata,10);
+	    this.myX = 250;
+        this.myY = 5;
+
+        var per = loadeddata / totaldata;
+        
+        ctxif.fillStyle="red";
+        ctxif.textAlign="left";
+        ctxif.fillText("Now loading..." + (per * 100).toFixed(0) + "%" + "(" + loadeddata + "/" + totaldata +")", this.centerX - this.myX, this.centerY - 10);
+        ctxif.beginPath();
+        ctxif.rect(this.centerX - this.myX,this.centerY - this.myY, 500, 10);
+        ctxif.strokeStyle = "red";
+        ctxif.stroke();
+        ctxif.stroke();
+        ctxif.beginPath();
+        ctxif.fillStyle="red";
+        ctxif.fillRect(this.centerX - this.myX, this.centerY - this.myY, 500 * per, 10);
 
 	if (loadeddata >= totaldata)//µ±loadingÍê
 	{
-	cload.width = 10;
-	cload.height = 10;
-	objectif.push(new mainphase("g_title","gamephasecontroller"));
+	    cload.width = 10;
+	    cload.height = 10;
+	    objectif.push(new mainphase("g_title","gamephasecontroller"));
 	}
 
 		break;
 	}
-nextstate(this,"nowloading",0,0);
+    nextstate(this,"nowloading",0,0);
 }
 
 interfaceobject.prototype.mainmenu = function()

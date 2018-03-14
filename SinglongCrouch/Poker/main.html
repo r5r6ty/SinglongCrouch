@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>超屌格斗游戏！</title>
+    <title>超屌扑克牌游戏</title>
 </head>
 
 <body>
@@ -56,105 +56,105 @@
     <script src="system/js/beta.js" charset="gbk"></script>-->
 
     <script type="text/javascript">
-            var gametitle = "超屌扑克牌游戏";
-            var gamesize = { width: 1280, height: 720 }
-            var cload = document.getElementById("cvsload");
-            var ctxload = cload.getContext("2d");
-            var cbg = document.getElementById("cvsbg");
-            var ctxbg = cbg.getContext("2d");
-            var c = document.getElementById("cvs");
-            var ctx = c.getContext("2d");
-            var cif = document.getElementById("interface");
-            var ctxif = cif.getContext("2d");
-            var totaldata = 999
-            var loadeddata = 0;
-            var object = new Array();
-            var objectif = new Array();
-            var objectbg = new Array();
-            var previous = [];
-            var mainloop = true;
-            var intervalID = -1;
-            var requestId;
-            var clear = 0;
-            var GameFPS;
-            //var groundvalue = 1180;
-            var groundvalue = 720;
-            var gamespace = 50;
+        var gametitle = document.title;
+        var gamesize = { width: 1280, height: 720 }
+        var cload = document.getElementById("cvsload");
+        var ctxload = cload.getContext("2d");
+        var cbg = document.getElementById("cvsbg");
+        var ctxbg = cbg.getContext("2d");
+        var c = document.getElementById("cvs");
+        var ctx = c.getContext("2d");
+        var cif = document.getElementById("interface");
+        var ctxif = cif.getContext("2d");
+        var totaldata = 999;
+        var loadeddata = 0;
+        var object = new Array();
+        var objectif = new Array();
+        var objectbg = new Array();
+        var previous = [];
+        var mainloop = true;
+        var intervalID = -1;
+        var requestId;
+        var clear = 0;
+        var GameFPS;
+        //var groundvalue = 1180;
+        var groundvalue = 720;
+        var gamespace = 50;
 
-            var vg = 1;
-            var vf = 0.1;
+        var vg = 1;
+        var vf = 0.1;
 
-            var p1hpgage = { x: 50, y: 50, w: 500, h: 20 }
-            var p2hpgage = { x: 1230, y: 50, w: 500, h: 20 }
+        var p1hpgage = { x: 50, y: 50, w: 500, h: 20 }
+        var p2hpgage = { x: 1230, y: 50, w: 500, h: 20 }
 
-            var visualswitch = false;
-            var visualobject;
-            var visualX = 0;
-            var visualY = 0;
-            //var focusrate = 1;
-            //var rangeXY = 0;
-            var pregp = "";
-            var nowgp = "";
+        var visualswitch = false;
+        var visualobject;
+        var visualX = 0;
+        var visualY = 0;
+        //var focusrate = 1;
+        //var rangeXY = 0;
+        var pregp = "";
+        var nowgp = "";
 
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
-            //取消滚动条
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        //取消滚动条
 
-            var ctest = document.getElementById("cvstest");
-            var ctxtest = ctest.getContext("2d");
+        var ctest = document.getElementById("cvstest");
+        var ctxtest = ctest.getContext("2d");
 
-            var player1 = {
-                        up: 87,
-                        down: 83,
-                        left: 65,
-                        right: 68,
-                        a: 74,
-                        b: 75,
-                        c: 76
-            };
+        var player1 = {
+                    up: 87,
+                    down: 83,
+                    left: 65,
+                    right: 68,
+                    a: 74,
+                    b: 75,
+                    c: 76
+        };
 
-            var player2 = {
-                        up: 38,
-                        down: 40,
-                        left: 37,
-                        right: 39,
-                        a: 97,
-                        b: 98,
-                        c: 99
-            };
-            //按键设置
+        var player2 = {
+                    up: 38,
+                    down: 40,
+                    left: 37,
+                    right: 39,
+                    a: 97,
+                    b: 98,
+                    c: 99
+        };
+        //按键设置
 
-            var mouse = { centerX: 0, centerY: 0 };
+        var mouse = { centerX: 0, centerY: 0 };
 
-            var ctestswitch = 0;
-            var c1x = 0;
-            var c1y = 0;
-            var c2x = 0;
-            var c2y = 0;
+        var ctestswitch = 0;
+        var c1x = 0;
+        var c1y = 0;
+        var c2x = 0;
+        var c2y = 0;
 
-            var gameplay = 0;
+        var gameplay = 0;
 
-            objectif.push(new mainphase("g_nowloading", "gamephasecontroller"));//载入Nowloading
+        objectif.push(new mainphase("g_nowloading", "gamephasecontroller"));//载入Nowloading
 
-            var keysDown = {};
-            addEventListener("keydown", function (e) {
-                        keysDown[e.keyCode] = true;
-            }, false);
-            addEventListener("keyup", function (e) {
-                        delete keysDown[e.keyCode];
-            }, false);
-            addEventListener("mousemove", function (e) {
-                cnvs_getCoordinates(e);
-            }, false);
-            addEventListener("mousedown", function (e) {
-                keysDown[e.button] = true;
-            }, false);
-            addEventListener("mouseup", function (e) {
-                delete keysDown[e.button];
-            }, false);
+        var keysDown = {};
+        addEventListener("keydown", function (e) {
+                    keysDown[e.keyCode] = true;
+        }, false);
+        addEventListener("keyup", function (e) {
+                    delete keysDown[e.keyCode];
+        }, false);
+        addEventListener("mousemove", function (e) {
+            cnvs_getCoordinates(e);
+        }, false);
+        addEventListener("mousedown", function (e) {
+            keysDown[e.button] = true;
+        }, false);
+        addEventListener("mouseup", function (e) {
+            delete keysDown[e.button];
+        }, false);
 
-            //setInterval(update, 1);
-            QueueNewFrame();
+        //setInterval(update, 1);
+        QueueNewFrame();
     </script>
 
     <div id="hidden" style="position: absolute;visibility:hidden;">
