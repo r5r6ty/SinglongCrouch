@@ -48,6 +48,63 @@
         <div></div>
     </div>
 
+    <div id="resource" style="position: absolute;visibility:hidden;">
+    </div>
+
+    <div id="hidden" style="position: absolute;visibility:hidden;">
+        <img id="poker,13,5,1"
+             src="system/pic/poker.png">
+        <!--<img id="arrow"
+             src="system/pic/arrow.png"
+             onload="picloader(this,1,2,0,25,25);">
+        <img id="character_s"
+             src="system/pic/character_s.png"
+             onload="picloader(this,2,1,1,100,100);">
+
+        <img id="davis0"
+             src="system/pic/davis_0.png"
+             onload="picloader(this,10,7,1,100,100);">
+        <img id="davis1"
+             src="system/pic/davis_1.png"
+             onload="picloader(this,10,7,1,100,100);">
+        <img id="davis2"
+             src="system/pic/davis_2.png"
+             onload="picloader(this,10,4,1,100,100);">
+        <img id="spark1"
+             src="system/pic/spark1.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="spark2"
+             src="system/pic/spark2.png"
+             onload="picloader(this,5,3,0,100,100);">
+        <img id="spark3"
+             src="system/pic/spark3.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="spark4"
+             src="system/pic/spark4.png"
+             onload="picloader(this,5,2,0,100,100);">
+        <img id="castle"
+             src="system/pic/castle.png"
+             onload="picloader(this,1,1,0,300,300);">
+        <img id="standing"
+             src="system/pic/standing.png"
+             onload="picloader(this,20,1,0,100,100);">-->
+
+        <audio id="ok"
+               src="system/se/ok.mp3"></audio>
+        <audio id="cancel"
+               src="system/se/cancel.mp3"></audio>
+    </div>
+    <!--<audio id="ticktack" src="system/se/ticktack.mp3" oncanplaythrough="audioloader();"></audio>
+
+    <audio id="001" src="system/se/001.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="006" src="system/se/006.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="007" src="system/se/007.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="012" src="system/se/012.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="016" src="system/se/016.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="017" src="system/se/017.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="031" src="system/se/031.mp3" oncanplaythrough="audioloader();"></audio>
+    <audio id="095" src="system/se/095.mp3" oncanplaythrough="audioloader();"></audio>-->
+
     <script src="system/js/system.js" charset="gbk"></script>
     <script src="system/js/interface.js" charset="gbk"></script>
     <script src="system/js/card.js"></script>
@@ -104,23 +161,23 @@
         var ctxtest = ctest.getContext("2d");
 
         var player1 = {
-                    up: 87,
-                    down: 83,
-                    left: 65,
-                    right: 68,
-                    a: 74,
-                    b: 75,
-                    c: 76
+            up: 87,
+            down: 83,
+            left: 65,
+            right: 68,
+            a: 74,
+            b: 75,
+            c: 76
         };
 
         var player2 = {
-                    up: 38,
-                    down: 40,
-                    left: 37,
-                    right: 39,
-                    a: 97,
-                    b: 98,
-                    c: 99
+            up: 38,
+            down: 40,
+            left: 37,
+            right: 39,
+            a: 97,
+            b: 98,
+            c: 99
         };
         //按键设置
 
@@ -138,10 +195,10 @@
 
         var keysDown = {};
         addEventListener("keydown", function (e) {
-                    keysDown[e.keyCode] = true;
+            keysDown[e.keyCode] = true;
         }, false);
         addEventListener("keyup", function (e) {
-                    delete keysDown[e.keyCode];
+            delete keysDown[e.keyCode];
         }, false);
         addEventListener("mousemove", function (e) {
             cnvs_getCoordinates(e);
@@ -157,65 +214,61 @@
         QueueNewFrame();
     </script>
 
-    <div id="hidden" style="position: absolute;visibility:hidden;">
-        <img id="poker"
-             src="system/pic/poker.png"
-             onload="picloader(this,13,5,1)">
-        <!--<img id="arrow"
-             src="system/pic/arrow.png"
-             onload="picloader(this,1,2,0,25,25);">
-        <img id="character_s"
-             src="system/pic/character_s.png"
-             onload="picloader(this,2,1,1,100,100);">
-
-        <img id="davis0"
-             src="system/pic/davis_0.png"
-             onload="picloader(this,10,7,1,100,100);">
-        <img id="davis1"
-             src="system/pic/davis_1.png"
-             onload="picloader(this,10,7,1,100,100);">
-        <img id="davis2"
-             src="system/pic/davis_2.png"
-             onload="picloader(this,10,4,1,100,100);">
-        <img id="spark1"
-             src="system/pic/spark1.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="spark2"
-             src="system/pic/spark2.png"
-             onload="picloader(this,5,3,0,100,100);">
-        <img id="spark3"
-             src="system/pic/spark3.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="spark4"
-             src="system/pic/spark4.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="castle"
-             src="system/pic/castle.png"
-             onload="picloader(this,1,1,0,300,300);">
-        <img id="standing"
-             src="system/pic/standing.png"
-             onload="picloader(this,20,1,0,100,100);">-->
-
-        <audio id="ok"
-               src="system/se/ok.mp3"
-               oncanplaythrough="audioloader()"></audio>
-        <audio id="cancel"
-               src="system/se/cancel.mp3"
-               oncanplaythrough="audioloader()"></audio>
-    </div>
-    <!--<audio id="ticktack" src="system/se/ticktack.mp3" oncanplaythrough="audioloader();"></audio>
-
-    <audio id="001" src="system/se/001.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="006" src="system/se/006.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="007" src="system/se/007.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="012" src="system/se/012.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="016" src="system/se/016.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="017" src="system/se/017.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="031" src="system/se/031.mp3" oncanplaythrough="audioloader();"></audio>
-    <audio id="095" src="system/se/095.mp3" oncanplaythrough="audioloader();"></audio>-->
-
     <script type="text/javascript">
-                totaldata = document.getElementById('hidden').children.length;
+
+        var h = document.getElementById("hidden");
+        var res = document.getElementById("resource");
+
+        totaldata = h.children.length;
+
+        var flag = setInterval(loadresource, 1 / GameFPS * 1000);
+
+        function loadresource() {
+            if (loadeddata >= totaldata) {
+                clearInterval(flag);
+                h.parentNode.removeChild(h);
+                return;
+            }
+
+            var imgs = h.getElementsByTagName("img");
+
+            for (var num = 0; num < imgs.length; num++) {
+                if (imgs[num].complete) {
+                    var para = imgs[num].id.split(",", 4)
+                    var name = para[0];
+                    var r = Number(para[1]);
+                    var c = Number(para[2]);
+                    var l = Number(para[3]);
+
+                    cload.width = imgs[num].width / r - l;
+                    cload.height = imgs[num].height / c - l;
+                    var i = 0;
+                    for (var y = 0; y < c; y++) {
+                        for (var x = 0; x < r; x++) {
+                            var image = document.createElement("img");
+                            image.id = name + "_" + i;
+                            image.style.position = "absolute";
+                            ctxload.drawImage(imgs[num], x * (cload.width + l), y * (cload.height + l), cload.width, cload.height, 0, 0, cload.width, cload.height);
+                            image.src = cload.toDataURL("image/png");
+                            ctxload.clearRect(0, 0, cload.width, cload.height);
+                            res.appendChild(image);
+                            i += 1;
+                        }
+                    }
+                    h.removeChild(imgs[num]);
+                    loadeddata += 1;
+                }
+            }
+
+            var audios = h.getElementsByTagName("audio");
+
+            for (var num = 0; num < audios.length; num++) {
+                if (audios[num].readyState == 4) {
+                    res.appendChild(audios[num]);
+                    loadeddata += 1;
+                }
+            }
+        }
     </script>
 </body>
 

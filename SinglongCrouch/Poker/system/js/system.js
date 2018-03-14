@@ -627,31 +627,6 @@ function sound(o, f, s) {
     }
 }
 
-function picloader(name, r, c, l) {
-    cload.width = name.width / r - l;
-    cload.height = name.height / c - l;
-    var i = 0;
-    for (var y = 0; y < c; y++) {
-        for (var x = 0; x < r; x++) {
-            var h = document.getElementById("hidden");
-            var image = document.createElement("img");
-            image.id = name.id + "_" + i;
-            image.style.position = "absolute";
-            ctxload.drawImage(name, x * (cload.width + l), y * (cload.height + l), cload.width, cload.height, 0, 0, cload.width, cload.height);
-            image.src = cload.toDataURL("image/png");
-            ctxload.clearRect(0, 0, cload.width, cload.height);
-            h.appendChild(image);
-            i += 1;
-        }
-    }
-    loadeddata += i;
-    h.removeChild(name);
-}
-
-function audioloader(name) {
-    loadeddata += 1;
-}
-
 function renderingLoop() {
     if (gameplay == 0 || gameplay == 1) {
 
