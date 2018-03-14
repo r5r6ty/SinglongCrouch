@@ -2,10 +2,10 @@ function cnvs_getCoordinates(e) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
-    var x1 = ctest.offsetParent.offsetLeft;
-    var y1 = ctest.offsetParent.offsetTop;
-    var x2 = ctest.offsetLeft;
-    var y2 = ctest.offsetTop;
+    var x1 = c.offsetParent.offsetLeft;
+    var y1 = c.offsetParent.offsetTop;
+    var x2 = c.offsetLeft;
+    var y2 = c.offsetTop;
     var sl = document.documentElement.scrollLeft;
     var st = document.documentElement.scrollTop;
     mouse.centerX = e.clientX - x1 - x2 + sl;
@@ -315,7 +315,7 @@ function drawpic(o, canvas) {
     canvas.arc(o.centerX, o.centerY, 2, 0, 2 * Math.PI, true);
     canvas.fill();
 
-    if (o.status == "character" || o.status == "weapon" || o.status == "ball") {
+    if (o.status == "card" || o.status == "interface") {
         canvas.beginPath();
         canvas.strokeStyle = "blue";
         canvas.moveTo(o.cx, o.cy);
@@ -336,9 +336,9 @@ function drawpic(o, canvas) {
                 canvas.stroke();
             }
         }
-        if (o.bdy.length != 0) {
-            o.bdy = [];
-        }
+        //if (o.bdy.length != 0) {
+        //    o.bdy = [];
+        //}
 
         for (var j = 0; j < o.itr.length; j++) {
             if (o.itr[j] != undefined) {
@@ -352,9 +352,9 @@ function drawpic(o, canvas) {
                 canvas.stroke();
             }
         }
-        if (o.itr.length != 0) {
-            o.itr = [];
-        }
+        //if (o.itr.length != 0) {
+        //    o.itr = [];
+        //}
     }
 
 

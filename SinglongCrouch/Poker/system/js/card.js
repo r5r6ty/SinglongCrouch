@@ -22,8 +22,8 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 	this.Alpha = alpha;
 	this.exist = true;
 	
-//	this.bdy = new Array();
-//	this.itr = new Array();
+	this.bdy = new Array();
+	this.itr = new Array();
 	
 	this.direction = 1;
 
@@ -32,11 +32,14 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 
 card.prototype.render = function()
 {
+    this.bdy.splice(0, this.bdy.length);//清空bdy
+    this.itr.splice(0, this.itr.length);//清空itr
 
-drawpic(this,this.c);
+    this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+    drawpic(this,this.c);
 
-this.counter += 1;
-return this.exist;
+    this.counter += 1;
+    return this.exist;
 }
 
 function deck()

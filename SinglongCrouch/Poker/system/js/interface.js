@@ -6,24 +6,27 @@ function interfaceobject(id,cx,cy,acx,acy,alpha,s)
 	this.identity = id;
 	this.pic;
 	this.state = s;
-	this.status = "interfaceobject";
+	this.status = "interface";
 	this.centerX = cx;
 	this.centerY = cy;
-	this.myX;
-	this.myY;
+	this.myX = 0;
+	this.myY = 0;
 	this.dvx = acx;
 	this.dvy = acy;
 	this.Alpha = alpha;
 	this.exist = true;
 	
-//	this.bdy = new Array();
-//	this.itr = new Array();
+	this.bdy = new Array();
+	this.itr = new Array();
 	
 	this.direction = 1;
 }
 
 interfaceobject.prototype.render = function()
 {
+    this.bdy.splice(0, this.bdy.length);//清空bdy
+    this.itr.splice(0, this.itr.length);//清空itr
+
 	switch(this.state)
 	{
 		case "nowloading":
@@ -97,10 +100,10 @@ interfaceobject.prototype.render = function()
 			break;
 	}
 
-drawpic(this,this.c);
+    drawpic(this,this.c);
 
-this.counter += 1;
-return this.exist;
+    this.counter += 1;
+    return this.exist;
 }
 
 
@@ -180,45 +183,45 @@ interfaceobject.prototype.mainmenu = function()
 			break;
 			
 	case cased(this,11,11):
-ctxif.beginPath();
-ctxif.strokeStyle="red";
-ctxif.strokeRect(this.centerX - 75,this.centerY - 15,150,30);
-	if(this.a)//延迟锁
-	{
-		if (87 in keysDown)//按上
-		{
-			if(this.centerY != 300)
-			{
-			this.centerY -= 30;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-		if (83 in keysDown)//按下
-		{
-			if(this.centerY != 390)
-			{
-			this.centerY += 30;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-	}
-		if (74 in keysDown)//确定
+        ctxif.beginPath();
+        ctxif.strokeStyle="red";
+        ctxif.strokeRect(this.centerX - 75,this.centerY - 15,150,30);
+	    if(this.a)//延迟锁
+	    {
+		    if (87 in keysDown)//按上
+		    {
+			    if(this.centerY != 300)
+			    {
+			    this.centerY -= 30;
+			    }
+			    this.a = false;
+			    var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+			    pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+		    }
+		    if (83 in keysDown)//按下
+		    {
+			    if(this.centerY != 390)
+			    {
+			    this.centerY += 30;
+			    }
+			    this.a = false;
+			    var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+			    pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+		    }
+	    }
+		if (0 in keysDown)//确定
 		{
 			sound(this,11,"ok");
 			this.p = true;
 			this.exist = false;
 		}
-		if (75 in keysDown)//取消
+		if (2 in keysDown)//取消
 		{
 			sound(this,11,"cancel");
 			objectif.push(new mainphase("g_title","gamephasecontroller"));
 			this.exist = false;
 		}
-			break;
+		break;
 		
 //		drawtext(ctxif,"TRAINING",this.centerX,this.centerY+120,"20px Verdana","crimson","center","middle",1);
 //		drawtext(ctxif,"OPTION",this.centerX,this.centerY+150,"20px Verdana","crimson","center","middle",1);
@@ -226,7 +229,7 @@ ctxif.strokeRect(this.centerX - 75,this.centerY - 15,150,30);
 
 
 	}
-nextstate(this,"mainmenu",11,11);
+    nextstate(this,"mainmenu",11,11);
 }
 
 interfaceobject.prototype.arcade = function()
@@ -234,22 +237,34 @@ interfaceobject.prototype.arcade = function()
 	switch(this.counter)
 	{
 	case cased(this,0,0):
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY)
-		{
-		drawtext(ctxif,"ARCADE",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
-		}
-		else
-		{
-		drawtext(ctxif,"ARCADE",this.centerX,this.centerY,"20px Verdana","crimson","center","middle",1);
-		}
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p)
-		{
-		objectif.push(new mainphase("g_arcade","gamephasecontroller"));
-		this.identity.p = false;
-		}
+        this.myX = 75;
+        this.myY = 15;
+        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+
+        //if (this.identity.centerX == this.centerX && this.identity.centerY == this.centerY) {
+        //    drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+        //}
+        //else {
+        //    drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+        //}
+        //if (this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p) {
+        //    objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
+        //    this.identity.p = false;
+        //}
+        if (mouse.centerX >= this.bdy[0].bx && mouse.centerX <= this.bdy[0].bx + this.bdy[0].bw && mouse.centerY >= this.bdy[0].by && mouse.centerY <= this.bdy[0].by + this.bdy[0].bh) {
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+        }
+        else {
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+        }
+        if (mouse.centerX >= this.bdy[0].bx && mouse.centerX <= this.bdy[0].bx + this.bdy[0].bw && mouse.centerY >= this.bdy[0].by && mouse.centerY <= this.bdy[0].by + this.bdy[0].bh && this.identity.p) {
+            objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
+            this.identity.p = false;
+        }
+        
 		break;
 	}
-nextstate(this,"arcade",0,0);
+    nextstate(this,"arcade",0,0);
 }
 
 interfaceobject.prototype.story = function()
@@ -338,21 +353,21 @@ nextstate(this,"gametitle",0,0);
 
 interfaceobject.prototype.pressstartbutton = function()
 {
-	if (74 in keysDown)
+	if (0 in keysDown)
 	{
-sound(this,0,"ok");
-objectif.push(new mainphase("g_menu","gamephasecontroller"));
-this.exist = false;
+        sound(this,0,"ok");
+        objectif.push(new mainphase("g_menu","gamephasecontroller"));
+        this.exist = false;
 	}
 	switch(this.counter)
 	{
-	case cased(this,0,0):
+	    case cased(this,0,0):
 
-		drawtext(ctxif,"PRESS START BUTTON",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
+		    drawtext(ctxif,"Touch any place",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
 
-		break;
+		    break;
 	}
-nextstate(this,"pressstartbutton",0,0);
+    nextstate(this,"pressstartbutton",0,0);
 }
 
 
@@ -528,13 +543,13 @@ drawtext(ctxif,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana",
 			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
 		}
 	}
-		if (74 in keysDown)//确定
+		if (0 in keysDown)//确定
 		{
 			sound(this,11,"ok");
 			this.p = true;
 			this.exist = false;
 		}
-		if (75 in keysDown)//取消
+		if (2 in keysDown)//取消
 		{
 			sound(this,11,"cancel");
 			objectif.push(new mainphase("g_menu","gamephasecontroller"));
