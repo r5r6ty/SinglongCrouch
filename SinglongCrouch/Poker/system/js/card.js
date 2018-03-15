@@ -4,13 +4,15 @@ var jokers = ["A","B"];
 
 function card(id,cx,cy,acx,acy,alpha,s,test)
 {
-	this.c;
+    this.c;
+
+    this.test = test;
 
     
     this.name = "";
 	this.counter = 0;
 	this.identity = id;
-	this.pic = test;
+    this.pic = this.test;
 	this.state = s;
 	this.status = "card";
 	this.centerX = cx;
@@ -19,7 +21,9 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 	this.myY = this.pic.height / 2;
 	this.dvx = acx;
 	this.dvy = acy;
-	this.Alpha = alpha;
+    this.Alpha = alpha;
+    this.scaleX = 1;
+    this.scaleY = 1;
 	this.exist = true;
 	
 	this.bdy = new Array();
@@ -27,13 +31,37 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 	
 	this.direction = 1;
 
-    
+    this.speed = Math.random();
+
+    this.angel = 90;
 }
 
 card.prototype.render = function()
 {
     this.bdy.splice(0, this.bdy.length);//清空bdy
     this.itr.splice(0, this.itr.length);//清空itr
+
+    var sine = Math.sin(Math.PI / 180 * this.angel);
+
+    if (sine < 0)
+    {
+        this.pic = document.getElementById("poker_64");
+        sine = Math.abs(sine);
+    }
+    else if (sine > 0) {
+        this.pic = this.test;
+    }
+
+    this.scaleX = sine;
+
+    this.angel += 5 * this.speed;
+
+    if (this.angel > 360) {
+        this.angel -= 360;
+    }
+    else if (this.angel < -360) {
+        this.angel += 360;
+    }
 
     this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
     drawpic(this,this.c);
@@ -76,7 +104,7 @@ function shuffleC(arr) {
 
 deck.prototype.render = function ()
 {
-
+    
 }
 
 deck.prototype.shuffle = function () {

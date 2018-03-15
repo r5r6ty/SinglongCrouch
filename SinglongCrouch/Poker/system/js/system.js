@@ -302,7 +302,7 @@ function drawpic(o, canvas) {
         }
         canvas.globalAlpha = o.Alpha;
         if (o.direction == 1) {
-            canvas.drawImage(o.pic, Math.round(o.centerX - o.myX), Math.round(o.centerY - o.myY));
+            canvas.drawImage(o.pic, Math.round(o.centerX - o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(o.centerY - o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
         }
         else {
             canvas.translate(c.width, 0);
@@ -317,7 +317,9 @@ function drawpic(o, canvas) {
         }
     }
 
+    var debug = document.getElementById("isdebug").checked;
     if (debug) {
+        canvas.globalAlpha = 1;
         canvas.beginPath();
         canvas.fillStyle = "yellow";
         canvas.arc(o.centerX, o.centerY, 2, 0, 2 * Math.PI, true);
@@ -521,13 +523,17 @@ function bdyrange(o, x, y, w, h) {
 
     if (o.direction == "1") {
         this.bx = o.centerX - o.myX + x;
+        this.bx += (w - w * o.scaleX) / 2;
     }
     else {
         this.bx = o.centerX + o.myX - x - w;
+        this.bx -= (w - w * o.scaleX) / 2;
     }
-    this.bw = w;
+    
+    this.bw = w * o.scaleX;
     this.by = o.centerY - o.myY + y;
-    this.bh = h;
+    this.by += (h - h * o.scaleY) / 2;
+    this.bh = h * o.scaleY;
 }
 
 function itrrange(o, x, y, w, h) {

@@ -45,7 +45,9 @@
         <div id="demo9"></div>
         <div id="demo13"></div>
         <div></div>
-        <div></div>
+        <div>
+            <input id="isdebug" type="checkbox">Debug line
+        </div>
     </div>
 
     <div id="resource" style="position: absolute;visibility:hidden;">
@@ -159,8 +161,6 @@
 
         var ctest = document.getElementById("cvstest");
         var ctxtest = ctest.getContext("2d");
-
-        var debug = false;
 
         var player1 = {
             up: 87,
