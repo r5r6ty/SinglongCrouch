@@ -160,6 +160,8 @@
         var ctest = document.getElementById("cvstest");
         var ctxtest = ctest.getContext("2d");
 
+        var debug = false;
+
         var player1 = {
             up: 87,
             down: 83,
@@ -195,7 +197,7 @@
 
         var keysDown = {};
         addEventListener("keydown", function (e) {
-            keysDown[e.keyCode] = true;
+            keysDown[e.button] = true;
         }, false);
         addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];

@@ -183,44 +183,41 @@ interfaceobject.prototype.mainmenu = function()
 			break;
 			
 	case cased(this,11,11):
-        ctxif.beginPath();
-        ctxif.strokeStyle="red";
-        ctxif.strokeRect(this.centerX - 75,this.centerY - 15,150,30);
-	    if(this.a)//延迟锁
-	    {
-		    if (87 in keysDown)//按上
-		    {
-			    if(this.centerY != 300)
-			    {
-			    this.centerY -= 30;
-			    }
-			    this.a = false;
-			    var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			    pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		    }
-		    if (83 in keysDown)//按下
-		    {
-			    if(this.centerY != 390)
-			    {
-			    this.centerY += 30;
-			    }
-			    this.a = false;
-			    var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			    pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		    }
-	    }
-		if (0 in keysDown)//确定
-		{
-			sound(this,11,"ok");
-			this.p = true;
-			this.exist = false;
-		}
-		if (2 in keysDown)//取消
-		{
-			sound(this,11,"cancel");
-			objectif.push(new mainphase("g_title","gamephasecontroller"));
-			this.exist = false;
-		}
+	    //if(this.a)//延迟锁
+	    //{
+		   // if (87 in keysDown)//按上
+		   // {
+			  //  if(this.centerY != 300)
+			  //  {
+			  //  this.centerY -= 30;
+			  //  }
+			  //  this.a = false;
+			  //  var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+			  //  pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+		   // }
+		   // if (83 in keysDown)//按下
+		   // {
+			  //  if(this.centerY != 390)
+			  //  {
+			  //  this.centerY += 30;
+			  //  }
+			  //  this.a = false;
+			  //  var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+			  //  pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+		   // }
+	    //}
+		//if (0 in keysDown)//确定
+		//{
+		//	sound(this,11,"ok");
+		//	this.p = true;
+		//	this.exist = false;
+		//}
+		//if (2 in keysDown)//取消
+		//{
+		//	sound(this,11,"cancel");
+		//	objectif.push(new mainphase("g_title","gamephasecontroller"));
+		//	this.exist = false;
+		//}
 		break;
 		
 //		drawtext(ctxif,"TRAINING",this.centerX,this.centerY+120,"20px Verdana","crimson","center","middle",1);
@@ -236,33 +233,26 @@ interfaceobject.prototype.arcade = function()
 {
 	switch(this.counter)
 	{
-	case cased(this,0,0):
-        this.myX = 75;
-        this.myY = 15;
-        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
 
-        //if (this.identity.centerX == this.centerX && this.identity.centerY == this.centerY) {
-        //    drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-        //}
-        //else {
-        //    drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-        //}
-        //if (this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p) {
-        //    objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
-        //    this.identity.p = false;
-        //}
-        if (mouse.centerX >= this.bdy[0].bx && mouse.centerX <= this.bdy[0].bx + this.bdy[0].bw && mouse.centerY >= this.bdy[0].by && mouse.centerY <= this.bdy[0].by + this.bdy[0].bh) {
-            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-        }
-        else {
-            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-        }
-        if (mouse.centerX >= this.bdy[0].bx && mouse.centerX <= this.bdy[0].bx + this.bdy[0].bw && mouse.centerY >= this.bdy[0].by && mouse.centerY <= this.bdy[0].by + this.bdy[0].bh && this.identity.p) {
-            objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
-            this.identity.p = false;
-        }
-        
-		break;
+            if (mousejudge(this)) {
+                drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+                ctxif.beginPath();
+                ctxif.strokeStyle = "red";
+                ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
+                if (0 in keysDown && !this.identity.p)//确定
+                {
+                    sound(this, 0, "ok");
+                    objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
+                    this.identity.p = true;
+                }
+            }
+            else {
+                drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            }
+		    break;
 	}
     nextstate(this,"arcade",0,0);
 }
@@ -272,19 +262,23 @@ interfaceobject.prototype.story = function()
 	switch(this.counter)
 	{
 	case cased(this,0,0):
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY)
-		{
-		drawtext(ctxif,"STORY",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
-		}
-		else
-		{
-		drawtext(ctxif,"STORY",this.centerX,this.centerY,"20px Verdana","crimson","center","middle",1);
-		}
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p)
-		{
-		objectif.push(new mainphase("g_story","gamephasecontroller"));
-		this.identity.p = false;
-		}
+        frameplay(this, "", 0, 0, 75, 15);
+        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+        if (mousejudge(this)) {
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            ctxif.beginPath();
+            ctxif.strokeStyle = "red";
+            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
+            if (0 in keysDown && !this.identity.p)//确定
+            {
+                sound(this, 0, "ok");
+                objectif.push(new mainphase("g_story", "gamephasecontroller"));
+                this.identity.p = true;
+            }
+        }
+        else {
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+        }
 		break;
 	}
 nextstate(this,"story",0,0);
@@ -295,19 +289,23 @@ interfaceobject.prototype.vs_cpu = function()
 	switch(this.counter)
 	{
 	case cased(this,0,0):
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY)
-		{
-		drawtext(ctxif,"VS CPU",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
-		}
-		else
-		{
-		drawtext(ctxif,"VS CPU",this.centerX,this.centerY,"20px Verdana","crimson","center","middle",1);
-		}
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p)
-		{
-		objectif.push(new mainphase("g_vs_cpu","gamephasecontroller"));
-		this.identity.p = false;
-		}
+        frameplay(this, "", 0, 0, 75, 15);
+        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+        if (mousejudge(this)) {
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            ctxif.beginPath();
+            ctxif.strokeStyle = "red";
+            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
+            if (0 in keysDown && !this.identity.p)//确定
+            {
+                sound(this, 0, "ok");
+                objectif.push(new mainphase("g_vs_cpu", "gamephasecontroller"));
+                this.identity.p = true;
+            }
+        }
+        else {
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+        }
 		break;
 	}
 nextstate(this,"vs_cpu",0,0);
@@ -318,19 +316,23 @@ interfaceobject.prototype.vs_player = function()
 	switch(this.counter)
 	{
 	case cased(this,0,0):
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY)
-		{
-		drawtext(ctxif,"VS PLAYER",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
-		}
-		else
-		{
-		drawtext(ctxif,"VS PLAYER",this.centerX,this.centerY,"20px Verdana","crimson","center","middle",1);
-		}
-		if(this.identity.centerX == this.centerX && this.identity.centerY == this.centerY && this.identity.p)
-		{
-		objectif.push(new mainphase("g_vs_player","gamephasecontroller"));
-		this.identity.p = false;
-		}
+        frameplay(this, "", 0, 0, 75, 15);
+        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+        if (mousejudge(this)) {
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            ctxif.beginPath();
+            ctxif.strokeStyle = "red";
+            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
+            if (0 in keysDown && !this.identity.p)//确定
+            {
+                sound(this, 0, "ok");
+                objectif.push(new mainphase("g_vs_player", "gamephasecontroller"));
+                this.identity.p = true;
+            }
+        }
+        else {
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+        }
 		break;
 	}
 nextstate(this,"vs_player",0,0);
@@ -353,19 +355,17 @@ nextstate(this,"gametitle",0,0);
 
 interfaceobject.prototype.pressstartbutton = function()
 {
-	if (0 in keysDown)
-	{
-        sound(this,0,"ok");
-        objectif.push(new mainphase("g_menu","gamephasecontroller"));
-        this.exist = false;
-	}
+    if (0 in keysDown && !this.identity.p)
+    {
+        sound(this, 0, "ok");
+        objectif.push(new mainphase("g_menu", "gamephasecontroller"));
+        this.identity.p = true;
+    }
 	switch(this.counter)
 	{
 	    case cased(this,0,0):
-
 		    drawtext(ctxif,"Touch any place",this.centerX,this.centerY,"20px Verdana","red","center","middle",1);
-
-		    break;
+            break;
 	}
     nextstate(this,"pressstartbutton",0,0);
 }
@@ -477,86 +477,119 @@ interfaceobject.prototype.selectcharacter = function()
 	{
 	case cased(this,0,0):
 	
-			var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
-			pushtocanvas(objectif,ctxif,d1);//载入人物1
-			var d2 = new interfaceobject(this,690,250,0,0,1,"s_davis");
-			pushtocanvas(objectif,ctxif,d2);//载入人物2
-			var d3 = new interfaceobject(this,590,350,0,0,1,"s_davis");
-			pushtocanvas(objectif,ctxif,d3);//载入人物3
-			var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
-			pushtocanvas(objectif,ctxif,d4);//载入人物4
+		//var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
+		//pushtocanvas(objectif,ctxif,d1);//载入人物1
+		//var d2 = new interfaceobject(this,690,250,0,0,1,"s_davis");
+		//pushtocanvas(objectif,ctxif,d2);//载入人物2
+		//var d3 = new interfaceobject(this,590,350,0,0,1,"s_davis");
+		//pushtocanvas(objectif,ctxif,d3);//载入人物3
+		//var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
+        //pushtocanvas(objectif, ctxif, d4);//载入人物4
+
+        var d = new deck(c.width / 2, c.height / 2 + 1000);
+        d.shuffle();
+
+        d.cards[0].centerX = c.width / 2 - 40;
+        d.cards[0].centerY = 540;
+
+        d.cards[1].centerX = c.width / 2 - 20;
+        d.cards[1].centerY = 540;
+
+        d.cards[2].centerX = c.width / 2;
+        d.cards[2].centerY = 540;
+
+        d.cards[3].centerX = c.width / 2 + 20;
+        d.cards[3].centerY = 540;
+
+        d.cards[4].centerX = c.width / 2 + 40;
+        d.cards[4].centerY = 540;
+
+        d.cards[5].centerX = c.width / 2 - 40;
+        d.cards[5].centerY = 160;
+
+        d.cards[6].centerX = c.width / 2 - 20;
+        d.cards[6].centerY = 160;
+
+        d.cards[7].centerX = c.width / 2;
+        d.cards[7].centerY = 160;
+
+        d.cards[8].centerX = c.width / 2 + 20;
+        d.cards[8].centerY = 160;
+
+        d.cards[9].centerX = c.width / 2 + 40;
+        d.cards[9].centerY = 160;
+
+        d.show();
 			
-			this.centerX = 590;
-			this.centerY = 250;
-			this.a = true;
-			this.p = false;
+		this.centerX = 590;
+		this.centerY = 250;
+		this.a = true;
+		this.p = false;
 		break;
 	case cased(this,1,10):
 
 		break;
 	case cased(this,11,11):
-ctxif.beginPath();
-ctxif.strokeStyle="red";
-ctxif.strokeRect(this.centerX - 50,this.centerY - 50,100,100);
-drawtext(ctxif,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana","red","center","middle",1);
+        //ctxif.beginPath();
+        //ctxif.strokeStyle="red";
+        //ctxif.strokeRect(this.centerX - 50,this.centerY - 50,100,100);
+        //drawtext(ctxif,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana","red","center","middle",1);
 
-	if(this.a)//延迟锁
-	{
-		if (87 in keysDown)//按上
-		{
-			if(this.centerY != 250)
-			{
-			this.centerY -= 100;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-		if (83 in keysDown)//按下
-		{
-			if(this.centerY != 350)
-			{
-			this.centerY += 100;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-		if (65 in keysDown)//按左
-		{
-			if(this.centerX != 590)
-			{
-			this.centerX -= 100;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-		if (68 in keysDown)//按右
-		{
-			if(this.centerX != 690)
-			{
-			this.centerX += 100;
-			}
-			this.a = false;
-			var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-			pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-		}
-	}
-		if (0 in keysDown)//确定
-		{
-			sound(this,11,"ok");
-			this.p = true;
-			this.exist = false;
-		}
-		if (2 in keysDown)//取消
-		{
+	//if(this.a)//延迟锁
+	//{
+	//	if (87 in keysDown)//按上
+	//	{
+	//		if(this.centerY != 250)
+	//		{
+	//		this.centerY -= 100;
+	//		}
+	//		this.a = false;
+	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+	//	}
+	//	if (83 in keysDown)//按下
+	//	{
+	//		if(this.centerY != 350)
+	//		{
+	//		this.centerY += 100;
+	//		}
+	//		this.a = false;
+	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+	//	}
+	//	if (65 in keysDown)//按左
+	//	{
+	//		if(this.centerX != 590)
+	//		{
+	//		this.centerX -= 100;
+	//		}
+	//		this.a = false;
+	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+	//	}
+	//	if (68 in keysDown)//按右
+	//	{
+	//		if(this.centerX != 690)
+	//		{
+	//		this.centerX += 100;
+	//		}
+	//		this.a = false;
+	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+	//	}
+	//}
+	//	if (0 in keysDown)//确定
+	//	{
+	//		sound(this,11,"ok");
+	//		this.p = true;
+	//		this.exist = false;
+	//	}
+		if (0 in keysDown)//取消
+		{   
 			sound(this,11,"cancel");
 			objectif.push(new mainphase("g_menu","gamephasecontroller"));
 			this.exist = false;
 		}
-			break;
-
 		break;
 	}
 nextstate(this,"selectcharacter",11,11);
@@ -628,13 +661,13 @@ interfaceobject.prototype.windowvision = function()
 	{
 		if(object[i].status == "character" || object[i].status == "weapon" || object[i].status == "ball")
 		{
-if(object[i].centerY < groundvalue)
-{
-object[i].airland = "air";
-}
-else
-{
-object[i].airland = "land";
+            if(object[i].centerY < groundvalue)
+            {
+            object[i].airland = "air";
+            }
+            else
+            {
+            object[i].airland = "land";
 }
 		if(object[i].status == "character" || object[i].status == "weapon")
 		{

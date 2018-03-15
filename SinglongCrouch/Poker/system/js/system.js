@@ -150,7 +150,14 @@ mainphase.prototype.gamephasecontroller = function () {
                     pushtocanvas(objectif, ctxif, nld);//载入进度条
                     break;
                 case "g_title":
-                            deck();
+                    var d = new deck(0,0);
+                    d.shuffle();
+                    for (var i = 0; i < d.cards.length; i++) {
+                        d.cards[i].centerX = Math.random() * c.width;
+                        d.cards[i].centerY = Math.random() * c.height;
+                        d.cards[i].Alpha = Math.random();
+                    }
+                    d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
                     pushtocanvas(objectif, ctxif, gt);//载入游戏标题
                     var psb = new interfaceobject(this, 640, 370, 0, 0, 1, "pressstartbutton");
@@ -310,12 +317,14 @@ function drawpic(o, canvas) {
         }
     }
 
-    canvas.beginPath();
-    canvas.fillStyle = "yellow";
-    canvas.arc(o.centerX, o.centerY, 2, 0, 2 * Math.PI, true);
-    canvas.fill();
+    if (debug) {
+        canvas.beginPath();
+        canvas.fillStyle = "yellow";
+        canvas.arc(o.centerX, o.centerY, 2, 0, 2 * Math.PI, true);
+        canvas.fill();
+    }
 
-    if (o.status == "card" || o.status == "interface") {
+    if (debug && (o.status == "card" || o.status == "interface")) {
         canvas.beginPath();
         canvas.strokeStyle = "blue";
         canvas.moveTo(o.cx, o.cy);
@@ -602,6 +611,16 @@ function detection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
                 else
                     return true;
 
+            }
+        }
+    }
+}
+
+function mousejudge(o) {
+    for (var i = 0; i < o.bdy.length; i++) {
+        if (o.bdy[i] != undefined) {
+            if (mouse.centerX >= o.bdy[i].bx && mouse.centerX <= o.bdy[i].bx + o.bdy[i].bw && mouse.centerY >= o.bdy[i].by && mouse.centerY <= o.bdy[i].by + o.bdy[i].bh) {
+                return true;
             }
         }
     }

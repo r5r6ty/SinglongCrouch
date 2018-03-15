@@ -7,7 +7,7 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 	this.c;
 
     
-
+    this.name = "";
 	this.counter = 0;
 	this.identity = id;
 	this.pic = test;
@@ -42,11 +42,49 @@ card.prototype.render = function()
     return this.exist;
 }
 
-function deck()
+function deck(cx, cy)
 {
-    for (var i = 0; i < numerals.length * suits.length + jokers.length; i++)
+    this.centerX = cx;
+    this.centerY = cy;
+    this.cards = new Array();
+    for (var i = 0; i < numerals.length * suits.length; i++)// + jokers.length
     {
-        var xxx = new card(player1,Math.random()*1960,Math.random()*1080,0,0,1,"normal",document.getElementById("poker_" + i));
-        pushtocanvas(object,ctx,xxx);//载入玩家2；
+        var xxx = new card(player1, cx, cy, 0, 0, 1, "normal", document.getElementById("poker_" + i));
+        xxx.name = "poker_" + i;
+        this.cards.push(xxx);
+    }
+}
+
+function random(min, max) {
+    if (max == null) {
+        max = min;
+        min = 0;
+    }
+    return min + Math.floor(Math.random() * (max - min + 1));
+};
+
+function shuffleC(arr) {
+    var length = arr.length,
+        shuffled = Array(length);
+    for (var index = 0, rand; index < length; index++) {
+        rand = random(0, index);
+        if (rand !== index) shuffled[index] = shuffled[rand];
+        shuffled[rand] = arr[index];
+    }
+    return shuffled;
+}
+
+deck.prototype.render = function ()
+{
+
+}
+
+deck.prototype.shuffle = function () {
+    this.cards = shuffleC(this.cards);
+}
+
+deck.prototype.show = function () {
+    for (var i = 0; i < this.cards.length; i++) {
+        pushtocanvas(object, ctx, this.cards[i]);
     }
 }
