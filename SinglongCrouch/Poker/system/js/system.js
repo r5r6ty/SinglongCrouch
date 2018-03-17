@@ -734,6 +734,9 @@ function renderingLoop() {
             mouseDown.splice(0, mouseDown.length);
         }
 
+        player1.name = document.getElementById("player").value;
+        player2.name = document.getElementById("com").value;
+
 
         ctxbg.clearRect(0, 0, cbg.width, cbg.height);
         for (var ibg = 0; ibg < objectbg.length; ibg++) {

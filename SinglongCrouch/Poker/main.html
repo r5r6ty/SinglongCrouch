@@ -20,13 +20,15 @@
     </div>
 
     <div style="position: absolute;background:#ffff00;top: 45%;left: 0%;">
+        <input type="text" id="com" value="Meijin">
+        <input type="text" id="player" value="Ryuuou">
         <div>
             <button id="playstop" onClick="ssstop()">▎▎</button>
             <button id="playgoon" onClick="gggoon()"> ▶ </button>
             <button id="playgoonstop" onClick="gggoonstop()">▎▶</button>
         </div>
         <!--<div id="xywh">blank</div>
-        <canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;" onmousemove="cnvs_getCoordinates(event)" onclick="ctestcc()"></canvas>-->
+    <canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;" onmousemove="cnvs_getCoordinates(event)" onclick="ctestcc()"></canvas>-->
     </div>
 
     <div id="divframe" style="position: absolute;background:#ffff00;top: 20%;left: 0%;">
@@ -50,7 +52,7 @@
             <input id="isdebug" type="checkbox">Debug line
         </div>
         <div>
-            AI强度（1~5）：
+            AI强度（1~10）：
             <select id="test_AI">
                 <option>lv.1</option>
                 <option>lv.2</option>
