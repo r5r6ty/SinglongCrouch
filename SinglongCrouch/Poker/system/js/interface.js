@@ -68,7 +68,10 @@ interfaceobject.prototype.render = function()
 			break;
 		case "battleinterface":
 			this.battleinterface();//按键进入游戏
-			break;
+            break;
+        case "gameover":
+            this.gameover();//标题
+            break;
 	}
 	switch(this.state)
 	{
@@ -263,14 +266,14 @@ interfaceobject.prototype.arcade = function()
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
 
             if (ismouseclick(0)){
                 sound(this, 2, "ok");
@@ -293,30 +296,23 @@ interfaceobject.prototype.story = function()
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
                 objectif.push(new mainphase("g_story", "gamephasecontroller"));
+                this.button = false;
             }
             break;
     }
-    if (mousejudge(this)) {
-        if (ismousedown(0)) {
-            nextstate(this, "story", 0, 2);
-        } else {
-            nextstate(this, "story", 0, 1);
-        }
-    } else {
-        nextstate(this, "story", 0, 0);
-    }
+    nextstate(this, "story", 0, buttonnextstate(this, 0, 0, 1, 2));
 }
 
 interfaceobject.prototype.vs_cpu = function()
@@ -330,30 +326,23 @@ interfaceobject.prototype.vs_cpu = function()
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
                 objectif.push(new mainphase("g_vs_cpu", "gamephasecontroller"));
+                this.button = false;
             }
             break;
     }
-    if (mousejudge(this)) {
-        if (ismousedown(0)) {
-            nextstate(this, "vs_cpu", 0, 2);
-        } else {
-            nextstate(this, "vs_cpu", 0, 1);
-        }
-    } else {
-        nextstate(this, "vs_cpu", 0, 0);
-    }
+    nextstate(this, "vs_cpu", 0, buttonnextstate(this, 0, 0, 1, 2));
 }
 
 interfaceobject.prototype.vs_player = function()
@@ -367,30 +356,23 @@ interfaceobject.prototype.vs_player = function()
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
                 objectif.push(new mainphase("g_vs_player", "gamephasecontroller"));
+                this.button = false;
             }
             break;
     }
-    if (mousejudge(this)) {
-        if (ismousedown(0)) {
-            nextstate(this, "vs_player", 0, 2);
-        } else {
-            nextstate(this, "vs_player", 0, 1);
-        }
-    } else {
-        nextstate(this, "vs_player", 0, 0);
-    }
+    nextstate(this, "vs_player", 0, buttonnextstate(this, 0, 0, 1, 2));
 }
 
 
@@ -426,6 +408,37 @@ interfaceobject.prototype.pressstartbutton = function()
             break;
 	}
     nextstate(this,"pressstartbutton",0,0);
+}
+
+interfaceobject.prototype.gameover = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, c.width / 2, c.height / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, c.width, c.height));
+
+            drawtext(ctxif, "GAME OVER", this.centerX, this.centerY - 100, "200px Verdana", "red", "center", "middle", 1);
+            
+            if (player1.score > player2.score) {
+                drawtext(ctxif, player1.name + " is the winner", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
+            } else if (player1.score < player2.score) {
+                drawtext(ctxif, player2.name + " is the winner", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
+            } else {
+                drawtext(ctxif, player2.name + "Draw", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
+            }
+
+
+            if (mousejudge(this)) {
+                if (ismouseclick(0)) {
+                    sound(this, 0, "ok");
+                    objectif.push(new mainphase("g_menu", "gamephasecontroller"));
+
+                    player1.score = 0;
+                    player2.score = 0;
+                }
+            }
+            break;
+    }
+    nextstate(this, "gameover", 0, 0);
 }
 
 
@@ -531,126 +544,155 @@ nextstate(this,"",10,1000);
 
 interfaceobject.prototype.selectcharacter = function()
 {
-	switch(this.counter)
-	{
-	case cased(this,0,0):
-	
-		//var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
-		//pushtocanvas(objectif,ctxif,d1);//载入人物1
-		//var d2 = new interfaceobject(this,690,250,0,0,1,"s_davis");
-		//pushtocanvas(objectif,ctxif,d2);//载入人物2
-		//var d3 = new interfaceobject(this,590,350,0,0,1,"s_davis");
-		//pushtocanvas(objectif,ctxif,d3);//载入人物3
-		//var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
-        //pushtocanvas(objectif, ctxif, d4);//载入人物4
+    switch (this.counter) {
+        case cased(this, 0, 0):
 
-        var d = new deck(c.width / 2, c.height / 2 + 1000);
-        d.shuffle();
+            g_player1 = new arcadeobject(player1, 200, 700, 0, 0, 1, "normal");
+            pushtocanvas(objectif, ctxif, g_player1);//载入玩家1；
 
-        d.cards[0].centerX = c.width / 2 - 40;
-        d.cards[0].centerY = 540;
+            g_player2 = new arcadeobject(player2, 200, 20, 0, 0, 1, "normal");
+            pushtocanvas(objectif, ctxif, g_player2);//载入玩家2；
 
-        d.cards[1].centerX = c.width / 2 - 20;
-        d.cards[1].centerY = 540;
+            var g_controller = new arcadeobject(this, 0, 0, 0, 0, 1, "controller");
+            pushtocanvas(objectif, ctxif, g_controller);//控制器；
 
-        d.cards[2].centerX = c.width / 2;
-        d.cards[2].centerY = 540;
+            //var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
+            //pushtocanvas(objectif,ctxif,d1);//载入人物1
+            //var d2 = new interfaceobject(this,690,250,0,0,1,"s_davis");
+            //pushtocanvas(objectif,ctxif,d2);//载入人物2
+            //var d3 = new interfaceobject(this,590,350,0,0,1,"s_davis");
+            //pushtocanvas(objectif,ctxif,d3);//载入人物3
+            //var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
+            //pushtocanvas(objectif, ctxif, d4);//载入人物4
 
-        d.cards[3].centerX = c.width / 2 + 20;
-        d.cards[3].centerY = 540;
+            var d = new deck(c.width / 2, c.height / 2 + 1000);
+            d.shuffle();
 
-        d.cards[4].centerX = c.width / 2 + 40;
-        d.cards[4].centerY = 540;
+            //d.cards[0].centerX = c.width / 2 - 40;
+            //d.cards[0].centerY = 540;
 
-        d.cards[5].centerX = c.width / 2 - 40;
-        d.cards[5].centerY = 160;
+            //d.cards[1].centerX = c.width / 2 - 20;
+            //d.cards[1].centerY = 540;
 
-        d.cards[6].centerX = c.width / 2 - 20;
-        d.cards[6].centerY = 160;
+            //d.cards[2].centerX = c.width / 2;
+            //d.cards[2].centerY = 540;
 
-        d.cards[7].centerX = c.width / 2;
-        d.cards[7].centerY = 160;
+            //d.cards[3].centerX = c.width / 2 + 20;
+            //d.cards[3].centerY = 540;
 
-        d.cards[8].centerX = c.width / 2 + 20;
-        d.cards[8].centerY = 160;
+            //d.cards[4].centerX = c.width / 2 + 40;
+            //d.cards[4].centerY = 540;
 
-        d.cards[9].centerX = c.width / 2 + 40;
-        d.cards[9].centerY = 160;
+            //d.cards[5].centerX = c.width / 2 - 40;
+            //d.cards[5].centerY = 160;
 
-        d.show();
-			
-		this.centerX = 590;
-		this.centerY = 250;
-		this.a = true;
-		this.p = false;
-		break;
-	case cased(this,1,10):
+            //d.cards[6].centerX = c.width / 2 - 20;
+            //d.cards[6].centerY = 160;
 
-		break;
-	case cased(this,11,11):
-        //ctxif.beginPath();
-        //ctxif.strokeStyle="red";
-        //ctxif.strokeRect(this.centerX - 50,this.centerY - 50,100,100);
-        //drawtext(ctxif,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana","red","center","middle",1);
+            //d.cards[7].centerX = c.width / 2;
+            //d.cards[7].centerY = 160;
 
-	//if(this.a)//延迟锁
-	//{
-	//	if (87 in keysDown)//按上
-	//	{
-	//		if(this.centerY != 250)
-	//		{
-	//		this.centerY -= 100;
-	//		}
-	//		this.a = false;
-	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-	//	}
-	//	if (83 in keysDown)//按下
-	//	{
-	//		if(this.centerY != 350)
-	//		{
-	//		this.centerY += 100;
-	//		}
-	//		this.a = false;
-	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-	//	}
-	//	if (65 in keysDown)//按左
-	//	{
-	//		if(this.centerX != 590)
-	//		{
-	//		this.centerX -= 100;
-	//		}
-	//		this.a = false;
-	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-	//	}
-	//	if (68 in keysDown)//按右
-	//	{
-	//		if(this.centerX != 690)
-	//		{
-	//		this.centerX += 100;
-	//		}
-	//		this.a = false;
-	//		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-	//		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
-	//	}
-	//}
-	//	if (0 in keysDown)//确定
-	//	{
-	//		sound(this,11,"ok");
-	//		this.p = true;
-	//		this.exist = false;
-	//	}
-		if (0 in keysDown)//取消
-		{   
-			sound(this,11,"cancel");
-			objectif.push(new mainphase("g_menu","gamephasecontroller"));
-			this.exist = false;
-		}
-		break;
-	}
-nextstate(this,"selectcharacter",11,11);
+            //d.cards[8].centerX = c.width / 2 + 20;
+            //d.cards[8].centerY = 160;
+
+            //d.cards[9].centerX = c.width / 2 + 40;
+            //d.cards[9].centerY = 160;
+
+            //var www = (c.width - 81 * 13) / 14;
+            //var hhh = (c.height - 125 * 4) / 5;
+
+            var www = 10;
+            var hhh = 10;
+
+
+            var offsetx = (c.width - (www + 81) * 13) / 2;
+            var offsety = (c.height - (www + 125) * 4) / 2;
+            for (var i = 0; i < d.cards.length; i++) {
+                d.cards[i].angle = 0;
+                d.cards[i].centerX = offsetx + 81 / 2 + (81 + www) * (i % 13);
+                d.cards[i].centerY = offsety + 125 / 2 + (125 + hhh) * (i % 4);
+            }
+
+            d.show();
+
+            this.centerX = 590;
+            this.centerY = 250;
+            this.a = true;
+            this.p = false;
+            break;
+        case cased(this, 1, 10):
+
+            break;
+        case cased(this, 11, 11):
+            //ctxif.beginPath();
+            //ctxif.strokeStyle="red";
+            //ctxif.strokeRect(this.centerX - 50,this.centerY - 50,100,100);
+            //drawtext(ctxif,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana","red","center","middle",1);
+
+            //if(this.a)//延迟锁
+            //{
+            //	if (87 in keysDown)//按上
+            //	{
+            //		if(this.centerY != 250)
+            //		{
+            //		this.centerY -= 100;
+            //		}
+            //		this.a = false;
+            //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+            //		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+            //	}
+            //	if (83 in keysDown)//按下
+            //	{
+            //		if(this.centerY != 350)
+            //		{
+            //		this.centerY += 100;
+            //		}
+            //		this.a = false;
+            //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+            //		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+            //	}
+            //	if (65 in keysDown)//按左
+            //	{
+            //		if(this.centerX != 590)
+            //		{
+            //		this.centerX -= 100;
+            //		}
+            //		this.a = false;
+            //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+            //		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+            //	}
+            //	if (68 in keysDown)//按右
+            //	{
+            //		if(this.centerX != 690)
+            //		{
+            //		this.centerX += 100;
+            //		}
+            //		this.a = false;
+            //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
+            //		pushtocanvas(objectif,ctxif,_cc);//载入延迟锁计时器
+            //	}
+            //}
+            //	if (0 in keysDown)//确定
+            //	{
+            //		sound(this,11,"ok");
+            //		this.p = true;
+            //		this.exist = false;
+            //	}
+            //if (0 in keysDown)//取消
+            //{   
+            //	sound(this,11,"cancel");
+            //	objectif.push(new mainphase("g_menu","gamephasecontroller"));
+            //	this.exist = false;
+            //}
+            if (g_player1.getcards.length + g_player2.getcards.length >= 52) {
+                g_player1.identity.score = g_player1.getcards.length;
+                g_player2.identity.score = g_player2.getcards.length;
+                objectif.push(new mainphase("g_gameover", "gamephasecontroller"));
+                lockinput(true);
+            }
+            break;
+    }
+    nextstate(this, "selectcharacter", 11, 11);
 }
 
 interfaceobject.prototype.s_davis = function()

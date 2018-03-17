@@ -49,6 +49,16 @@
         <div>
             <input id="isdebug" type="checkbox">Debug line
         </div>
+        <div>
+            AI强度（1~5）：
+            <select id="test_AI">
+                <option>lv.1</option>
+                <option>lv.2</option>
+                <option>lv.3</option>
+                <option>lv.4</option>
+                <option>lv.5</option>
+            </select>
+        </div>
     </div>
 
     <div id="resource" style="position: absolute;visibility:hidden;">
@@ -62,35 +72,7 @@
              onload="picloader(this,1,2,0,25,25);">
         <img id="character_s"
              src="system/pic/character_s.png"
-             onload="picloader(this,2,1,1,100,100);">
-
-        <img id="davis0"
-             src="system/pic/davis_0.png"
-             onload="picloader(this,10,7,1,100,100);">
-        <img id="davis1"
-             src="system/pic/davis_1.png"
-             onload="picloader(this,10,7,1,100,100);">
-        <img id="davis2"
-             src="system/pic/davis_2.png"
-             onload="picloader(this,10,4,1,100,100);">
-        <img id="spark1"
-             src="system/pic/spark1.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="spark2"
-             src="system/pic/spark2.png"
-             onload="picloader(this,5,3,0,100,100);">
-        <img id="spark3"
-             src="system/pic/spark3.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="spark4"
-             src="system/pic/spark4.png"
-             onload="picloader(this,5,2,0,100,100);">
-        <img id="castle"
-             src="system/pic/castle.png"
-             onload="picloader(this,1,1,0,300,300);">
-        <img id="standing"
-             src="system/pic/standing.png"
-             onload="picloader(this,20,1,0,100,100);">-->
+             onload="picloader(this,2,1,1,100,100);">-->
 
         <audio id="ok"
                src="system/se/ok.mp3"></audio>
@@ -111,6 +93,7 @@
     <script src="system/js/system.js" charset="gbk"></script>
     <script src="system/js/interface.js" charset="gbk"></script>
     <script src="system/js/card.js"></script>
+    <script src="system/js/arcade.js"></script>
     <!--<script src="system/js/bg.js" charset="gbk"></script>
 
     <script src="system/js/beta.js" charset="gbk"></script>-->
@@ -164,6 +147,8 @@
         //var ctxtest = ctest.getContext("2d");
 
         var player1 = {
+            name: "ryuuou",
+            score: 0,
             up: 87,
             down: 83,
             left: 65,
@@ -174,6 +159,8 @@
         };
 
         var player2 = {
+            name: "meijin",
+            score: 0,
             up: 38,
             down: 40,
             left: 37,
@@ -184,6 +171,9 @@
         };
         //按键设置
 
+        var g_player1 = undefined;
+        var g_player2 = undefined;
+
         var mouse = { centerX: 0, centerY: 0 };
 
         var ctestswitch = 0;
@@ -193,17 +183,18 @@
         var c2y = 0;
 
         var gameplay = 0;
+        var caninput = true;
 
         objectif.push(new mainphase("g_nowloading", "gamephasecontroller"));//载入Nowloading
 
         var mouseDown = new Array();;
         var keysDown = {};
-        //addEventListener("keydown", function (e) {
-        //    keysDown[e.keyCode] = 0;
-        //}, false);
-        //addEventListener("keyup", function (e) {
-        //    delete keysDown[e.keyCode];
-        //}, false);
+        addEventListener("keydown", function (e) {
+            keysDown[e.keyCode] = 0;
+        }, false);
+        addEventListener("keyup", function (e) {
+            delete keysDown[e.keyCode];
+        }, false);
         addEventListener("mousemove", function (e) {
             cnvs_getCoordinates(e.clientX, e.clientY);
         }, false);
@@ -211,7 +202,9 @@
             mouseDown[e.button] = 1;
         }, false);
         addEventListener("mouseup", function (e) {
-            mouseDown[e.button] = 4;
+            if (mouseDown[e.button] >= 3) {
+                mouseDown[e.button] = 4;
+            }
         }, false);
         addEventListener("touchmove", function (e) {
             e.preventDefault();
@@ -224,7 +217,9 @@
             mouseDown[e.button] = 1;
         }, false);
         addEventListener("touchend", function (e) {
-            mouseDown[e.button] = 4;
+            if (mouseDown[e.button] >= 3) {
+                mouseDown[e.button] = 4;
+            }
         }, false);
         //未压下=undefined
         //刚压下=2

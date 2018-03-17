@@ -181,6 +181,10 @@ mainphase.prototype.gamephasecontroller = function () {
                     var bi = new interfaceobject(this, 0, 0, 0, 0, 1, "battleinterface");
                     pushtocanvas(objectif, ctxif, bi);//载入对战画面
                     break;
+                case "g_gameover":
+                    var go = new interfaceobject(this, c.width / 2, c.height / 2, 0, 0, 1, "gameover");
+                    pushtocanvas(objectif, ctxif, go);//gameover
+                    break;
                 default:
                     break;
             }
@@ -339,45 +343,50 @@ function drawpic(o, canvas) {
     }
 
     if (debug && (o.status == "card" || o.status == "interface")) {
-        canvas.beginPath();
-        canvas.strokeStyle = "blue";
-        canvas.moveTo(o.cx, o.cy);
-        canvas.lineTo(o.cx + o.cw, o.cy);
-        canvas.lineTo(o.cx + o.cw, o.cy + o.ch);
-        canvas.lineTo(o.cx, o.cy + o.ch);
-        canvas.closePath();
-        canvas.stroke();
-        for (var i = 0; i < o.bdy.length; i++) {
-            if (o.bdy[i] != undefined) {
-                canvas.beginPath();
-                canvas.strokeStyle = "green";
-                canvas.moveTo(o.bdy[i].bx, o.bdy[i].by);
-                canvas.lineTo(o.bdy[i].bx + o.bdy[i].bw, o.bdy[i].by);
-                canvas.lineTo(o.bdy[i].bx + o.bdy[i].bw, o.bdy[i].by + o.bdy[i].bh);
-                canvas.lineTo(o.bdy[i].bx, o.bdy[i].by + o.bdy[i].bh);
-                canvas.closePath();
-                canvas.stroke();
+        //canvas.beginPath();
+        //canvas.strokeStyle = "blue";
+        //canvas.moveTo(o.cx, o.cy);
+        //canvas.lineTo(o.cx + o.cw, o.cy);
+        //canvas.lineTo(o.cx + o.cw, o.cy + o.ch);
+        //canvas.lineTo(o.cx, o.cy + o.ch);
+        //canvas.closePath();
+        //canvas.stroke();
+        if (o.bdy != undefined) {
+            for (var i = 0; i < o.bdy.length; i++) {
+                if (o.bdy[i] != undefined) {
+                    canvas.beginPath();
+                    canvas.strokeStyle = "green";
+                    canvas.moveTo(o.bdy[i].bx, o.bdy[i].by);
+                    canvas.lineTo(o.bdy[i].bx + o.bdy[i].bw, o.bdy[i].by);
+                    canvas.lineTo(o.bdy[i].bx + o.bdy[i].bw, o.bdy[i].by + o.bdy[i].bh);
+                    canvas.lineTo(o.bdy[i].bx, o.bdy[i].by + o.bdy[i].bh);
+                    canvas.closePath();
+                    canvas.stroke();
+                }
             }
-        }
-        //if (o.bdy.length != 0) {
-        //    o.bdy = [];
-        //}
 
-        for (var j = 0; j < o.itr.length; j++) {
-            if (o.itr[j] != undefined) {
-                canvas.beginPath();
-                canvas.strokeStyle = "red";
-                canvas.moveTo(o.itr[j].ix, o.itr[j].iy);
-                canvas.lineTo(o.itr[j].ix + o.itr[j].iw, o.itr[j].iy);
-                canvas.lineTo(o.itr[j].ix + o.itr[j].iw, o.itr[j].iy + o.itr[j].ih);
-                canvas.lineTo(o.itr[j].ix, o.itr[j].iy + o.itr[j].ih);
-                canvas.closePath();
-                canvas.stroke();
-            }
+            //if (o.bdy.length != 0) {
+            //    o.bdy = [];
+            //}
         }
+
+        if (o.itr != undefined) {
+            for (var j = 0; j < o.itr.length; j++) {
+                if (o.itr[j] != undefined) {
+                    canvas.beginPath();
+                    canvas.strokeStyle = "red";
+                    canvas.moveTo(o.itr[j].ix, o.itr[j].iy);
+                    canvas.lineTo(o.itr[j].ix + o.itr[j].iw, o.itr[j].iy);
+                    canvas.lineTo(o.itr[j].ix + o.itr[j].iw, o.itr[j].iy + o.itr[j].ih);
+                    canvas.lineTo(o.itr[j].ix, o.itr[j].iy + o.itr[j].ih);
+                    canvas.closePath();
+                    canvas.stroke();
+                }
+            }
         //if (o.itr.length != 0) {
         //    o.itr = [];
         //}
+        }
     }
 
 
@@ -696,20 +705,34 @@ function ismouseclick(button) {
     }
 }
 
+function lockinput(l) {
+    caninput = l;
+}
+
 function renderingLoop() {
+
+    //if (87 in keysDown) {
+    //    gameplay = 2;
+    //}
+
     if (gameplay == 0 || gameplay == 1) {
 
-        var loop = mouseDown.length;
-        for (var m = 0; m < loop; m++) {
-            if (mouseDown[m] > 4) {
-                delete mouseDown[m];
-                mouseDown.splice(m, 1);
-                m -= 1;    //改变循环变量  
-                loop -= 1;   //改变循环次数  
-            } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
-                mouseDown[m] += 1;
+        if (caninput) {
+            var loop = mouseDown.length;
+            for (var m = 0; m < loop; m++) {
+                if (mouseDown[m] > 4) {
+                    delete mouseDown[m];
+                    mouseDown.splice(m, 1);
+                    m -= 1;    //改变循环变量  
+                    loop -= 1;   //改变循环次数  
+                } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
+                    mouseDown[m] += 1;
+                }
             }
+        } else {
+            mouseDown.splice(0, mouseDown.length);
         }
+
 
         ctxbg.clearRect(0, 0, cbg.width, cbg.height);
         for (var ibg = 0; ibg < objectbg.length; ibg++) {

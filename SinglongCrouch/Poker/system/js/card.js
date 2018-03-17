@@ -31,9 +31,9 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 	
 	this.direction = 1;
 
-    this.speed = Math.random();
+    this.speed = 1;
 
-    this.angel = 90;
+    this.angle = 90;
 }
 
 card.prototype.render = function()
@@ -41,10 +41,27 @@ card.prototype.render = function()
     this.bdy.splice(0, this.bdy.length);//清空bdy
     this.itr.splice(0, this.itr.length);//清空itr
 
-    var sine = Math.sin(Math.PI / 180 * this.angel);
+    switch (this.state) {
+        case "normal":
+            this.normal();
+            break;
+        //case "X_rolling":
+        //    this.X_rolling();
+        //    break;
+        case "Y_rolling":
+            this.Y_rolling();
+            break;
+        case "back":
+            this.back();
+            break;
+        case "open":
+            this.open();
+            break;
+    }
 
-    if (sine < 0)
-    {
+    var sine = Math.sin(Math.PI / 180 * (this.angle - 90));
+
+    if (sine < 0) {
         this.pic = document.getElementById("poker_64");
         sine = Math.abs(sine);
     }
@@ -54,20 +71,84 @@ card.prototype.render = function()
 
     this.scaleX = sine;
 
-    this.angel += 5 * this.speed;
-
-    if (this.angel >= 360) {
-        this.angel -= 360;
+    if (this.angle >= 360) {
+        this.angle -= 360;
     }
-    else if (this.angel <= -360) {
-        this.angel += 360;
+    else if (this.angle <= -360) {
+        this.angle += 360;
     }
 
-    this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
-    drawpic(this,this.c);
+    drawpic(this, this.c);
 
     this.counter += 1;
     return this.exist;
+}
+
+card.prototype.normal = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+            break;
+    }
+    nextstate(this, "normal", 0, 0);
+}
+
+card.prototype.Y_rolling = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            var sine = Math.sin(Math.PI / 180 * (this.angle - 90));
+            this.angle += 1 + 4 * this.speed * Math.random();
+            this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+            break;
+    }
+    nextstate(this, "Y_rolling", 0, 0);
+}
+
+card.prototype.back = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+            if (this.angle < 0) {
+                this.angle += this.speed * 5;
+                if (this.angle > 0) {
+                    this.angel = 0;
+                }
+            } else if (this.angle > 0) {
+                this.angle -= this.speed * 5;
+                if (this.angle < 0) {
+                    this.angel = 0;
+                }
+            }
+
+            if (mousejudge(this)) {
+                if (ismouseclick(0)) {
+                    this.state = "open";
+                    this.counter = 0 - 1;
+                }
+            }
+            break;
+    }
+    nextstate(this, "back", 0, 0);
+}
+
+card.prototype.open = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+            if (this.angle < 180) {
+                this.angle += this.speed * 5;
+                if (this.angle > 180) {
+                    this.angel = 180;
+                }
+            } else if (this.angle > 180) {
+                this.angle -= this.speed * 5;
+                if (this.angle < 180) {
+                    this.angel = 180;
+                }
+            }
+            break;
+    }
+    nextstate(this, "open", 0, 0);
 }
 
 function deck(cx, cy)
@@ -77,7 +158,7 @@ function deck(cx, cy)
     this.cards = new Array();
     for (var i = 0; i < numerals.length * suits.length; i++)// + jokers.length
     {
-        var xxx = new card(player1, cx, cy, 0, 0, 1, "normal", document.getElementById("poker_" + i));
+        var xxx = new card(player1, cx, cy, 0, 0, 1, "back", document.getElementById("poker_" + i));
         xxx.name = "poker_" + i;
         this.cards.push(xxx);
     }
