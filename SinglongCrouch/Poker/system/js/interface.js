@@ -1,4 +1,22 @@
-function interfaceobject(id,cx,cy,acx,acy,alpha,s)
+function buttonnextstate(o,button, up, on, down) {
+    var state = up;
+    if (mousejudge(o)) {
+        if (ismouseondown(button) || o.button) {
+            state = down;
+            o.button = true;
+        } else {
+            state = on;
+        }
+    } else {
+        state = up;
+        if (ismouseup(button)) {
+            o.button = false;
+        }
+    }
+    return state;
+}
+
+function interfaceobject(id, cx, cy, acx, acy, alpha, s)
 {
 	this.c;
 
@@ -257,25 +275,11 @@ interfaceobject.prototype.arcade = function()
             if (ismouseclick(0)){
                 sound(this, 2, "ok");
                 objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
+                this.button = false;
             }
             break;
     }
-
-    var state = 0;
-    if (mousejudge(this)) {
-        if (ismouseondown(0) || this.button) {
-            state = 2;
-            this.button = true;
-        } else {
-            state = this.counter;
-        }
-    } else {
-        state = 0;
-        if (ismouseup(0)) {
-            this.button = false;
-        }
-    }
-    nextstate(this, "arcade", 0, state);
+    nextstate(this, "arcade", 0, buttonnextstate(this, 0, 0, 1, 2));
 }
 
 interfaceobject.prototype.story = function()

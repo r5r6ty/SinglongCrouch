@@ -699,10 +699,13 @@ function ismouseclick(button) {
 function renderingLoop() {
     if (gameplay == 0 || gameplay == 1) {
 
-        for (var m = 0; m < mouseDown.length; m++) {
+        var loop = mouseDown.length;
+        for (var m = 0; m < loop; m++) {
             if (mouseDown[m] > 4) {
                 delete mouseDown[m];
                 mouseDown.splice(m, 1);
+                m -= 1;    //改变循环变量  
+                loop -= 1;   //改变循环次数  
             } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
                 mouseDown[m] += 1;
             }
