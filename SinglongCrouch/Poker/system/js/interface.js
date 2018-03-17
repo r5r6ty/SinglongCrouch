@@ -432,8 +432,8 @@ interfaceobject.prototype.gameover = function () {
                     sound(this, 0, "ok");
                     objectif.push(new mainphase("g_menu", "gamephasecontroller"));
 
-                    player1.score = 0;
-                    player2.score = 0;
+                    //player1.score = 0;
+                    //player2.score = 0;
                 }
             }
             break;

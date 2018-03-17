@@ -125,7 +125,7 @@ arcadeobject.prototype.controller = function () {
                         while (!(f + 13 == s || f + 13 * 2 == s || f + 13 * 3 == s || f - 13 == s || f - 13 * 2 == s || f - 13 * 3 == s)) {
                             c = arr[random(0, arr.length - 1)];
                             s = Number(c.name.split("_", 2)[1]);
-                            if (!getRandom(level / 5)) {
+                            if (!getRandom(level / 10)) {
                                 break;
                             }
                         }
