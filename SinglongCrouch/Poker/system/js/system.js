@@ -150,12 +150,13 @@ mainphase.prototype.gamephasecontroller = function () {
                     pushtocanvas(objectif, ctxif, nld);//载入进度条
                     break;
                 case "g_title":
-                    var d = new deck(0,0);
+                    var d = new deck(0, 0, "Y_rolling");
                     d.shuffle();
                     for (var i = 0; i < d.cards.length; i++) {
                         d.cards[i].centerX = Math.random() * c.width;
                         d.cards[i].centerY = Math.random() * c.height;
                         d.cards[i].Alpha = Math.random();
+                        d.cards[i].speed = 5 * Math.random();
                     }
                     d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");

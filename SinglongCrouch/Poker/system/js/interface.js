@@ -565,7 +565,7 @@ interfaceobject.prototype.selectcharacter = function()
             //var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
             //pushtocanvas(objectif, ctxif, d4);//‘ÿ»Î»ÀŒÔ4
 
-            var d = new deck(c.width / 2, c.height / 2 + 1000);
+            var d = new deck(c.width / 2, c.height / 2, "back");
             d.shuffle();
 
             //d.cards[0].centerX = c.width / 2 - 40;

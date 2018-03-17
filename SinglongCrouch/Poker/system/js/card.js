@@ -97,7 +97,7 @@ card.prototype.Y_rolling = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             var sine = Math.sin(Math.PI / 180 * (this.angle - 90));
-            this.angle += 1 + 4 * this.speed * Math.random();
+            this.angle += 1 + this.speed;
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
             break;
     }
@@ -109,12 +109,12 @@ card.prototype.back = function () {
         case cased(this, 0, 0):
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
             if (this.angle < 0) {
-                this.angle += this.speed * 5;
+                this.angle += 5;
                 if (this.angle > 0) {
                     this.angel = 0;
                 }
             } else if (this.angle > 0) {
-                this.angle -= this.speed * 5;
+                this.angle -= 5;
                 if (this.angle < 0) {
                     this.angel = 0;
                 }
@@ -136,12 +136,12 @@ card.prototype.open = function () {
         case cased(this, 0, 0):
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
             if (this.angle < 180) {
-                this.angle += this.speed * 5;
+                this.angle += 5;
                 if (this.angle > 180) {
                     this.angel = 180;
                 }
             } else if (this.angle > 180) {
-                this.angle -= this.speed * 5;
+                this.angle -= 5;
                 if (this.angle < 180) {
                     this.angel = 180;
                 }
@@ -151,14 +151,14 @@ card.prototype.open = function () {
     nextstate(this, "open", 0, 0);
 }
 
-function deck(cx, cy)
+function deck(cx, cy, s)
 {
     this.centerX = cx;
     this.centerY = cy;
     this.cards = new Array();
     for (var i = 0; i < numerals.length * suits.length; i++)// + jokers.length
     {
-        var xxx = new card(player1, cx, cy, 0, 0, 1, "back", document.getElementById("poker_" + i));
+        var xxx = new card(player1, cx, cy, 0, 0, 1, s, document.getElementById("poker_" + i));
         xxx.name = "poker_" + i;
         this.cards.push(xxx);
     }
