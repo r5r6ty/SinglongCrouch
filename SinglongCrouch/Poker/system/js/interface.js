@@ -423,7 +423,7 @@ interfaceobject.prototype.gameover = function () {
             } else if (player1.score < player2.score) {
                 drawtext(ctxif, player2.name + " is the winner", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
             } else {
-                drawtext(ctxif, player2.name + "Draw", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
+                drawtext(ctxif, "Draw", this.centerX, this.centerY + 50, "50px Verdana", "red", "center", "middle", 1);
             }
 
 

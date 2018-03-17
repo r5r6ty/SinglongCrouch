@@ -776,8 +776,6 @@ function renderingLoop() {
     document.getElementById("demo11").innerHTML = "objectbg数量：" + objectbg.length;
     document.getElementById("demo14").innerHTML = "objectif数量：" + objectif.length;
 
-    document.getElementById("demo13").innerHTML = mouseDown[0];
-
 
     //mainloop
 

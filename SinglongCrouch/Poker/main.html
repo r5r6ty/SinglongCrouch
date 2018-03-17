@@ -195,17 +195,6 @@
         //addEventListener("keyup", function (e) {
         //    delete keysDown[e.keyCode];
         //}, false);
-        addEventListener("mousemove", function (e) {
-            cnvs_getCoordinates(e.clientX, e.clientY);
-        }, false);
-        addEventListener("mousedown", function (e) {
-            mouseDown[e.button] = 1;
-        }, false);
-        addEventListener("mouseup", function (e) {
-            if (mouseDown[e.button] >= 3) {
-                mouseDown[e.button] = 4;
-            }
-        }, false);
         addEventListener("touchmove", function (e) {
             //e.preventDefault();
             var touch = e.touches[0]; //获取第一个触点
@@ -217,6 +206,17 @@
             mouseDown[e.button] = 1;
         }, false);
         addEventListener("touchend", function (e) {
+            if (mouseDown[e.button] >= 3) {
+                mouseDown[e.button] = 4;
+            }
+        }, false);
+        addEventListener("mousemove", function (e) {
+            cnvs_getCoordinates(e.clientX, e.clientY);
+        }, false);
+        addEventListener("mousedown", function (e) {
+            mouseDown[e.button] = 1;
+        }, false);
+        addEventListener("mouseup", function (e) {
             if (mouseDown[e.button] >= 3) {
                 mouseDown[e.button] = 4;
             }
