@@ -21,7 +21,9 @@ function interfaceobject(id,cx,cy,acx,acy,alpha,s)
 	this.bdy = new Array();
 	this.itr = new Array();
 	
-	this.direction = 1;
+    this.direction = 1;
+
+    this.button = false;
 }
 
 interfaceobject.prototype.render = function()
@@ -238,110 +240,153 @@ interfaceobject.prototype.arcade = function()
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 75, 15);
             this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            break;
+        case cased(this, 1, 1):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            break;
+        case cased(this, 2, 2):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
 
-            if (mousejudge(this))
-            {
-                drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-                ctxif.beginPath();
-                ctxif.strokeStyle = "red";
-                ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
-                if (0 in keysDown && !this.identity.p)//确定
-                {
-                    sound(this, 0, "ok");
-                    objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
-                    this.identity.p = true;
-                }
+            if (ismouseclick(0)){
+                sound(this, 2, "ok");
+                objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
             }
-            else {
-                drawtext(ctxif, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-            }
-		    break;
-	}
-    nextstate(this,"arcade",0,0);
+            break;
+    }
+
+    var state = 0;
+    if (mousejudge(this)) {
+        if (ismouseondown(0) || this.button) {
+            state = 2;
+            this.button = true;
+        } else {
+            state = this.counter;
+        }
+    } else {
+        state = 0;
+        if (ismouseup(0)) {
+            this.button = false;
+        }
+    }
+    nextstate(this, "arcade", 0, state);
 }
 
 interfaceobject.prototype.story = function()
 {
-	switch(this.counter)
-	{
-	case cased(this,0,0):
-        frameplay(this, "", 0, 0, 75, 15);
-        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-        if (mousejudge(this))
-        {
-            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            ctxif.beginPath();
-            ctxif.strokeStyle = "red";
-            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
-            if (0 in keysDown && !this.identity.p)//确定
-            {
-                sound(this, 0, "ok");
-                objectif.push(new mainphase("g_story", "gamephasecontroller"));
-                this.identity.p = true;
-            }
-        }
-        else {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
             drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            break;
+        case cased(this, 1, 1):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            break;
+        case cased(this, 2, 2):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "STORY", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+
+            if (ismouseclick(0)) {
+                sound(this, 2, "ok");
+                objectif.push(new mainphase("g_story", "gamephasecontroller"));
+            }
+            break;
+    }
+    if (mousejudge(this)) {
+        if (ismousedown(0)) {
+            nextstate(this, "story", 0, 2);
+        } else {
+            nextstate(this, "story", 0, 1);
         }
-		break;
-	}
-nextstate(this,"story",0,0);
+    } else {
+        nextstate(this, "story", 0, 0);
+    }
 }
 
 interfaceobject.prototype.vs_cpu = function()
 {
-	switch(this.counter)
-	{
-	case cased(this,0,0):
-        frameplay(this, "", 0, 0, 75, 15);
-        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-        if (mousejudge(this))
-        {
-            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            ctxif.beginPath();
-            ctxif.strokeStyle = "red";
-            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
-            if (0 in keysDown && !this.identity.p)//确定
-            {
-                sound(this, 0, "ok");
-                objectif.push(new mainphase("g_vs_cpu", "gamephasecontroller"));
-                this.identity.p = true;
-            }
-        }
-        else {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
             drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            break;
+        case cased(this, 1, 1):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            break;
+        case cased(this, 2, 2):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "VS CPU", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+
+            if (ismouseclick(0)) {
+                sound(this, 2, "ok");
+                objectif.push(new mainphase("g_vs_cpu", "gamephasecontroller"));
+            }
+            break;
+    }
+    if (mousejudge(this)) {
+        if (ismousedown(0)) {
+            nextstate(this, "vs_cpu", 0, 2);
+        } else {
+            nextstate(this, "vs_cpu", 0, 1);
         }
-		break;
-	}
-nextstate(this,"vs_cpu",0,0);
+    } else {
+        nextstate(this, "vs_cpu", 0, 0);
+    }
 }
 
 interfaceobject.prototype.vs_player = function()
 {
-	switch(this.counter)
-	{
-	case cased(this,0,0):
-        frameplay(this, "", 0, 0, 75, 15);
-        this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-        if (mousejudge(this))
-        {
-            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
-            ctxif.beginPath();
-            ctxif.strokeStyle = "red";
-            ctxif.strokeRect(this.centerX - 75, this.centerY - 15, 150, 30);
-            if (0 in keysDown && !this.identity.p)//确定
-            {
-                sound(this, 0, "ok");
-                objectif.push(new mainphase("g_vs_player", "gamephasecontroller"));
-                this.identity.p = true;
-            }
-        }
-        else {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
             drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            break;
+        case cased(this, 1, 1):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "pink", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "pink", 0.5);
+            break;
+        case cased(this, 2, 2):
+            frameplay(this, "", 0, 0, 75, 15);
+            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
+            drawtext(ctxif, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "yellow", "center", "middle", 1);
+            drawfillrect(ctxif, this.centerX - 75, this.centerY - 15, 150, 30, "yellow", 0.5);
+
+            if (ismouseclick(0)) {
+                sound(this, 2, "ok");
+                objectif.push(new mainphase("g_vs_player", "gamephasecontroller"));
+            }
+            break;
+    }
+    if (mousejudge(this)) {
+        if (ismousedown(0)) {
+            nextstate(this, "vs_player", 0, 2);
+        } else {
+            nextstate(this, "vs_player", 0, 1);
         }
-		break;
-	}
-nextstate(this,"vs_player",0,0);
+    } else {
+        nextstate(this, "vs_player", 0, 0);
+    }
 }
 
 
@@ -363,17 +408,15 @@ interfaceobject.prototype.pressstartbutton = function()
 {
 	switch(this.counter)
 	{
-	    case cased(this,0,0):
-            drawtext(ctxif, "Touch any place", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-
+        case cased(this, 0, 0):
             frameplay(this, "", 0, 0, c.width / 2, c.height / 2);
             this.bdy.push(new bdyrange(this, 0, 0, c.width, c.height));
-            if (mousejudge(this))
-            {
-                if (0 in keysDown && !this.identity.p) {
+            drawtext(ctxif, "Click anywhere to start", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+
+            if (mousejudge(this)) {
+                if (ismouseclick(0)) {
                     sound(this, 0, "ok");
                     objectif.push(new mainphase("g_menu", "gamephasecontroller"));
-                    this.identity.p = true;
                 }
             }
             break;

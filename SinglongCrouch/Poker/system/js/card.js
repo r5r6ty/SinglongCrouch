@@ -56,10 +56,10 @@ card.prototype.render = function()
 
     this.angel += 5 * this.speed;
 
-    if (this.angel > 360) {
+    if (this.angel >= 360) {
         this.angel -= 360;
     }
-    else if (this.angel < -360) {
+    else if (this.angel <= -360) {
         this.angel += 360;
     }
 

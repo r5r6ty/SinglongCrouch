@@ -1,4 +1,4 @@
-function cnvs_getCoordinates(e) {
+function cnvs_getCoordinates(x, y) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
@@ -8,53 +8,53 @@ function cnvs_getCoordinates(e) {
     var y2 = c.offsetTop;
     var sl = document.documentElement.scrollLeft;
     var st = document.documentElement.scrollTop;
-    mouse.centerX = e.clientX - x1 - x2 + sl;
-    mouse.centerY = e.clientY - y1 - y2 + st;
+    mouse.centerX = x - x1 - x2 + sl;
+    mouse.centerY = y - y1 - y2 + st;
 
-    if (ctestswitch == 1) {
-        ctxtest.clearRect(0, 0, ctest.width, ctest.height);
+    //if (ctestswitch == 1) {
+    //    ctxtest.clearRect(0, 0, ctest.width, ctest.height);
 
-        ctxtest.drawImage(g_player1.pic, 0, 0);
+    //    ctxtest.drawImage(g_player1.pic, 0, 0);
 
-        ctxtest.beginPath();
-        ctxtest.font = "20px Verdana";
-        ctxtest.fillStyle = "white";
-        ctxtest.textAlign = "left";
-        ctxtest.textBaseline = "top";
-        ctxtest.fillText("(" + c1x + "," + c1y + ")", c1x, c1y);
+    //    ctxtest.beginPath();
+    //    ctxtest.font = "20px Verdana";
+    //    ctxtest.fillStyle = "white";
+    //    ctxtest.textAlign = "left";
+    //    ctxtest.textBaseline = "top";
+    //    ctxtest.fillText("(" + c1x + "," + c1y + ")", c1x, c1y);
 
-        ctxtest.beginPath();
-        ctxtest.strokeStyle = "red";
-        ctxtest.rect(c1x, c1y, mouse.centerX - c1x, mouse.centerY - c1y);
-        ctxtest.stroke()
-    }
-    if (ctestswitch == 2) {
-        ctxtest.clearRect(0, 0, ctest.width, ctest.height);
+    //    ctxtest.beginPath();
+    //    ctxtest.strokeStyle = "red";
+    //    ctxtest.rect(c1x, c1y, mouse.centerX - c1x, mouse.centerY - c1y);
+    //    ctxtest.stroke()
+    //}
+    //if (ctestswitch == 2) {
+    //    ctxtest.clearRect(0, 0, ctest.width, ctest.height);
 
-        ctxtest.drawImage(g_player1.pic, 0, 0);
+    //    ctxtest.drawImage(g_player1.pic, 0, 0);
 
-        ctxtest.beginPath();
-        ctxtest.font = "20px Verdana";
-        ctxtest.fillStyle = "white";
-        ctxtest.textAlign = "left";
-        ctxtest.textBaseline = "top";
-        ctxtest.fillText("(" + c1x + "," + c1y + ")", c1x, c1y);
+    //    ctxtest.beginPath();
+    //    ctxtest.font = "20px Verdana";
+    //    ctxtest.fillStyle = "white";
+    //    ctxtest.textAlign = "left";
+    //    ctxtest.textBaseline = "top";
+    //    ctxtest.fillText("(" + c1x + "," + c1y + ")", c1x, c1y);
 
-        ctxtest.beginPath();
-        ctxtest.font = "20px Verdana";
-        ctxtest.fillStyle = "white";
-        ctxtest.textAlign = "right";
-        ctxtest.textBaseline = "bottom";
-        ctxtest.fillText("(" + c2x + "," + c2y + ")", c2x, c2y);
+    //    ctxtest.beginPath();
+    //    ctxtest.font = "20px Verdana";
+    //    ctxtest.fillStyle = "white";
+    //    ctxtest.textAlign = "right";
+    //    ctxtest.textBaseline = "bottom";
+    //    ctxtest.fillText("(" + c2x + "," + c2y + ")", c2x, c2y);
 
-        ctxtest.beginPath();
-        ctxtest.strokeStyle = "red";
-        ctxtest.rect(c1x, c1y, c2x - c1x, c2y - c1y);
-        ctxtest.stroke()
+    //    ctxtest.beginPath();
+    //    ctxtest.strokeStyle = "red";
+    //    ctxtest.rect(c1x, c1y, c2x - c1x, c2y - c1y);
+    //    ctxtest.stroke()
 
-        ctestswitch = 0;
-        document.getElementById("xywh").innerHTML = c1x + " " + c1y + " " + (c2x - c1x) + " " + (c2y - c1y);
-    }
+    //    ctestswitch = 0;
+    //    document.getElementById("xywh").innerHTML = c1x + " " + c1y + " " + (c2x - c1x) + " " + (c2y - c1y);
+    //}
 
     document.getElementById("demo5").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
 }
@@ -160,7 +160,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
                     pushtocanvas(objectif, ctxif, gt);//载入游戏标题
-                    var psb = new interfaceobject(this, 640, 370, 0, 0, 1, "pressstartbutton");
+                    var psb = new interfaceobject(this, 640, c.height / 2, 0, 0, 1, "pressstartbutton");
                     pushtocanvas(objectif, ctxif, psb);//载入press start button
                     break;
                 case "g_menu":
@@ -290,6 +290,18 @@ function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha) {
     canvas.fillStyle = color;
     canvas.globalAlpha = alpha;
     canvas.fillText(text, Math.round(x), Math.round(y));
+    canvas.restore();
+}
+
+function drawfillrect(canvas, x, y, width, height, color, alpha) {
+    canvas.save();
+    if (canvas != ctxif) {
+        canvas.translate(Math.round(-visualX), Math.round(-visualY));
+    }
+    canvas.beginPath();
+    canvas.fillStyle = color;
+    canvas.globalAlpha = alpha;
+    canvas.fillRect(x, y, width, height);
     canvas.restore();
 }
 
@@ -652,8 +664,49 @@ function sound(o, f, s) {
     }
 }
 
+function ismouseup(button) {
+    if (button in mouseDown && (mouseDown[button] == undefined || mouseDown[button] == 5)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ismouseondown(button) {
+    if (button in mouseDown && (mouseDown[button] == 2)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ismousedown(button) {
+    if (button in mouseDown && (mouseDown[button] == 3)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ismouseclick(button) {
+    if (button in mouseDown && (mouseDown[button] == 5)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function renderingLoop() {
     if (gameplay == 0 || gameplay == 1) {
+
+        for (var m = 0; m < mouseDown.length; m++) {
+            if (mouseDown[m] > 4) {
+                delete mouseDown[m];
+                mouseDown.splice(m, 1);
+            } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
+                mouseDown[m] += 1;
+            }
+        }
 
         ctxbg.clearRect(0, 0, cbg.width, cbg.height);
         for (var ibg = 0; ibg < objectbg.length; ibg++) {
