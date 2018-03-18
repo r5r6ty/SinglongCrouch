@@ -674,6 +674,20 @@ function sound(o, f, s) {
     }
 }
 
+//判断是否支持触摸事件
+function isTouchDevice() {
+    document.getElementById("version").innerHTML = navigator.appVersion;
+    try {
+        document.createEvent("TouchEvent");
+        document.getElementById("demo16").innerHTML = "支持TouchEvent事件！";
+
+        return true;
+    } catch (e) {
+        document.getElementById("demo16").innerHTML = "不支持TouchEvent事件！";
+        return false;
+    }
+}
+
 function ismouseup(button) {
     if (button in mouseDown && (mouseDown[button] == undefined || mouseDown[button] == 5)) {
         return true;

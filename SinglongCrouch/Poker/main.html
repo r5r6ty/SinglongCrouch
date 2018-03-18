@@ -15,6 +15,7 @@
         <canvas id="interface" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:crosshair;"></canvas>
 
         <div id="bstate" style="font-size:10px;line-height:20px;position: absolute;left: 50%;margin-left: -640px;background:#ffff00;height:20px;top: 700px">
+        <div id="version" style="position:absolute;top: 720px"></div>
         </div>
 
     </div>
@@ -199,7 +200,7 @@
 
         var mouseDown = new Array();;
         var keysDown = {};
-        if (document.hasOwnProperty("touchstart") || document.hasOwnProperty("touchmove") || document.hasOwnProperty("touchend")) {//判断是否支持触屏，优先使用触屏
+        if (isTouchDevice()) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
                 mouseDown[e.button] = 1;
                 document.getElementById("demo15").innerHTML = "touchstart";
@@ -218,7 +219,6 @@
                 }
                 document.getElementById("demo15").innerHTML = "touchend";
             }, false);
-            document.getElementById("demo16").innerHTML = "触屏！";
         } else {
             //addEventListener("keydown", function (e) {
             //    keysDown[e.keyCode] = 0;
@@ -240,7 +240,6 @@
                 }
                 document.getElementById("demo15").innerHTML = "mouseup";
             }, false);
-            document.getElementById("demo16").innerHTML = "键鼠！";
         }
         //未压下=undefined
         //刚压下=2
