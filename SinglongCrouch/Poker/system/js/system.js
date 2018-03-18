@@ -679,11 +679,11 @@ function isTouchDevice() {
     document.getElementById("version").innerHTML = navigator.appVersion;
     try {
         document.createEvent("TouchEvent");
-        document.getElementById("demo16").innerHTML = "支持TouchEvent事件！";
+        document.getElementById("demo16").innerHTML = "TouchEvent ok!";
 
         return true;
     } catch (e) {
-        document.getElementById("demo16").innerHTML = "不支持TouchEvent事件！";
+        document.getElementById("demo16").innerHTML = "TouchEvent ng!";
         return false;
     }
 }
