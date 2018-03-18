@@ -429,7 +429,6 @@ interfaceobject.prototype.gameover = function () {
 
             if (mousejudge(this)) {
                 if (ismouseclick(0)) {
-                    sound(this, 0, "ok");
                     objectif.push(new mainphase("g_menu", "gamephasecontroller"));
 
                     //player1.score = 0;
