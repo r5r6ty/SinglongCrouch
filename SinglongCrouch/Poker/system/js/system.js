@@ -8,8 +8,8 @@ function cnvs_getCoordinates(x, y) {
     var y2 = c.offsetTop;
     var sl = document.documentElement.scrollLeft;
     var st = document.documentElement.scrollTop;
-    mouse.centerX = x - x1 - x2 + sl;
-    mouse.centerY = y - y1 - y2 + st;
+    mouse.centerX = Math.round(x - x1 - x2 + sl);
+    mouse.centerY = Math.round(y - y1 - y2 + st);
 
     //if (ctestswitch == 1) {
     //    ctxtest.clearRect(0, 0, ctest.width, ctest.height);
