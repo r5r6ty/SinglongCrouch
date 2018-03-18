@@ -199,7 +199,7 @@
 
         var mouseDown = new Array();;
         var keysDown = {};
-        if (document.hasOwnProperty("ontouchstart")) {//判断是否支持触屏，优先使用触屏
+        if (document.hasOwnProperty("touchstart") || document.hasOwnProperty("touchmove") || document.hasOwnProperty("touchend")) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
                 mouseDown[e.button] = 1;
                 document.getElementById("demo15").innerHTML = "touchstart";
