@@ -49,6 +49,7 @@
         <div id="demo9"></div>
         <div id="demo13"></div>
         <div id="demo15"></div>
+        <div id="demo16"></div>
         <div></div>
         <div>
             <input id="isdebug" type="checkbox">Debug line
@@ -198,44 +199,49 @@
 
         var mouseDown = new Array();;
         var keysDown = {};
-        //addEventListener("keydown", function (e) {
-        //    keysDown[e.keyCode] = 0;
-        //}, false);
-        //addEventListener("keyup", function (e) {
-        //    delete keysDown[e.keyCode];
-        //}, false);
-        addEventListener("touchstart", function (e) {
-            mouseDown[e.button] = 1;
-            document.getElementById("demo15").innerHTML = "touchstart";
-        }, false);
-        addEventListener("touchmove", function (e) {
-            //e.preventDefault();
-            var touch = e.touches[0]; //获取第一个触点
-            var x = Number(touch.pageX); //页面触点X坐标
-            var y = Number(touch.pageY); //页面触点Y坐标
-            cnvs_getCoordinates(x, y);
-            document.getElementById("demo15").innerHTML = "touchmove";
-        }, false);
-        addEventListener("touchend", function (e) {
-            if (mouseDown[e.button] >= 3) {
-                mouseDown[e.button] = 4;
-            }
-            document.getElementById("demo15").innerHTML = "touchend";
-        }, false);
-        addEventListener("mousedown", function (e) {
-            mouseDown[e.button] = 1;
-            document.getElementById("demo15").innerHTML = "mousedown";
-        }, false);
-        addEventListener("mousemove", function (e) {
-            cnvs_getCoordinates(e.clientX, e.clientY);
-            document.getElementById("demo15").innerHTML = "mousemove";
-        }, false);
-        addEventListener("mouseup", function (e) {
-            if (mouseDown[e.button] >= 3) {
-                mouseDown[e.button] = 4;
-            }
-            document.getElementById("demo15").innerHTML = "mouseup";
-        }, false);
+        if (document.hasOwnProperty("ontouchstart")) {//判断是否支持触屏，优先使用触屏
+            addEventListener("touchstart", function (e) {
+                mouseDown[e.button] = 1;
+                document.getElementById("demo15").innerHTML = "touchstart";
+            }, false);
+            addEventListener("touchmove", function (e) {
+                //e.preventDefault();
+                var touch = e.touches[0]; //获取第一个触点
+                var x = Number(touch.pageX); //页面触点X坐标
+                var y = Number(touch.pageY); //页面触点Y坐标
+                cnvs_getCoordinates(x, y);
+                document.getElementById("demo15").innerHTML = "touchmove";
+            }, false);
+            addEventListener("touchend", function (e) {
+                if (mouseDown[e.button] >= 3) {
+                    mouseDown[e.button] = 4;
+                }
+                document.getElementById("demo15").innerHTML = "touchend";
+            }, false);
+            document.getElementById("demo16").innerHTML = "触屏！";
+        } else {
+            //addEventListener("keydown", function (e) {
+            //    keysDown[e.keyCode] = 0;
+            //}, false);
+            //addEventListener("keyup", function (e) {
+            //    delete keysDown[e.keyCode];
+            //}, false);
+            addEventListener("mousedown", function (e) {
+                mouseDown[e.button] = 1;
+                document.getElementById("demo15").innerHTML = "mousedown";
+            }, false);
+            addEventListener("mousemove", function (e) {
+                cnvs_getCoordinates(e.clientX, e.clientY);
+                document.getElementById("demo15").innerHTML = "mousemove";
+            }, false);
+            addEventListener("mouseup", function (e) {
+                if (mouseDown[e.button] >= 3) {
+                    mouseDown[e.button] = 4;
+                }
+                document.getElementById("demo15").innerHTML = "mouseup";
+            }, false);
+            document.getElementById("demo16").innerHTML = "键鼠！";
+        }
         //未压下=undefined
         //刚压下=2
         //压下中=3

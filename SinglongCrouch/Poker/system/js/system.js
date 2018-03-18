@@ -775,9 +775,9 @@ function renderingLoop() {
         }
     }
 
-    document.getElementById("demo").innerHTML = "object数量：" + object.length;
-    document.getElementById("demo11").innerHTML = "objectbg数量：" + objectbg.length;
-    document.getElementById("demo14").innerHTML = "objectif数量：" + objectif.length;
+    document.getElementById("demo").innerHTML = "object: " + object.length;
+    document.getElementById("demo11").innerHTML = "objectbg: " + objectbg.length;
+    document.getElementById("demo14").innerHTML = "objectif: " + objectif.length;
 
 
     //mainloop
