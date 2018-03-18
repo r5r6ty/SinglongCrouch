@@ -202,7 +202,7 @@
         var keysDown = {};
         if (isTouchDevice()) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
-                mouseDown[e.button] = 1;
+                mouseDown[0] = 1;
                 document.getElementById("demo15").innerHTML = "button " + e.button + " touchstart";
             }, false);
             addEventListener("touchmove", function (e) {
@@ -214,8 +214,8 @@
                 document.getElementById("demo15").innerHTML = "button " + e.button + " touchmove";
             }, false);
             addEventListener("touchend", function (e) {
-                if (mouseDown[e.button] >= 3) {
-                    mouseDown[e.button] = 4;
+                if (mouseDown[0] >= 3) {
+                    mouseDown[0] = 4;
                 }
                 document.getElementById("demo15").innerHTML = "button " + e.button + " touchend";
             }, false);
