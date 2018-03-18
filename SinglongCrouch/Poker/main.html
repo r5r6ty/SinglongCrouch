@@ -203,7 +203,7 @@
         if (isTouchDevice()) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
                 mouseDown[0] = 1;
-                document.getElementById("demo15").innerHTML = "button " + e.button + " touchstart";
+                document.getElementById("demo15").innerHTML = "button " + 0 + " touchstart " + mouseDown[0];
             }, false);
             addEventListener("touchmove", function (e) {
                 //e.preventDefault();
@@ -211,13 +211,13 @@
                 var x = Number(touch.pageX); //页面触点X坐标
                 var y = Number(touch.pageY); //页面触点Y坐标
                 cnvs_getCoordinates(x, y);
-                document.getElementById("demo15").innerHTML = "button " + e.button + " touchmove";
+                document.getElementById("demo15").innerHTML = "button " + 0 + " touchmove " + mouseDown[0];
             }, false);
             addEventListener("touchend", function (e) {
                 if (mouseDown[0] >= 3) {
                     mouseDown[0] = 4;
                 }
-                document.getElementById("demo15").innerHTML = "button " + e.button + " touchend";
+                document.getElementById("demo15").innerHTML = "button " + 0 + " touchend " + mouseDown[0];
             }, false);
         } else {
             //addEventListener("keydown", function (e) {
@@ -228,17 +228,17 @@
             //}, false);
             addEventListener("mousedown", function (e) {
                 mouseDown[e.button] = 1;
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown";
+                document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown " + mouseDown[e.button];
             }, false);
             addEventListener("mousemove", function (e) {
                 cnvs_getCoordinates(e.clientX, e.clientY);
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mousemove";
+                document.getElementById("demo15").innerHTML = "button " + e.button + " mousemove " + mouseDown[e.button];
             }, false);
             addEventListener("mouseup", function (e) {
                 if (mouseDown[e.button] >= 3) {
                     mouseDown[e.button] = 4;
                 }
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mouseup";
+                document.getElementById("demo15").innerHTML = "button " + e.button + " mouseup " + mouseDown[e.button];
             }, false);
         }
         //未压下=undefined
