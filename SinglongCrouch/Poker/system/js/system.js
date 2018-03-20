@@ -2,10 +2,10 @@ function cnvs_getCoordinates(x, y) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
-    var x1 = c.offsetParent.offsetLeft;
-    var y1 = c.offsetParent.offsetTop;
-    var x2 = c.offsetLeft;
-    var y2 = c.offsetTop;
+    var x1 = ctx.canvas.offsetParent.offsetLeft;
+    var y1 = ctx.canvas.offsetParent.offsetTop;
+    var x2 = ctx.canvas.offsetLeft;
+    var y2 = ctx.canvas.offsetTop;
     var sl = document.documentElement.scrollLeft;
     var st = document.documentElement.scrollTop;
     mouse.centerX = Math.round(x - x1 - x2 + sl);
@@ -153,15 +153,15 @@ mainphase.prototype.gamephasecontroller = function () {
                     var d = new deck(0, 0, "Y_rolling");
                     d.shuffle();
                     for (var i = 0; i < d.cards.length; i++) {
-                        d.cards[i].centerX = Math.random() * c.width;
-                        d.cards[i].centerY = Math.random() * c.height;
+                        d.cards[i].centerX = Math.random() * ctx.canvas.width;
+                        d.cards[i].centerY = Math.random() * ctx.canvas.height;
                         d.cards[i].Alpha = Math.random();
                         d.cards[i].speed = 5 * Math.random();
                     }
                     d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
                     pushtocanvas(objectif, ctxif, gt);//载入游戏标题
-                    var psb = new interfaceobject(this, 640, c.height / 2, 0, 0, 1, "pressstartbutton");
+                    var psb = new interfaceobject(this, 640, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
                     pushtocanvas(objectif, ctxif, psb);//载入press start button
                     break;
                 case "g_menu":
@@ -183,7 +183,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     pushtocanvas(objectif, ctxif, bi);//载入对战画面
                     break;
                 case "g_gameover":
-                    var go = new interfaceobject(this, c.width / 2, c.height / 2, 0, 0, 1, "gameover");
+                    var go = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "gameover");
                     pushtocanvas(objectif, ctxif, go);//gameover
                     break;
                 default:
@@ -231,8 +231,9 @@ function computeFPS() {
         //		{
         //		object.splice(ic,1);
         //		}
+    } else {
+        clear += 1 / GameFPS;
     }
-    clear += 1 / GameFPS;
     document.getElementById("bstate").innerHTML = "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + nowgp + " " + pregp;
 }
 
@@ -266,13 +267,13 @@ function playsound(p) {
     this.audio.src = p.src;
     this.counterB = p.duration;
     this.audio.autoplay = true;
-    c.appendChild(this.audio);
+    ctx.canvas.appendChild(this.audio);
 
 }
 playsound.prototype.render = function () {
 
     if (this.audio.ended || this.counterA >= this.counterB + 10) {
-        c.removeChild(this.audio);
+        ctx.canvas.removeChild(this.audio);
         return false;
     }
     else {
@@ -724,6 +725,10 @@ function lockinput(l) {
     caninput = l;
 }
 
+function mainLoop() {
+
+}
+
 function renderingLoop() {
 
     //if (87 in keysDown) {
@@ -752,7 +757,7 @@ function renderingLoop() {
         player2.name = document.getElementById("com").value;
 
 
-        ctxbg.clearRect(0, 0, cbg.width, cbg.height);
+        ctxbg.clearRect(0, 0, ctxbg.canvas.width, ctxbg.canvas.height);
         for (var ibg = 0; ibg < objectbg.length; ibg++) {
             //判断object[ibg]是否存在，是就绘制，否就删除
             if (objectbg[ibg] != undefined) {
@@ -762,19 +767,17 @@ function renderingLoop() {
             }
         }
 
-        if (mainloop) {
-            ctx.clearRect(0, 0, c.width, c.height);
-            for (var i1 = 0; i1 < object.length; i1++) {
-                //判断object[i1]是否存在，是就绘制，否就删除
-                if (object[i1] != undefined) {
-                    if (!object[i1].render()) {
-                        delete object[i1];
-                    }
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        for (var i1 = 0; i1 < object.length; i1++) {
+            //判断object[i1]是否存在，是就绘制，否就删除
+            if (object[i1] != undefined) {
+                if (!object[i1].render()) {
+                    delete object[i1];
                 }
             }
         }
 
-        ctxif.clearRect(0, 0, cif.width, cif.height);
+        ctxif.clearRect(0, 0, ctxif.canvas.width, ctxif.canvas.height);
         for (var iif = 0; iif < objectif.length; iif++) {
             //判断objectif[iif]是否存在，是就绘制，否就删除
             if (objectif[iif] != undefined) {

@@ -20,7 +20,7 @@
 
     </div>
 
-    <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.5;bottom: 0%;left: 0%;">
+    <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.3;bottom: 0%;left: 0%;" onmouseover="(function(){style.opacity=1.0;})()" onmouseout="(function(){style.opacity=0.3;})()">
         <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
         <div id="demo"></div>
         <div id="demo10"></div>
@@ -77,10 +77,10 @@
              src="system/pic/poker.png">
         <!--<img id="arrow"
              src="system/pic/arrow.png"
-             onload="picloader(this,1,2,0,25,25);">
+             onload="pictxload.canvaser(this,1,2,0,25,25);">
         <img id="character_s"
              src="system/pic/character_s.png"
-             onload="picloader(this,2,1,1,100,100);">-->
+             onload="pictxload.canvaser(this,2,1,1,100,100);">-->
 
         <audio id="ok"
                src="system/se/ok.mp3"></audio>
@@ -109,21 +109,16 @@
     <script type="text/javascript">
         var gametitle = document.title;
         var gamesize = { width: 1280, height: 720 }
-        var cload = document.getElementById("cvsload");
-        var ctxload = cload.getContext("2d");
-        var cbg = document.getElementById("cvsbg");
-        var ctxbg = cbg.getContext("2d");
-        var c = document.getElementById("cvs");
-        var ctx = c.getContext("2d");
-        var cif = document.getElementById("interface");
-        var ctxif = cif.getContext("2d");
+        var ctxload = document.getElementById("cvsload").getContext("2d");
+        var ctxbg = document.getElementById("cvsbg").getContext("2d");
+        var ctx = document.getElementById("cvs").getContext("2d");
+        var ctxif = document.getElementById("interface").getContext("2d");
         var totaldata = 999;
         var loadeddata = 0;
         var object = new Array();
         var objectif = new Array();
         var objectbg = new Array();
         var previous = [];
-        var mainloop = true;
         var intervalID = -1;
         var requestId;
         var clear = 0;
@@ -199,13 +194,15 @@
         var keysDown = {};
         if (isTouchDevice()) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
-                var touch = e.touches[0]; //获取第一个触点
-                var x = Number(touch.pageX); //页面触点X坐标
-                var y = Number(touch.pageY); //页面触点Y坐标
-                cnvs_getCoordinates(x, y);
+                if (e.target == ctxif.canvas) {
+                    var touch = e.touches[0]; //获取第一个触点
+                    var x = Number(touch.pageX); //页面触点X坐标
+                    var y = Number(touch.pageY); //页面触点Y坐标
+                    cnvs_getCoordinates(x, y);
 
-                mouseDown[0] = 1;
-                document.getElementById("demo15").innerHTML = "button " + 0 + " touchstart " + mouseDown[0];
+                    mouseDown[0] = 1;
+                    document.getElementById("demo15").innerHTML = "button " + 0 + " touchstart " + mouseDown[0];
+                }
             }, false);
             addEventListener("touchmove", function (e) {
                 e.preventDefault();
@@ -229,8 +226,10 @@
             //    delete keysDown[e.keyCode];
             //}, false);
             addEventListener("mousedown", function (e) {
-                mouseDown[e.button] = 1;
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown " + mouseDown[e.button];
+                if (e.target == ctxif.canvas) {
+                    mouseDown[e.button] = 1;
+                    document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown " + mouseDown[e.button];
+                }
             }, false);
             addEventListener("mousemove", function (e) {
                 cnvs_getCoordinates(e.clientX, e.clientY);
@@ -265,6 +264,7 @@
             if (loadeddata >= totaldata) {
                 clearInterval(flag);
                 h.parentNode.removeChild(h);
+                ctxload.canvas.parentNode.removeChild(ctxload.canvas);
                 return;
             }
 
@@ -278,17 +278,17 @@
                     var c = Number(para[2]);
                     var l = Number(para[3]);
 
-                    cload.width = imgs[num].width / r - l;
-                    cload.height = imgs[num].height / c - l;
+                    ctxload.canvas.width = imgs[num].width / r - l;
+                    ctxload.canvas.height = imgs[num].height / c - l;
                     var i = 0;
                     for (var y = 0; y < c; y++) {
                         for (var x = 0; x < r; x++) {
                             var image = document.createElement("img");
                             image.id = name + "_" + i;
                             image.style.position = "absolute";
-                            ctxload.drawImage(imgs[num], x * (cload.width + l), y * (cload.height + l), cload.width, cload.height, 0, 0, cload.width, cload.height);
-                            image.src = cload.toDataURL("image/png");
-                            ctxload.clearRect(0, 0, cload.width, cload.height);
+                            ctxload.drawImage(imgs[num], x * (ctxload.canvas.width + l), y * (ctxload.canvas.height + l), ctxload.canvas.width, ctxload.canvas.height, 0, 0, ctxload.canvas.width, ctxload.canvas.height);
+                            image.src = ctxload.canvas.toDataURL("image/png");
+                            ctxload.clearRect(0, 0, ctxload.canvas.width, ctxload.canvas.height);
                             res.appendChild(image);
                             i += 1;
                         }

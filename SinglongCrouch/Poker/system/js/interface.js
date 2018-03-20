@@ -172,8 +172,6 @@ interfaceobject.prototype.nowloading = function()
 
 	if (loadeddata >= totaldata)//当loading完
 	{
-	    cload.width = 10;
-	    cload.height = 10;
 	    objectif.push(new mainphase("g_title","gamephasecontroller"));
 	}
 
@@ -395,8 +393,8 @@ interfaceobject.prototype.pressstartbutton = function()
 	switch(this.counter)
 	{
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, c.width / 2, c.height / 2);
-            this.bdy.push(new bdyrange(this, 0, 0, c.width, c.height));
+            frameplay(this, "", 0, 0, ctx.canvas.width / 2, ctx.canvas.height / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, ctx.canvas.width, ctx.canvas.height));
             drawtext(ctxif, "Click anywhere to start", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
 
             if (mousejudge(this)) {
@@ -413,8 +411,8 @@ interfaceobject.prototype.pressstartbutton = function()
 interfaceobject.prototype.gameover = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, c.width / 2, c.height / 2);
-            this.bdy.push(new bdyrange(this, 0, 0, c.width, c.height));
+            frameplay(this, "", 0, 0, ctx.canvas.width / 2, ctx.canvas.height / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, ctx.canvas.width, ctx.canvas.height));
 
             drawtext(ctxif, "GAME OVER", this.centerX, this.centerY - 100, "200px Verdana", "red", "center", "middle", 1);
             
@@ -564,48 +562,16 @@ interfaceobject.prototype.selectcharacter = function()
             //var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
             //pushtocanvas(objectif, ctxif, d4);//载入人物4
 
-            var d = new deck(c.width / 2, c.height / 2, "back");
+            var d = new deck(ctx.canvas.width / 2, ctx.canvas.height / 2, "back");
             d.shuffle();
 
-            //d.cards[0].centerX = c.width / 2 - 40;
-            //d.cards[0].centerY = 540;
-
-            //d.cards[1].centerX = c.width / 2 - 20;
-            //d.cards[1].centerY = 540;
-
-            //d.cards[2].centerX = c.width / 2;
-            //d.cards[2].centerY = 540;
-
-            //d.cards[3].centerX = c.width / 2 + 20;
-            //d.cards[3].centerY = 540;
-
-            //d.cards[4].centerX = c.width / 2 + 40;
-            //d.cards[4].centerY = 540;
-
-            //d.cards[5].centerX = c.width / 2 - 40;
-            //d.cards[5].centerY = 160;
-
-            //d.cards[6].centerX = c.width / 2 - 20;
-            //d.cards[6].centerY = 160;
-
-            //d.cards[7].centerX = c.width / 2;
-            //d.cards[7].centerY = 160;
-
-            //d.cards[8].centerX = c.width / 2 + 20;
-            //d.cards[8].centerY = 160;
-
-            //d.cards[9].centerX = c.width / 2 + 40;
-            //d.cards[9].centerY = 160;
-
-            //var www = (c.width - 81 * 13) / 14;
-            //var hhh = (c.height - 125 * 4) / 5;
 
             var www = 10;
             var hhh = 10;
 
 
-            var offsetx = (c.width - (www + 81) * 13) / 2;
-            var offsety = (c.height - (www + 125) * 4) / 2;
+            var offsetx = (ctx.canvas.width - (www + 81) * 13) / 2;
+            var offsety = (ctx.canvas.height - (www + 125) * 4) / 2;
             for (var i = 0; i < d.cards.length; i++) {
                 d.cards[i].angle = 0;
                 d.cards[i].centerX = offsetx + 81 / 2 + (81 + www) * (i % 13);
