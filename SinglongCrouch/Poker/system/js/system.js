@@ -234,7 +234,7 @@ function computeFPS() {
     } else {
         clear += 1 / GameFPS;
     }
-    document.getElementById("bstate").innerHTML = "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + nowgp + " " + pregp;
+    drawtext(ctxif, "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + pregp + " ¡ú " + nowgp, 0, ctxif.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
 }
 
 
@@ -723,6 +723,7 @@ function ismouseclick(button) {
 
 function lockinput(l) {
     caninput = l;
+
 }
 
 function mainLoop() {
@@ -749,8 +750,10 @@ function renderingLoop() {
                     mouseDown[m] += 1;
                 }
             }
+            ctxif.canvas.style.cursor = "pointer";
         } else {
             mouseDown.splice(0, mouseDown.length);
+            ctxif.canvas.style.cursor = "wait";
         }
 
         player1.name = document.getElementById("player").value;

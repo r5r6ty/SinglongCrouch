@@ -8,16 +8,11 @@
 
 <body>
 
-    <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#ffff00;width:1280px;height:720px;top: 0px">
-        <canvas id="cvsblack" width=1280 height=720 style="border:0px solid #c3c3c3;background:black;position:absolute;left: 0;"></canvas>
+    <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#000000;width:1280px;height:720px;top: 0px">
         <canvas id="cvsbg" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
         <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
-        <canvas id="interface" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:crosshair;"></canvas>
-
-        <div id="bstate" style="font-size:10px;line-height:20px;position: absolute;left: 50%;margin-left: -640px;background:#ffff00;height:20px;top: 700px">
-        <div id="version" style="position:absolute;top: 720px"></div>
-        </div>
-
+        <canvas id="interface" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:pointer;"></canvas>
+        <div id="version" style="position:absolute;top:720px"></div>
     </div>
 
     <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.3;bottom: 0%;left: 0%;" onmouseover="(function(){style.opacity=1.0;})()" onmouseout="(function(){style.opacity=0.3;})()">
@@ -261,13 +256,6 @@
         var flag = setInterval(loadresource, 1 / GameFPS * 1000);
 
         function loadresource() {
-            if (loadeddata >= totaldata) {
-                clearInterval(flag);
-                h.parentNode.removeChild(h);
-                ctxload.canvas.parentNode.removeChild(ctxload.canvas);
-                return;
-            }
-
             var imgs = h.getElementsByTagName("img");
 
             for (var num = 0; num < imgs.length; num++) {
@@ -305,6 +293,12 @@
                     res.appendChild(audios[num]);
                     loadeddata += 1;
                 }
+            }
+
+            if (loadeddata >= totaldata) {
+                clearInterval(flag);
+                h.parentNode.removeChild(h);
+                ctxload.canvas.parentNode.removeChild(ctxload.canvas);
             }
         }
     </script>

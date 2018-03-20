@@ -121,11 +121,13 @@ card.prototype.back = function () {
             }
 
             if (mousejudge(this)) {
-                this.centerX += Math.random() * 2 - 1;
-                this.centerY += Math.random() * 2 - 1;
-                if (ismouseclick(0)) {
-                    this.state = "open";
-                    this.counter = 0 - 1;
+                if (caninput) {
+                    this.centerX += Math.random() * 2 - 1;
+                    this.centerY += Math.random() * 2 - 1;
+                    if (ismouseclick(0)) {
+                        this.state = "open";
+                        this.counter = 0 - 1;
+                    }
                 }
             }
             break;
