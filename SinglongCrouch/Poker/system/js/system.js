@@ -132,14 +132,14 @@ mainphase.prototype.gamephasecontroller = function () {
             for (var iif = 0; iif < objectif.length; iif++) {
                 //		if(objectif[iif] != undefined && objectif[iif].status != "sound")
                 //		{
-                delete objectif[iif];
+                objectif[iif].exist = false;
                 //		}
             }
             for (var i1 = 0; i1 < object.length; i1++) {
-                delete object[i1];
+                object[i1].exist = false;
             }
             for (var ibg = 0; ibg < objectbg.length; ibg++) {
-                delete objectbg[ibg];
+                objectbg[ibg].exist = false;
             }
             //清空所有数组
 
@@ -200,6 +200,7 @@ mainphase.prototype.gamephasecontroller = function () {
 function computeFPS() {
 
     if (previous.length > 60) {
+        delete previous[0];
         previous.splice(0, 1);
     }
     var start = (new Date).getTime();
@@ -212,29 +213,7 @@ function computeFPS() {
 
     var diff = 1000.0 / (sum / previous.length);
     GameFPS = diff.toFixed();
-    if (clear >= 1) {
-        clear = 0;
-        for (var ic = 0; ic < object.length; ic++)
-            if (object[ic] == undefined) {
-                object.splice(ic, 1);
-            }
-        for (var icbg = 0; icbg < objectbg.length; icbg++)
-            if (objectbg[icbg] == undefined) {
-                objectbg.splice(icbg, 1);
-            }
-        for (var icif = 0; icif < objectif.length; icif++)
-            if (objectif[icif] == undefined) {
-                objectif.splice(icif, 1);
-            }
-        //		for (var ic=0; ic<object.length; ic++)
-        //		if (object[ic] == undefined)
-        //		{
-        //		object.splice(ic,1);
-        //		}
-    } else {
-        clear += 1 / GameFPS;
-    }
-    drawtext(ctx, "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + pregp + " → " + nowgp, 0, ctx.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
+    drawtext(ctx, "FPS: " + GameFPS + " " + pregp + " -> " + nowgp, 0, ctx.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
 }
 
 
@@ -267,21 +246,18 @@ function playsound(p) {
     this.audio.src = p.src;
     this.counterB = p.duration;
     this.audio.autoplay = true;
+    this.exist = true;
     ctx.canvas.appendChild(this.audio);
 
 }
 playsound.prototype.render = function () {
-
     if (this.audio.ended || this.counterA >= this.counterB + 10) {
         ctx.canvas.removeChild(this.audio);
         return false;
-    }
-    else {
+    }  else {
         this.counterA += 1 / GameFPS;
         return true;
     }
-
-    return false;
 }
 
 function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha, shadowColor, shadowBlur) {
@@ -752,8 +728,8 @@ function renderingLoop() {
                 if (mouseDown[m] > 4) {
                     delete mouseDown[m];
                     mouseDown.splice(m, 1);
-                    m -= 1;    //改变循环变量  
-                    loop -= 1;   //改变循环次数  
+                    m--;    //改变循环变量  
+                    loop--;   //改变循环次数  
                 } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
                     mouseDown[m] += 1;
                 }
@@ -769,29 +745,42 @@ function renderingLoop() {
 
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        for (var ibg = 0; ibg < objectbg.length; ibg++) {
+
+        var bglen = objectbg.length;
+        for (var ibg = 0; ibg < bglen; ibg++) {
             //判断object[ibg]是否存在，是就绘制，否就删除
             if (objectbg[ibg] != undefined) {
                 if (!objectbg[ibg].render()) {
                     delete objectbg[ibg];
+                    objectbg.splice(ibg, 1);
+                    ibg--;
+                    bglen--;
                 }
             }
         }
 
-        for (var i1 = 0; i1 < object.length; i1++) {
+        var len1 = object.length
+        for (var i1 = 0; i1 < len1; i1++) {
             //判断object[i1]是否存在，是就绘制，否就删除
             if (object[i1] != undefined) {
                 if (!object[i1].render()) {
                     delete object[i1];
+                    object.splice(i1, 1);
+                    i1--;
+                    len1--;
                 }
             }
         }
 
-        for (var iif = 0; iif < objectif.length; iif++) {
+        var iflen = objectif.length;
+        for (var iif = 0; iif < iflen; iif++) {
             //判断objectif[iif]是否存在，是就绘制，否就删除
             if (objectif[iif] != undefined) {
                 if (!objectif[iif].render()) {
                     delete objectif[iif];
+                    objectif.splice(iif, 1);
+                    iif--;
+                    iflen--;
                 }
             }
         }
