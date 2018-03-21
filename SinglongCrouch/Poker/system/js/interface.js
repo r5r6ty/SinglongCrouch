@@ -360,7 +360,7 @@ interfaceobject.prototype.gametitle = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1);
+            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1, "gold", 50);
 
             break;
     }

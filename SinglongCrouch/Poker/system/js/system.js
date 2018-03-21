@@ -284,12 +284,14 @@ playsound.prototype.render = function () {
     return false;
 }
 
-function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha) {
+function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha, shadowColor, shadowBlur) {
     canvas.save();
     if (canvas != ctx) {
         canvas.translate(Math.round(-visualX), Math.round(-visualY));
     }
     canvas.beginPath();
+    canvas.shadowBlur = shadowBlur;
+    canvas.shadowColor = shadowColor;
     canvas.font = sizefont;
     canvas.textAlign = align;
     canvas.textBaseline = baseline;
@@ -299,12 +301,14 @@ function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha) {
     canvas.restore();
 }
 
-function drawfillrect(canvas, x, y, width, height, color, alpha) {
+function drawfillrect(canvas, x, y, width, height, color, alpha, shadowColor, shadowBlur) {
     canvas.save();
     if (canvas != ctx) {
         canvas.translate(Math.round(-visualX), Math.round(-visualY));
     }
     canvas.beginPath();
+    canvas.shadowBlur = shadowBlur;
+    canvas.shadowColor = shadowColor;
     canvas.fillStyle = color;
     canvas.globalAlpha = alpha;
     canvas.fillRect(x, y, width, height);
@@ -315,6 +319,10 @@ function drawpic(o, canvas) {
     if (o.pic != undefined) {
         var canvas = canvas;
         canvas.save();
+        if (o.hasOwnProperty("shadowBlur") && o.hasOwnProperty("shadowColor")) {
+            canvas.shadowBlur = o.shadowBlur;
+            canvas.shadowColor = o.shadowColor;
+        }
         if (canvas != ctx) {
             canvas.translate(Math.round(-visualX), Math.round(-visualY));
         }

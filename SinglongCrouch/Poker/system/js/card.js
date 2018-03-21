@@ -34,6 +34,9 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
     this.speed = 1;
 
     this.angle = 90;
+
+    this.shadowBlur = 0;
+    this.shadowColor = "";
 }
 
 card.prototype.render = function()
@@ -127,8 +130,17 @@ card.prototype.back = function () {
                     if (ismouseclick(0)) {
                         this.state = "open";
                         this.counter = 0 - 1;
+
+                        this.shadowBlur = 0;
+                        this.shadowColor = "";
+                    } else {
+                        this.shadowBlur = 20 + (Math.random() * 2 - 1) * 10;
+                        this.shadowColor = "gold";
                     }
                 }
+            } else {
+                this.shadowBlur = 0;
+                this.shadowColor = "";
             }
             break;
     }
