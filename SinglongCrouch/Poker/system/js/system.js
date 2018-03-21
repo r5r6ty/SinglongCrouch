@@ -122,7 +122,7 @@ mainphase.prototype.gamephasecontroller = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             var f_o = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_out");
-            pushtocanvas(objectif, ctxif, f_o);//载入fade_out
+            pushtocanvas(objectif, ctx, f_o);//载入fade_out
             break;
         case cased(this, 1, 10):
             break;
@@ -147,7 +147,7 @@ mainphase.prototype.gamephasecontroller = function () {
             switch (this.gamephase) {
                 case "g_nowloading":
                     var nld = new interfaceobject(this, 640, 310, 0, 0, 1, "nowloading");
-                    pushtocanvas(objectif, ctxif, nld);//载入进度条
+                    pushtocanvas(objectif, ctx, nld);//载入进度条
                     break;
                 case "g_title":
                     var d = new deck(0, 0, "Y_rolling");
@@ -160,17 +160,17 @@ mainphase.prototype.gamephasecontroller = function () {
                     }
                     d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
-                    pushtocanvas(objectif, ctxif, gt);//载入游戏标题
+                    pushtocanvas(objectif, ctx, gt);//载入游戏标题
                     var psb = new interfaceobject(this, 640, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
-                    pushtocanvas(objectif, ctxif, psb);//载入press start button
+                    pushtocanvas(objectif, ctx, psb);//载入press start button
                     break;
                 case "g_menu":
                     var mm = new interfaceobject(this, 0, 0, 0, 0, 1, "mainmenu");
-                    pushtocanvas(objectif, ctxif, mm);//载入vs模式按钮
+                    pushtocanvas(objectif, ctx, mm);//载入vs模式按钮
                     break;
                 case "g_arcade":
                     var sc = new interfaceobject(this, 0, 0, 0, 0, 1, "selectcharacter");
-                    pushtocanvas(objectif, ctxif, sc);//载入选人界面
+                    pushtocanvas(objectif, ctx, sc);//载入选人界面
                     break;
                 case "g_story":
                     break;
@@ -180,17 +180,17 @@ mainphase.prototype.gamephasecontroller = function () {
                     break;
                 case "g_battle":
                     var bi = new interfaceobject(this, 0, 0, 0, 0, 1, "battleinterface");
-                    pushtocanvas(objectif, ctxif, bi);//载入对战画面
+                    pushtocanvas(objectif, ctx, bi);//载入对战画面
                     break;
                 case "g_gameover":
                     var go = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "gameover");
-                    pushtocanvas(objectif, ctxif, go);//gameover
+                    pushtocanvas(objectif, ctx, go);//gameover
                     break;
                 default:
                     break;
             }
             var f_i = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_in");
-            pushtocanvas(objectif, ctxif, f_i);//载入fade_in
+            pushtocanvas(objectif, ctx, f_i);//载入fade_in
             break;
     }
     nextstate(this, "", 11, 1000);
@@ -234,7 +234,7 @@ function computeFPS() {
     } else {
         clear += 1 / GameFPS;
     }
-    drawtext(ctxif, "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + pregp + " → " + nowgp, 0, ctxif.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
+    drawtext(ctx, "FPS: " + GameFPS + " / " + clear.toFixed() + "|" + pregp + " → " + nowgp, 0, ctx.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
 }
 
 
@@ -286,7 +286,7 @@ playsound.prototype.render = function () {
 
 function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha) {
     canvas.save();
-    if (canvas != ctxif) {
+    if (canvas != ctx) {
         canvas.translate(Math.round(-visualX), Math.round(-visualY));
     }
     canvas.beginPath();
@@ -301,7 +301,7 @@ function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha) {
 
 function drawfillrect(canvas, x, y, width, height, color, alpha) {
     canvas.save();
-    if (canvas != ctxif) {
+    if (canvas != ctx) {
         canvas.translate(Math.round(-visualX), Math.round(-visualY));
     }
     canvas.beginPath();
@@ -315,7 +315,7 @@ function drawpic(o, canvas) {
     if (o.pic != undefined) {
         var canvas = canvas;
         canvas.save();
-        if (canvas != ctxif) {
+        if (canvas != ctx) {
             canvas.translate(Math.round(-visualX), Math.round(-visualY));
         }
         canvas.globalAlpha = o.Alpha;
@@ -750,17 +750,17 @@ function renderingLoop() {
                     mouseDown[m] += 1;
                 }
             }
-            ctxif.canvas.style.cursor = "pointer";
+            ctx.canvas.style.cursor = "auto";
         } else {
             mouseDown.splice(0, mouseDown.length);
-            ctxif.canvas.style.cursor = "wait";
+            ctx.canvas.style.cursor = "wait";
         }
 
         player1.name = document.getElementById("player").value;
         player2.name = document.getElementById("com").value;
 
 
-        ctxbg.clearRect(0, 0, ctxbg.canvas.width, ctxbg.canvas.height);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for (var ibg = 0; ibg < objectbg.length; ibg++) {
             //判断object[ibg]是否存在，是就绘制，否就删除
             if (objectbg[ibg] != undefined) {
@@ -770,7 +770,6 @@ function renderingLoop() {
             }
         }
 
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for (var i1 = 0; i1 < object.length; i1++) {
             //判断object[i1]是否存在，是就绘制，否就删除
             if (object[i1] != undefined) {
@@ -780,7 +779,6 @@ function renderingLoop() {
             }
         }
 
-        ctxif.clearRect(0, 0, ctxif.canvas.width, ctxif.canvas.height);
         for (var iif = 0; iif < objectif.length; iif++) {
             //判断objectif[iif]是否存在，是就绘制，否就删除
             if (objectif[iif] != undefined) {

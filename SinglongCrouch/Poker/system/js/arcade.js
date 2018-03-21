@@ -50,7 +50,7 @@ arcadeobject.prototype.normal = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
-            drawtext(ctxif, this.identity.name + "获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+            drawtext(ctx, this.identity.name + "获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
             for (var i = 0; i < this.getcards.length; i++) {
                 this.getcards[i].centerX = this.centerX + 250 + i * 20;
                 this.getcards[i].centerY = this.centerY;

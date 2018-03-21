@@ -9,9 +9,7 @@
 <body>
 
     <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#000000;width:1280px;height:720px;top: 0px">
-        <canvas id="cvsbg" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
-        <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
-        <canvas id="interface" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:pointer;"></canvas>
+        <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left:0;cursor:auto;"></canvas>
         <div id="version" style="position:absolute;top:720px"></div>
     </div>
 
@@ -93,8 +91,8 @@
     <audio id="031" src="system/se/031.mp3" oncanplaythrough="audioloader();"></audio>
     <audio id="095" src="system/se/095.mp3" oncanplaythrough="audioloader();"></audio>-->
 
-    <script src="system/js/system.js" charset="gbk"></script>
-    <script src="system/js/interface.js" charset="gbk"></script>
+    <script src="system/js/system.js"></script>
+    <script src="system/js/interface.js"></script>
     <script src="system/js/card.js"></script>
     <script src="system/js/arcade.js"></script>
     <!--<script src="system/js/bg.js" charset="gbk"></script>
@@ -105,9 +103,7 @@
         var gametitle = document.title;
         var gamesize = { width: 1280, height: 720 }
         var ctxload = document.getElementById("cvsload").getContext("2d");
-        var ctxbg = document.getElementById("cvsbg").getContext("2d");
         var ctx = document.getElementById("cvs").getContext("2d");
-        var ctxif = document.getElementById("interface").getContext("2d");
         var totaldata = 999;
         var loadeddata = 0;
         var object = new Array();
@@ -121,7 +117,7 @@
         //var groundvalue = 1180;
         var groundvalue = 720;
         var gamespace = 50;
-
+        
         var vg = 1;
         var vf = 0.1;
 
@@ -189,7 +185,7 @@
         var keysDown = {};
         if (isTouchDevice()) {//判断是否支持触屏，优先使用触屏
             addEventListener("touchstart", function (e) {
-                if (e.target == ctxif.canvas) {
+                if (e.target == ctx.canvas) {
                     var touch = e.touches[0]; //获取第一个触点
                     var x = Number(touch.pageX); //页面触点X坐标
                     var y = Number(touch.pageY); //页面触点Y坐标
@@ -221,7 +217,7 @@
             //    delete keysDown[e.keyCode];
             //}, false);
             addEventListener("mousedown", function (e) {
-                if (e.target == ctxif.canvas) {
+                if (e.target == ctx.canvas) {
                     mouseDown[e.button] = 1;
                     document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown " + mouseDown[e.button];
                 }
