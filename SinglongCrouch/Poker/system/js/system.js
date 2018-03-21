@@ -104,6 +104,16 @@ function mainphase(g, s) {
 }
 
 mainphase.prototype.render = function () {
+
+    //for (var i = 0; i < objectif.length; i++) {
+    //    if (objectif[i] != undefined) {
+    //        if (objectif[i] != this && objectif[i].gamephase == this.gamephase) {
+    //            this.exist = false;
+    //            return this.exist;
+    //        }
+    //    }
+    //}
+
     switch (this.state) {
         case "gamephasecontroller":
             this.gamephasecontroller();//游戏进程控制
@@ -130,20 +140,31 @@ mainphase.prototype.gamephasecontroller = function () {
         case cased(this, 11, 11):
 
             for (var iif = 0; iif < objectif.length; iif++) {
-                //		if(objectif[iif] != undefined && objectif[iif].status != "sound")
-                //		{
-                objectif[iif].exist = false;
-                //		}
+                if (objectif[iif] != undefined) {// && objectif[iif].status != "sound"
+                    objectif[iif].exist = false;
+                }
             }
             for (var i1 = 0; i1 < object.length; i1++) {
-                object[i1].exist = false;
+                if (object[i1] != undefined) {
+                    object[i1].exist = false;
+                }
             }
             for (var ibg = 0; ibg < objectbg.length; ibg++) {
-                objectbg[ibg].exist = false;
+                if (objectbg[ibg] != undefined) {
+                    objectbg[ibg].exist = false;
+                }
             }
             //清空所有数组
 
-
+            var testcounter = 0;
+            for (var i = 0; i < objectif.length; i++) {
+                if (objectif[i] != undefined) {
+                    if (objectif[i].status == "main") {
+                        testcounter += 1;
+                    }
+                }
+            }
+            document.getElementById("demo17").innerHTML += this.gamephase + testcounter + " ";
             switch (this.gamephase) {
                 case "g_nowloading":
                     var nld = new interfaceobject(this, 640, 310, 0, 0, 1, "nowloading");

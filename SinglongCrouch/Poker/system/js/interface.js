@@ -411,6 +411,10 @@ interfaceobject.prototype.gameover = function () {
                 }
             }
             break;
+        case cased(this, 1, 10):
+            break;
+        case cased(this, 11, 11):
+            break;
     }
     nextstate(this, "gameover", 0, 0);
 }

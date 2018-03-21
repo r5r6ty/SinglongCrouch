@@ -106,7 +106,9 @@ arcadeobject.prototype.controller = function () {
                 }
             }
 
-            if (this.counter == 5 || this.counter == 20) {
+            var ai = document.getElementById("test_AI");
+            var level = ai.value.split(".", 2)[1];
+            if (this.counter == 10 + 1 - level || this.counter == (10 + 1 - level) * 2) {
                 var arr = new Array();
                 for (var i = 0; i < object.length; i++) {
                     if (object[i] != undefined && object[i].state == "back") {
@@ -115,8 +117,6 @@ arcadeobject.prototype.controller = function () {
                 }
                 if (arr.length > 0) {
                     if (p.selectcards.first != undefined) {
-                        var ai = document.getElementById("test_AI");
-                        var level = ai.value.split(".", 2)[1];
 
                         var f = Number(p.selectcards.first.name.split("_", 2)[1]);
 
@@ -175,7 +175,7 @@ arcadeobject.prototype.controller = function () {
 }
 
 function judge2card(o) {
-    if (o.selectcards.first != undefined && o.selectcards.second != undefined && o.selectcards.first.angle == 180 && o.selectcards.second.angle == 180) {
+    if (o != undefined && o.selectcards.first != undefined && o.selectcards.second != undefined && o.selectcards.first.angle == 180 && o.selectcards.second.angle == 180) {
         var f = Number(o.selectcards.first.name.split("_", 2)[1]);
         var s = Number(o.selectcards.second.name.split("_", 2)[1]);
 
