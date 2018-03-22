@@ -114,8 +114,10 @@
         var previous = [];
         var intervalID = -1;
         var requestId;
-        var clear = 0;
-        var GameFPS;
+        var UpdateFPS = 60;
+        var GameFPS = 0;
+        var ren = 0;
+        var UpdateSimulationTime = 0;
         //var groundvalue = 1180;
         var groundvalue = 720;
         var gamespace = 50;
@@ -212,12 +214,12 @@
                 document.getElementById("demo15").innerHTML = "button " + 0 + " touchend " + mouseDown[0];
             }, false);
         } else {
-            //addEventListener("keydown", function (e) {
-            //    keysDown[e.keyCode] = 0;
-            //}, false);
-            //addEventListener("keyup", function (e) {
-            //    delete keysDown[e.keyCode];
-            //}, false);
+            addEventListener("keydown", function (e) {
+                keysDown[e.keyCode] = 0;
+            }, false);
+            addEventListener("keyup", function (e) {
+                delete keysDown[e.keyCode];
+            }, false);
             addEventListener("mousedown", function (e) {
                 if (e.target == ctx.canvas) {
                     mouseDown[e.button] = 1;

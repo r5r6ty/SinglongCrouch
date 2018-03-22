@@ -37,7 +37,7 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
     this.shadowColor = "";
 }
 
-card.prototype.render = function()
+card.prototype.update = function()
 {
     this.bdy.splice(0, this.bdy.length);//清空bdy
     this.itr.splice(0, this.itr.length);//清空itr
@@ -79,10 +79,12 @@ card.prototype.render = function()
         this.angle += 360;
     }
 
-    drawpic(this);
-
     this.counter += 1;
     return this.exist;
+}
+
+card.prototype.render = function () {
+    drawpic(this);
 }
 
 card.prototype.normal = function () {

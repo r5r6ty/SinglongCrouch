@@ -41,7 +41,7 @@ function interfaceobject(id, cx, cy, acx, acy, alpha, s) {
     this.button = false;
 }
 
-interfaceobject.prototype.render = function () {
+interfaceobject.prototype.update = function () {
     this.bdy.splice(0, this.bdy.length);//清空bdy
     this.itr.splice(0, this.itr.length);//清空itr
 
@@ -115,10 +115,12 @@ interfaceobject.prototype.render = function () {
             break;
     }
 
-    drawpic(this);
-
     this.counter += 1;
     return this.exist;
+}
+
+interfaceobject.prototype.render = function () {
+    drawpic(this);
 }
 
 
@@ -156,8 +158,7 @@ interfaceobject.prototype.nowloading = function () {
             ctx.fillStyle = "red";
             ctx.fillRect(this.centerX - this.myX, this.centerY - this.myY, 500 * per, 10);
 
-            if (loadeddata >= totaldata)//当loading完
-            {
+            if (loadeddata >= totaldata) {//当loading完
                 objectif.push(new mainphase("g_title", "gamephasecontroller"));
             }
 
@@ -358,7 +359,7 @@ interfaceobject.prototype.gametitle = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1, "gold", 50);
+            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1, "red", 10);
 
             break;
     }

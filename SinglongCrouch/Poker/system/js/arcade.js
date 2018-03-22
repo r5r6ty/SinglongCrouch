@@ -27,7 +27,7 @@
     this.change = 0;
 }
 
-arcadeobject.prototype.render = function () {
+arcadeobject.prototype.update = function () {
 
     switch (this.state) {
         case "normal":
@@ -38,10 +38,12 @@ arcadeobject.prototype.render = function () {
             break;
     }
 
-    drawpic(this);
-
     this.counter += 1;
     return this.exist;
+}
+
+arcadeobject.prototype.render = function () {
+    drawpic(this);
 }
 
 arcadeobject.prototype.normal = function () {
@@ -106,7 +108,7 @@ arcadeobject.prototype.controller = function () {
 
             var ai = document.getElementById("test_AI");
             var level = ai.value.split(".", 2)[1];
-            if (this.counter == 10 + 1 - level || this.counter == (10 + 1 - level) * 2) {
+            if (this.counter == (10 + 1 - level) * 2 || this.counter == (10 + 1 - level) * 4) {
                 var arr = new Array();
                 for (var i = 0; i < object.length; i++) {
                     if (object[i] != undefined && object[i].state == "back") {
