@@ -4,8 +4,6 @@ var jokers = ["A","B"];
 
 function card(id,cx,cy,acx,acy,alpha,s,test)
 {
-    this.c;
-
     this.test = test;
 
     
@@ -81,7 +79,7 @@ card.prototype.render = function()
         this.angle += 360;
     }
 
-    drawpic(this, this.c);
+    drawpic(this);
 
     this.counter += 1;
     return this.exist;
@@ -211,6 +209,6 @@ deck.prototype.shuffle = function () {
 
 deck.prototype.show = function () {
     for (var i = 0; i < this.cards.length; i++) {
-        pushtocanvas(object, ctx, this.cards[i]);
+        object.push(this.cards[i]);
     }
 }

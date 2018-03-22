@@ -94,26 +94,24 @@ function gggoonstop() {
 
 
 function mainphase(g, s) {
-    pregp = nowgp;
-    nowgp = g;
-    this.status = "main";
-    this.gamephase = g;
-    this.state = s;
-    this.counter = 0;
-    this.exist = true;
+    if (nowgp == g) {
+        this.status = "";
+        this.gamephase = "";
+        this.state = "";
+        this.counter = 0;
+        this.exist = false;
+    } else {
+        pregp = nowgp;
+        nowgp = g;
+        this.status = "main";
+        this.gamephase = g;
+        this.state = s;
+        this.counter = 0;
+        this.exist = true;
+    }
 }
 
 mainphase.prototype.render = function () {
-
-    //for (var i = 0; i < objectif.length; i++) {
-    //    if (objectif[i] != undefined) {
-    //        if (objectif[i] != this && objectif[i].gamephase == this.gamephase) {
-    //            this.exist = false;
-    //            return this.exist;
-    //        }
-    //    }
-    //}
-
     switch (this.state) {
         case "gamephasecontroller":
             this.gamephasecontroller();//游戏进程控制
@@ -132,7 +130,7 @@ mainphase.prototype.gamephasecontroller = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             var f_o = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_out");
-            pushtocanvas(objectif, ctx, f_o);//载入fade_out
+            objectif.push(f_o);//载入fade_out
             break;
         case cased(this, 1, 10):
             break;
@@ -156,19 +154,10 @@ mainphase.prototype.gamephasecontroller = function () {
             }
             //清空所有数组
 
-            var testcounter = 0;
-            for (var i = 0; i < objectif.length; i++) {
-                if (objectif[i] != undefined) {
-                    if (objectif[i].status == "main") {
-                        testcounter += 1;
-                    }
-                }
-            }
-            document.getElementById("demo17").innerHTML += this.gamephase + testcounter + " ";
             switch (this.gamephase) {
                 case "g_nowloading":
                     var nld = new interfaceobject(this, 640, 310, 0, 0, 1, "nowloading");
-                    pushtocanvas(objectif, ctx, nld);//载入进度条
+                    objectif.push(nld);//载入进度条
                     break;
                 case "g_title":
                     var d = new deck(0, 0, "Y_rolling");
@@ -181,17 +170,17 @@ mainphase.prototype.gamephasecontroller = function () {
                     }
                     d.show();   
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
-                    pushtocanvas(objectif, ctx, gt);//载入游戏标题
+                    objectif.push(gt);//载入游戏标题
                     var psb = new interfaceobject(this, 640, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
-                    pushtocanvas(objectif, ctx, psb);//载入press start button
+                    objectif.push(psb);//载入press start button
                     break;
                 case "g_menu":
                     var mm = new interfaceobject(this, 0, 0, 0, 0, 1, "mainmenu");
-                    pushtocanvas(objectif, ctx, mm);//载入vs模式按钮
+                    objectif.push(mm);//载入vs模式按钮
                     break;
                 case "g_arcade":
                     var sc = new interfaceobject(this, 0, 0, 0, 0, 1, "selectcharacter");
-                    pushtocanvas(objectif, ctx, sc);//载入选人界面
+                    objectif.push(sc);//载入选人界面
                     break;
                 case "g_story":
                     break;
@@ -201,17 +190,17 @@ mainphase.prototype.gamephasecontroller = function () {
                     break;
                 case "g_battle":
                     var bi = new interfaceobject(this, 0, 0, 0, 0, 1, "battleinterface");
-                    pushtocanvas(objectif, ctx, bi);//载入对战画面
+                    objectif.push(bi);//载入对战画面
                     break;
                 case "g_gameover":
                     var go = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "gameover");
-                    pushtocanvas(objectif, ctx, go);//gameover
+                    objectif.push(go);//gameover
                     break;
                 default:
                     break;
             }
             var f_i = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_in");
-            pushtocanvas(objectif, ctx, f_i);//载入fade_in
+            objectif.push(f_i);//载入fade_in
             break;
     }
     nextstate(this, "", 11, 1000);
@@ -312,7 +301,8 @@ function drawfillrect(canvas, x, y, width, height, color, alpha, shadowColor, sh
     canvas.restore();
 }
 
-function drawpic(o, canvas) {
+function drawpic(o) {
+    var canvas = ctx;
     if (o.pic != undefined) {
         var canvas = canvas;
         canvas.save();
@@ -398,12 +388,6 @@ function drawpic(o, canvas) {
 
 
     canvas.restore();
-}
-
-function pushtocanvas(o, c, t) {
-    var canvas = o;
-    t.c = c;
-    canvas.push(t);
 }
 
 function frameplay(o, p, acx, acy, myX, myY) {
@@ -594,7 +578,7 @@ function nextstate(o, s, f1, f2) {
         o.state = s;
         o.counter = f2 - 1;
     }
-    o.groundstate = "normal";
+    //o.groundstate = "normal";
 }
 
 //function gravitation(o,k)

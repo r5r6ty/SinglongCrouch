@@ -1,6 +1,4 @@
 ﻿function arcadeobject(id, cx, cy, acx, acy, alpha, s) {
-    this.c;
-
     this.counter = 0;
     this.identity = id;
     this.pic;
@@ -40,7 +38,7 @@ arcadeobject.prototype.render = function () {
             break;
     }
 
-    drawpic(this, this.c);
+    drawpic(this);
 
     this.counter += 1;
     return this.exist;

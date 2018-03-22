@@ -17,8 +17,6 @@ function buttonnextstate(o, button, up, on, down) {
 }
 
 function interfaceobject(id, cx, cy, acx, acy, alpha, s) {
-    this.c;
-
     this.counter = 0;
     this.identity = id;
     this.pic;
@@ -117,7 +115,7 @@ interfaceobject.prototype.render = function () {
             break;
     }
 
-    drawpic(this, this.c);
+    drawpic(this);
 
     this.counter += 1;
     return this.exist;
@@ -173,13 +171,13 @@ interfaceobject.prototype.mainmenu = function () {
         case cased(this, 0, 0):
 
             var _arcade = new interfaceobject(this, 640, 300, 0, 0, 1, "arcade");
-            pushtocanvas(objectif, ctx, _arcade);//载入arcade
+            objectif.push(_arcade);//载入arcade
             var _story = new interfaceobject(this, 640, 330, 0, 0, 1, "story");
-            pushtocanvas(objectif, ctx, _story);//载入story
+            objectif.push(_story);//载入story
             var _vs_cpu = new interfaceobject(this, 640, 360, 0, 0, 1, "vs_cpu");
-            pushtocanvas(objectif, ctx, _vs_cpu);//载入arcade
+            objectif.push(_vs_cpu);//载入arcade
             var _vs_player = new interfaceobject(this, 640, 390, 0, 0, 1, "vs_player");
-            pushtocanvas(objectif, ctx, _vs_player);//载入arcade
+            objectif.push(_vs_player);//载入arcade
 
             this.centerX = 640;
             this.centerY = 300;
@@ -521,13 +519,13 @@ interfaceobject.prototype.selectcharacter = function () {
         case cased(this, 0, 0):
 
             g_player1 = new arcadeobject(player1, 200, 700, 0, 0, 1, "normal");
-            pushtocanvas(objectif, ctx, g_player1);//载入玩家1；
+            objectif.push(g_player1);//载入玩家1；
 
             g_player2 = new arcadeobject(player2, 200, 20, 0, 0, 1, "normal");
-            pushtocanvas(objectif, ctx, g_player2);//载入玩家2；
+            objectif.push(g_player2);//载入玩家2；
 
             var g_controller = new arcadeobject(this, 0, 0, 0, 0, 1, "controller");
-            pushtocanvas(objectif, ctx, g_controller);//控制器；
+            objectif.push(g_controller);//控制器；
 
             //var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
             //pushtocanvas(objectif,ctx,d1);//载入人物1
@@ -658,28 +656,28 @@ interfaceobject.prototype.battleinterface = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             gamebg = new bg(this, 0, 0, 0, 0, 1, "castle1412")
-            pushtocanvas(objectbg, ctx, gamebg);//载入场景；
+            objectbg.push(gamebg);//载入场景；
 
             g_player1 = new beta(player1, 340, 520, 0, 0, 1, "standing");
-            pushtocanvas(object, ctx, g_player1);//载入玩家1；
+            object.push(g_player1);//载入玩家1；
 
             g_player2 = new beta(player2, 940, 520, 0, 0, 1, "standing");
             g_player2.direction = -1;
-            pushtocanvas(object, ctx, g_player2);//载入玩家2；
+            object.push(g_player2);//载入玩家2；
 
             var g_p1_hpgage = new interfaceobject(this, p1hpgage.x, p1hpgage.y, 0, 0, 1, "p1_hp")
-            pushtocanvas(objectif, ctx, g_p1_hpgage);
+            objectif.push(g_p1_hpgage);
 
             var g_p2_hpgage = new interfaceobject(this, p2hpgage.x, p2hpgage.y, 0, 0, 1, "p2_hp")
             g_p2_hpgage.direction = -1;
-            pushtocanvas(objectif, ctx, g_p2_hpgage);
+            objectif.push(g_p2_hpgage);
             //载入血条
             var timer = new interfaceobject(this, 640, 61, 0, 0, 1, "battletimer")
-            pushtocanvas(objectif, ctx, timer);//载入计时器
+            objectif.push(timer);//载入计时器
 
             var _wv = new interfaceobject(this, 0, 0, 0, 0, 1, "windowvision")
             _wv.visualobject = g_player1;
-            pushtocanvas(objectif, ctx, _wv);//载入视角控制器
+            objectif.push(_wv);//载入视角控制器
             break;
     }
     nextstate(this, "", 0, 1000);
