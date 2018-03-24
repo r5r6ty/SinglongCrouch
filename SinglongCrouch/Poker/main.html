@@ -249,16 +249,7 @@
 
         var antialiasbtn = document.getElementById("antialias");
         function toggleAntialias(event) {
-            if (ctx.imageSmoothingEnabled)
-                ctx.imageSmoothingEnabled = antialiasbtn.checked;
-            else if (ctx.mozImageSmoothingEnabled)
-                ctx.mozImageSmoothingEnabled = antialiasbtn.checked;
-            else if (ctx.webkitImageSmoothingEnabled)
-                ctx.webkitImageSmoothingEnabled = antialiasbtn.checked;
-            else if (ctx.msImageSmoothingEnabled)
-                ctx.msImageSmoothingEnabled = antialiasbtn.checked;
-            else
-                antialiasbtn.removeEventListener("change", toggleAntialias, false);
+            ctx.imageSmoothingEnabled = antialiasbtn.checked;
         };
         antialiasbtn.addEventListener("change", toggleAntialias, false);
 

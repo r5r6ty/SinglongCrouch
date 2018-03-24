@@ -175,7 +175,7 @@ arcadeobject.prototype.controller = function () {
 }
 
 function judge2card(o) {
-    if (o != undefined && o.selectcards.first != undefined && o.selectcards.second != undefined && o.selectcards.first.angle == 180 && o.selectcards.second.angle == 180) {
+    if (o != undefined && o.selectcards.first != undefined && o.selectcards.second != undefined && o.selectcards.first.angleY == 180 && o.selectcards.second.angleY == 180) {
         var f = Number(o.selectcards.first.name.split("_", 2)[1]);
         var s = Number(o.selectcards.second.name.split("_", 2)[1]);
 

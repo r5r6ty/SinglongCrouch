@@ -748,9 +748,9 @@ function renderingLoop() {
         }
     }
 
-    document.getElementById("demo").innerHTML = "object: " + object.length;
-    document.getElementById("demo11").innerHTML = "objectbg: " + objectbg.length;
-    document.getElementById("demo14").innerHTML = "objectif: " + objectif.length;
+    //document.getElementById("demo").innerHTML = "object: " + object.length;
+    //document.getElementById("demo11").innerHTML = "objectbg: " + objectbg.length;
+    //document.getElementById("demo14").innerHTML = "objectif: " + objectif.length;
 
 
     //mainloop
@@ -760,7 +760,7 @@ function renderingLoop() {
 
     UpdateSimulationTime += 1 / GameFPS;
 
-    document.getElementById("demo18").innerHTML = UpdateSimulationTime;
+    //document.getElementById("demo18").innerHTML = UpdateSimulationTime;
 
     QueueNewFrame();
 }
