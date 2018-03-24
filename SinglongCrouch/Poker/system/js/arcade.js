@@ -50,15 +50,21 @@ arcadeobject.prototype.normal = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
-            if (this.centerY > ctx.canvas.width / 2) {
-                drawtext(ctx, this.identity.name + "获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
-            } else {
-                drawtext(ctx, this.identity.name + "(Lv." + level +")获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
-            }
+
+            var s = 0;
             var www = (ctx.canvas.width - this.getcards.length * 20) / 2;
             for (var i = 0; i < this.getcards.length; i++) {
                 this.getcards[i].centerX = www + i * 20;
                 this.getcards[i].centerY = this.centerY;
+
+                s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
+                console.log(s);
+            }
+            this.identity.score = s;
+            if (this.centerY > ctx.canvas.width / 2) {
+                drawtext(ctx, this.identity.name + "获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+            } else {
+                drawtext(ctx, this.identity.name + "(Lv." + level + ")获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
             }
             break;
     }

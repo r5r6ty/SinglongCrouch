@@ -626,8 +626,6 @@ interfaceobject.prototype.selectcharacter = function () {
             //	this.exist = false;
             //}
             if (g_player1.getcards.length + g_player2.getcards.length >= 52) {
-                g_player1.identity.score = g_player1.getcards.length;
-                g_player2.identity.score = g_player2.getcards.length;
                 objectif.push(new mainphase("g_gameover", "gamephasecontroller"));
                 lockinput(true);
             }
