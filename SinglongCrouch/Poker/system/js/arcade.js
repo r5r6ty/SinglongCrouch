@@ -58,7 +58,6 @@ arcadeobject.prototype.normal = function () {
                 this.getcards[i].centerY = this.centerY;
 
                 s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
-                console.log(s);
             }
             this.identity.score = s;
             if (this.centerY > ctx.canvas.width / 2) {
