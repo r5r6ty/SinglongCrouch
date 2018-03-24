@@ -34,9 +34,9 @@
         <div id="demo17"></div>
         <div id="demo18"></div>
         <div></div>
-        <div>
-            <input id="isdebug" type="checkbox">Debug line
-        </div>
+        <input id="isdebug" type="checkbox">Debug line
+        <div></div>
+        <input id="antialias" type="checkbox">Anti-alias
         <div>
             AI强度（1~10）：
             <select id="test_AI">
@@ -105,6 +105,10 @@
         var gametitle = document.title;
         var gamesize = { width: 1280, height: 720 }
         var ctxload = document.getElementById("cvsload").getContext("2d");
+        ctxload.mozImageSmoothingEnabled = false;
+        ctxload.webkitImageSmoothingEnabled = false;
+        ctxload.msImageSmoothingEnabled = false;
+        ctxload.imageSmoothingEnabled = false;
         var ctx = document.getElementById("cvs").getContext("2d");
         var totaldata = 999;
         var loadeddata = 0;
@@ -241,6 +245,24 @@
         //刚压下=2
         //压下中=3
         //单击（刚放开）=5
+
+
+        var antialiasbtn = document.getElementById('antialias');
+        function toggleAntialias(event) {
+            ctx.imageSmoothingEnabled = this.checked;
+            ctx.mozImageSmoothingEnabled = this.checked;
+            ctx.webkitImageSmoothingEnabled = this.checked;
+            ctx.msImageSmoothingEnabled = this.checked;
+        };
+        antialiasbtn.addEventListener('change', toggleAntialias, false);
+
+        var debugbtn = document.getElementById('isdebug');
+        var debug = debugbtn.checked;
+        function toggleDebug(event) {
+            debug = debugbtn.checked;
+        };
+        debugbtn.addEventListener('change', toggleDebug, false);
+
 
         //setInterval(update, 1);
         QueueNewFrame();

@@ -31,7 +31,7 @@ function card(id,cx,cy,acx,acy,alpha,s,test)
 
     this.speed = 1;
 
-    this.angle = 90;
+    this.angleY = 90;
 
     this.shadowBlur = 0;
     this.shadowColor = "";
@@ -46,9 +46,9 @@ card.prototype.update = function()
         case "normal":
             this.normal();
             break;
-        //case "X_rolling":
-        //    this.X_rolling();
-        //    break;
+        case "Z_rolling":
+            this.Z_rolling();
+            break;
         case "Y_rolling":
             this.Y_rolling();
             break;
@@ -60,7 +60,7 @@ card.prototype.update = function()
             break;
     }
 
-    var sine = Math.sin(Math.PI / 180 * (this.angle - 90));
+    var sine = Math.sin(Math.PI / 180 * (this.angleY - 90));
 
     if (sine < 0) {
         this.pic = document.getElementById("poker_64");
@@ -72,11 +72,11 @@ card.prototype.update = function()
 
     this.scaleX = sine;
 
-    if (this.angle >= 360) {
-        this.angle -= 360;
+    if (this.angleY >= 360) {
+        this.angleY -= 360;
     }
-    else if (this.angle <= -360) {
-        this.angle += 360;
+    else if (this.angleY <= -360) {
+        this.angleY += 360;
     }
 
     this.counter += 1;
@@ -99,27 +99,38 @@ card.prototype.normal = function () {
 card.prototype.Y_rolling = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            var sine = Math.sin(Math.PI / 180 * (this.angle - 90));
-            this.angle += 1 + this.speed;
+            var sine = Math.sin(Math.PI / 180 * (this.angleY - 90));
+            this.angleY += 1 + this.speed;
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
             break;
     }
     nextstate(this, "Y_rolling", 0, 0);
 }
 
+card.prototype.Z_rolling = function () {
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            var sine = Math.sin(Math.PI / 180 * (this.angleY - 90));
+            this.angleY += 1 + this.speed;
+            this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
+            break;
+    }
+    nextstate(this, "Z_rolling", 0, 0);
+}
+
 card.prototype.back = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
-            if (this.angle < 0) {
-                this.angle += 5;
-                if (this.angle > 0) {
-                    this.angel = 0;
+            if (this.angleY < 0) {
+                this.angleY += 5;
+                if (this.angleY > 0) {
+                    this.angleY = 0;
                 }
-            } else if (this.angle > 0) {
-                this.angle -= 5;
-                if (this.angle < 0) {
-                    this.angel = 0;
+            } else if (this.angleY > 0) {
+                this.angleY -= 5;
+                if (this.angleY < 0) {
+                    this.angleY = 0;
                 }
             }
 
@@ -152,15 +163,15 @@ card.prototype.open = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             this.bdy.push(new bdyrange(this, 0, 0, 81, 125));
-            if (this.angle < 180) {
-                this.angle += 5;
-                if (this.angle > 180) {
-                    this.angel = 180;
+            if (this.angleY < 180) {
+                this.angleY += 5;
+                if (this.angleY > 180) {
+                    this.angleY = 180;
                 }
-            } else if (this.angle > 180) {
-                this.angle -= 5;
-                if (this.angle < 180) {
-                    this.angel = 180;
+            } else if (this.angleY > 180) {
+                this.angleY -= 5;
+                if (this.angleY < 180) {
+                    this.angleY = 180;
                 }
             }
             break;

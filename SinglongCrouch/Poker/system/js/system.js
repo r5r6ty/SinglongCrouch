@@ -338,7 +338,6 @@ function drawpic(o) {
         }
     }
 
-    var debug = document.getElementById("isdebug").checked;
     if (debug) {
         canvas.globalAlpha = 1;
         canvas.beginPath();
