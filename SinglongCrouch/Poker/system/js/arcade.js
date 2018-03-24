@@ -50,9 +50,14 @@ arcadeobject.prototype.normal = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
-            drawtext(ctx, this.identity.name + "获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+            if (this.centerY > ctx.canvas.width / 2) {
+                drawtext(ctx, this.identity.name + "获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+            } else {
+                drawtext(ctx, this.identity.name + "(Lv." + level +")获得了" + this.getcards.length + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+            }
+            var www = (ctx.canvas.width - this.getcards.length * 20) / 2;
             for (var i = 0; i < this.getcards.length; i++) {
-                this.getcards[i].centerX = this.centerX + 250 + i * 20;
+                this.getcards[i].centerX = www + i * 20;
                 this.getcards[i].centerY = this.centerY;
             }
             break;
@@ -184,7 +189,12 @@ function judge2card(o) {
             o.getcards.push(o.selectcards.second);
             delete o.selectcards.first;
             delete o.selectcards.second;
-            object.sort(sortNumber);
+            if (o.identity == player1) {
+                object.sort(sortNumberB);
+            } else {
+                object.sort(sortNumberA);
+                console.log("wawa");
+            }
             return 1;
         } else {
             o.selectcards.first.state = "back";
@@ -199,8 +209,12 @@ function judge2card(o) {
         return 0;
     }
 
-    function sortNumber(a, b) {
-        return o.getcards.indexOf(a) - o.getcards.indexOf(b)
+    function sortNumberA(a, b) {
+        return o.getcards.indexOf(b) - o.getcards.indexOf(a);
+    }
+
+    function sortNumberB(a, b) {
+        return o.getcards.indexOf(a) - o.getcards.indexOf(b);
     }
 }
 

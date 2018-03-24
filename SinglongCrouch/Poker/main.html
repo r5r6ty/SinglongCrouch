@@ -6,7 +6,7 @@
     <title>超屌扑克牌游戏</title>
 </head>
 
-<body>
+<body onload="dominit()">
 
     <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#000000;width:1280px;height:720px;top: 0px">
         <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left:0;cursor:auto;"></canvas>
@@ -105,10 +105,6 @@
         var gametitle = document.title;
         var gamesize = { width: 1280, height: 720 }
         var ctxload = document.getElementById("cvsload").getContext("2d");
-        ctxload.mozImageSmoothingEnabled = false;
-        ctxload.webkitImageSmoothingEnabled = false;
-        ctxload.msImageSmoothingEnabled = false;
-        ctxload.imageSmoothingEnabled = false;
         var ctx = document.getElementById("cvs").getContext("2d");
         var totaldata = 999;
         var loadeddata = 0;
@@ -237,27 +233,33 @@
         //压下中=3
         //单击（刚放开）=5
 
-        ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
+        var debug;
+        var level;
+        function dominit() {
+            ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
+            debug = document.getElementById("isdebug").checked;
+            player1.name = document.getElementById("player").value;
+            player2.name = document.getElementById("com").value;
+            level = document.getElementById("test_AI").value.split(".", 2)[1];
+        }
+
         document.getElementById("antialias").addEventListener("change", function (e) {
             ctx.imageSmoothingEnabled = this.checked;
+            ctxload.imageSmoothingEnabled = this.checked;
         }, false);
 
-        var debug = document.getElementById("isdebug").checked;
         document.getElementById("isdebug").addEventListener("change", function (e) {
             debug = this.checked;
         }, false);
 
-        player1.name = document.getElementById("player").value;
         document.getElementById("player").addEventListener("change", function (e) {
             player1.name = this.value;
         }, false);
 
-        player2.name = document.getElementById("com").value;
         document.getElementById("com").addEventListener("change", function (e) {
             player2.name = this.value;
         }, false);
 
-        var level = document.getElementById("test_AI").value.split(".", 2)[1];
         document.getElementById("test_AI").addEventListener("change", function (e) {
             level = this.value.split(".", 2)[1];
         }, false);
