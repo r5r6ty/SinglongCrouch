@@ -554,6 +554,7 @@ interfaceobject.prototype.selectcharacter = function () {
             }
 
             d.show();
+            delete d;
 
             this.centerX = 590;
             this.centerY = 250;

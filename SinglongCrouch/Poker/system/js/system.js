@@ -56,38 +56,12 @@ function cnvs_getCoordinates(x, y) {
     //    document.getElementById("xywh").innerHTML = c1x + " " + c1y + " " + (c2x - c1x) + " " + (c2y - c1y);
     //}
 
-    document.getElementById("demo5").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
+    //document.getElementById("demo5").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
 }
 
 
-function ctestcc() {
-
-    if (ctestswitch == 0) {
-        c1x = mouse.centerX;
-        c1y = mouse.centerY;
-    }
-    if (ctestswitch == 1) {
-        c2x = mouse.centerX;
-        c2y = mouse.centerY;
-    }
-
-    ctestswitch += 1;
-
-
-    document.getElementById("demo111").innerHTML = "Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
-}
-
-
-function ssstop() {
-    gameplay = 2;
-}
-
-function gggoon() {
-    gameplay = 0;
-}
-
-function gggoonstop() {
-    gameplay = 1;
+function ssstoponstop(s) {
+    gameplay = s;
 }
 
 
@@ -172,7 +146,8 @@ mainphase.prototype.gamephasecontroller = function () {
                         d.cards[i].Alpha = Math.random();
                         d.cards[i].speed = 5 * Math.random();
                     }
-                    d.show();   
+                    d.show();
+                    delete d;
                     var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
                     objectif.push(gt);//载入游戏标题
                     var psb = new interfaceobject(this, 640, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
@@ -783,9 +758,6 @@ function updategame(todraw) {
         mouseDown.splice(0, mouseDown.length);
         ctx.canvas.style.cursor = "wait";
     }
-
-    player1.name = document.getElementById("player").value;
-    player2.name = document.getElementById("com").value;
 
     if (todraw) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);

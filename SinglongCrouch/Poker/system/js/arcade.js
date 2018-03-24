@@ -95,7 +95,6 @@ arcadeobject.prototype.controller = function () {
             } else if (jd == 1) {
                 lockinput(true);
             }
-            document.getElementById("demo13").innerHTML = "我方";
             break;
         case cased(this, 1, 100):
             frameplay(this, "", 0, 0, 0, 0);
@@ -106,8 +105,6 @@ arcadeobject.prototype.controller = function () {
                 }
             }
 
-            var ai = document.getElementById("test_AI");
-            var level = ai.value.split(".", 2)[1];
             if (this.counter == (10 + 1 - level) * 2 || this.counter == (10 + 1 - level) * 4) {
                 var arr = new Array();
                 for (var i = 0; i < object.length; i++) {
@@ -168,7 +165,6 @@ arcadeobject.prototype.controller = function () {
             } else {
                 wait = 100;
             }
-            document.getElementById("demo13").innerHTML = "对方";
             break;
     }
     nextstate(this, "controller", wait, this.change);

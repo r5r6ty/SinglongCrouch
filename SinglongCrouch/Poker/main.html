@@ -56,9 +56,9 @@
         <div></div>
         <input type="text" id="player" value="Ryuuou">你的名字
         <div>
-            <button id="playstop" onClick="ssstop()">▎▎</button>
-            <button id="playgoon" onClick="gggoon()"> ▶ </button>
-            <button id="playgoonstop" onClick="gggoonstop()">▎▶</button>暂停/播放
+            <button id="playstop" onClick="ssstoponstop(2)">▎▎</button>
+            <button id="playgoon" onClick="ssstoponstop(0)"> ▶ </button>
+            <button id="playgoonstop" onClick="ssstoponstop(1)">▎▶</button>暂停/播放
         </div>
         <!--<div id="xywh">blank</div>
     <canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;" onmousemove="cnvs_getCoordinates(event)" onclick="ctestcc()"></canvas>-->
@@ -145,11 +145,8 @@
         document.body.style.overflow = 'hidden';
         //取消滚动条
 
-        //var ctest = document.getElementById("cvstest");
-        //var ctxtest = ctest.getContext("2d");
-
         var player1 = {
-            name: "ryuuou",
+            name: "Ryuuou",
             score: 0,
             up: 87,
             down: 83,
@@ -161,7 +158,7 @@
         };
 
         var player2 = {
-            name: "meijin",
+            name: "Meijin",
             score: 0,
             up: 38,
             down: 40,
@@ -200,7 +197,6 @@
                     cnvs_getCoordinates(x, y);
 
                     mouseDown[0] = 1;
-                    document.getElementById("demo15").innerHTML = "button " + 0 + " touchstart " + mouseDown[0];
                 }
             }, false);
             addEventListener("touchmove", function (e) {
@@ -209,13 +205,11 @@
                 var x = Number(touch.pageX); //页面触点X坐标
                 var y = Number(touch.pageY); //页面触点Y坐标
                 cnvs_getCoordinates(x, y);
-                document.getElementById("demo15").innerHTML = "button " + 0 + " touchmove " + mouseDown[0];
             }, false);
             addEventListener("touchend", function (e) {
                 if (mouseDown[0] >= 3) {
                     mouseDown[0] = 4;
                 }
-                document.getElementById("demo15").innerHTML = "button " + 0 + " touchend " + mouseDown[0];
             }, false);
         } else {
             addEventListener("keydown", function (e) {
@@ -227,18 +221,15 @@
             addEventListener("mousedown", function (e) {
                 if (e.target == ctx.canvas) {
                     mouseDown[e.button] = 1;
-                    document.getElementById("demo15").innerHTML = "button " + e.button + " mousedown " + mouseDown[e.button];
                 }
             }, false);
             addEventListener("mousemove", function (e) {
                 cnvs_getCoordinates(e.clientX, e.clientY);
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mousemove " + mouseDown[e.button];
             }, false);
             addEventListener("mouseup", function (e) {
                 if (mouseDown[e.button] >= 3) {
                     mouseDown[e.button] = 4;
                 }
-                document.getElementById("demo15").innerHTML = "button " + e.button + " mouseup " + mouseDown[e.button];
             }, false);
         }
         //未压下=undefined
@@ -246,20 +237,30 @@
         //压下中=3
         //单击（刚放开）=5
 
+        ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
+        document.getElementById("antialias").addEventListener("change", function (e) {
+            ctx.imageSmoothingEnabled = this.checked;
+        }, false);
 
-        var antialiasbtn = document.getElementById("antialias");
-        function toggleAntialias(event) {
-            ctx.imageSmoothingEnabled = antialiasbtn.checked;
-        };
-        antialiasbtn.addEventListener("change", toggleAntialias, false);
+        var debug = document.getElementById("isdebug").checked;
+        document.getElementById("isdebug").addEventListener("change", function (e) {
+            debug = this.checked;
+        }, false);
 
-        var debugbtn = document.getElementById("isdebug");
-        var debug = debugbtn.checked;
-        function toggleDebug(event) {
-            debug = debugbtn.checked;
-        };
-        debugbtn.addEventListener("change", toggleDebug, false);
+        player1.name = document.getElementById("player").value;
+        document.getElementById("player").addEventListener("change", function (e) {
+            player1.name = this.value;
+        }, false);
 
+        player2.name = document.getElementById("com").value;
+        document.getElementById("com").addEventListener("change", function (e) {
+            player2.name = this.value;
+        }, false);
+
+        var level = document.getElementById("test_AI").value.split(".", 2)[1];
+        document.getElementById("test_AI").addEventListener("change", function (e) {
+            level = this.value.split(".", 2)[1];
+        }, false);
 
         //setInterval(update, 1);
         QueueNewFrame();

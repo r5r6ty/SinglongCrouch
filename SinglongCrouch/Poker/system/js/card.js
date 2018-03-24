@@ -63,7 +63,9 @@ card.prototype.update = function()
     var sine = Math.sin(Math.PI / 180 * (this.angleY - 90));
 
     if (sine < 0) {
-        this.pic = document.getElementById("poker_64");
+        if (this.pic == this.test) {
+            this.pic = document.getElementById("poker_64");
+        }
         sine = Math.abs(sine);
     }
     else if (sine > 0) {
