@@ -361,6 +361,30 @@ interfaceobject.prototype.gametitle = function () {
 
             drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1, "red", 10);
 
+            //for (var i = 0; i < object.length; i++) {
+            //    object[i].exist = false;
+            //}
+
+
+            //var d = new deck(ctx.canvas.width / 2, ctx.canvas.height / 2, "normal");
+            ////d.shuffle();
+            //var t = d.cards.length - document.getElementById("testrange").value;
+            //for (var i = 0; i < t; i++) {
+            //    delete d.cards[i];
+            //    d.cards.splice(i, 1);
+            //    i--;
+            //    t--;
+            //}
+            //for (var i = 0; i < d.cards.length; i++) {
+            //    //d.cards[i].angleZ = -90 + i * (180 / (d.cards.length));
+            //    d.cards[i].angleZ = (20 / d.cards.length) * i - (20 / 2 - (20 / (d.cards.length)) / 2);
+
+            //    d.cards[i].centerX = Math.cos((d.cards[i].angleZ - 90) * Math.PI / 180) * 1500 + ctx.canvas.width / 2;
+            //    d.cards[i].centerY = Math.sin((d.cards[i].angleZ - 90) * Math.PI / 180) * 1500 + ctx.canvas.height + 1500 - 20;
+            //}
+            //d.show();
+            //delete d;
+
             break;
     }
     nextstate(this, "gametitle", 0, 0);

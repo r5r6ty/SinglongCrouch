@@ -243,7 +243,7 @@ playsound.prototype.update = function () {
     if (this.audio.ended || this.counterA >= this.counterB + 10) {
         ctx.canvas.removeChild(this.audio);
         return false;
-    }  else {
+    } else {
         this.counterA += 1 / GameFPS;
         return true;
     }
@@ -289,39 +289,41 @@ function drawpic(o) {
     if (o.pic != undefined) {
         var canvas = canvas;
         canvas.save();
-        if (o.hasOwnProperty("shadowBlur") && o.hasOwnProperty("shadowColor")) {
+        //if (canvas != ctx) {
+        //    canvas.translate(Math.round(-visualX), Math.round(-visualY));
+        //}
+        canvas.globalAlpha = o.Alpha;
+        if (o.hasOwnProperty("shadowBlur") && o.hasOwnProperty("shadowColor") && o.hasOwnProperty("angleZ")) {
             canvas.shadowBlur = o.shadowBlur;
             canvas.shadowColor = o.shadowColor;
-        }
-        if (canvas != ctx) {
-            canvas.translate(Math.round(-visualX), Math.round(-visualY));
-        }
-        canvas.globalAlpha = o.Alpha;
-        if (o.direction == 1) {
-            canvas.drawImage(o.pic, Math.round(o.centerX - o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(o.centerY - o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
-        }
-        else {
-            canvas.translate(c.width, 0);
-            canvas.scale(-1, 1);
-            //画图
+            canvas.translate(o.centerX, o.centerY);
+            canvas.rotate(o.angleZ * Math.PI / 180);
+            canvas.drawImage(o.pic, Math.round(-o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(-o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
+        } else {
+            if (o.direction == 1) {
+                canvas.drawImage(o.pic, Math.round(o.centerX - o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(o.centerY - o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
+            }
+            else {
+                canvas.translate(c.width, 0);
+                canvas.scale(-1, 1);
+                //画图
 
-            canvas.drawImage(o.pic, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY));
-            //翻转回来
+                canvas.drawImage(o.pic, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY));
+                //翻转回来
 
-            canvas.translate(c.width, 0);
-            canvas.scale(-1, 1);
+                canvas.translate(c.width, 0);
+                canvas.scale(-1, 1);
+            }
         }
     }
 
-    if (debug) {
+    if (debug && !o.hasOwnProperty("angleZ")) {
         canvas.globalAlpha = 1;
         canvas.beginPath();
         canvas.fillStyle = "yellow";
         canvas.arc(o.centerX, o.centerY, 2, 0, 2 * Math.PI, true);
         canvas.fill();
-    }
 
-    if (debug && (o.status == "card" || o.status == "interface")) {
         //canvas.beginPath();
         //canvas.strokeStyle = "blue";
         //canvas.moveTo(o.cx, o.cy);
@@ -362,9 +364,9 @@ function drawpic(o) {
                     canvas.stroke();
                 }
             }
-        //if (o.itr.length != 0) {
-        //    o.itr = [];
-        //}
+            //if (o.itr.length != 0) {
+            //    o.itr = [];
+            //}
         }
     }
 
@@ -523,7 +525,7 @@ function bdyrange(o, x, y, w, h) {
         this.bx = o.centerX + o.myX - x - w;
         this.bx -= (w - w * o.scaleX) / 2;
     }
-    
+
     this.bw = w * o.scaleX;
     this.by = o.centerY - o.myY + y;
     this.by += (h - h * o.scaleY) / 2;

@@ -51,20 +51,33 @@ arcadeobject.prototype.normal = function () {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
 
-            var s = 0;
-            var www = (ctx.canvas.width - this.getcards.length * 20) / 2;
-            for (var i = 0; i < this.getcards.length; i++) {
-                this.getcards[i].centerX = www + i * 20;
-                this.getcards[i].centerY = this.centerY;
 
-                s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
-            }
-            this.identity.score = s;
-            if (this.centerY > ctx.canvas.width / 2) {
+            //var www = (ctx.canvas.width - this.getcards.length * 20) / 2;
+            if (this.identity == player1) {
+                var s = 0;
+                for (var i = 0; i < this.getcards.length; i++) {
+                    //this.getcards[i].centerX = www + i * 20;
+                    //this.getcards[i].centerY = this.centerY;
+
+                    this.getcards[i].angleZ = (20 / this.getcards.length) * i - (20 / 2 - (20 / (this.getcards.length)) / 2);
+
+                    this.getcards[i].centerX = Math.cos((this.getcards[i].angleZ - 90) * Math.PI / 180) * 1500 + ctx.canvas.width / 2;
+                    this.getcards[i].centerY = Math.sin((this.getcards[i].angleZ - 90) * Math.PI / 180) * 1500 + this.centerY + 1500;
+
+                    s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
+                }
                 drawtext(ctx, this.identity.name + "获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
             } else {
+                var s = 0;
+                for (var i = 0; i < this.getcards.length; i++) {
+                    this.getcards[i].angleZ = (-20 / this.getcards.length) * i + (20 / 2 - (20 / (this.getcards.length)) / 2);
+                    this.getcards[i].centerX = Math.cos((this.getcards[i].angleZ - 90) * Math.PI / 180) * -1500 + ctx.canvas.width / 2;
+                    this.getcards[i].centerY = Math.sin((this.getcards[i].angleZ - 90) * Math.PI / 180) * -1500 + this.centerY - 1500;
+                    s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
+                }
                 drawtext(ctx, this.identity.name + "(Lv." + level + ")获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
             }
+            this.identity.score = s;
             break;
     }
     nextstate(this, "normal", 0, 0);
@@ -198,7 +211,6 @@ function judge2card(o) {
                 object.sort(sortNumberB);
             } else {
                 object.sort(sortNumberA);
-                console.log("wawa");
             }
             return 1;
         } else {

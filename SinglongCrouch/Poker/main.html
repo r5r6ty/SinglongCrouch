@@ -52,9 +52,11 @@
                 <option>lv.10</option>
             </select>
         </div>
-        <input type="text" id="com" value="Meijin">电脑的名字
+        <input type="range" id="testrange" min="0" max="52">
         <div></div>
-        <input type="text" id="player" value="Ryuuou">你的名字
+        <input type="text" id="com" value="电脑">电脑的名字
+        <div></div>
+        <input type="text" id="player" value="玩家">你的名字
         <div>
             <button id="playstop" onClick="ssstoponstop(2)">▎▎</button>
             <button id="playgoon" onClick="ssstoponstop(0)"> ▶ </button>
@@ -142,7 +144,7 @@
         //取消滚动条
 
         var player1 = {
-            name: "Ryuuou",
+            name: "玩家",
             score: 0,
             up: 87,
             down: 83,
@@ -154,7 +156,7 @@
         };
 
         var player2 = {
-            name: "Meijin",
+            name: "电脑",
             score: 0,
             up: 38,
             down: 40,
