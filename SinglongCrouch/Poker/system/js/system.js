@@ -164,7 +164,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     objectif.push(nld);//载入进度条
                     break;
                 case "g_title":
-                    var d = new deck(0, 0, "Y_rolling");
+                    var d = new deck(0, 0, "Z_rolling");
                     d.shuffle();
                     for (var i = 0; i < d.cards.length; i++) {
                         d.cards[i].centerX = Math.random() * ctx.canvas.width;

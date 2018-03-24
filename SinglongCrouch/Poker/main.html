@@ -247,21 +247,27 @@
         //单击（刚放开）=5
 
 
-        var antialiasbtn = document.getElementById('antialias');
+        var antialiasbtn = document.getElementById("antialias");
         function toggleAntialias(event) {
-            ctx.imageSmoothingEnabled = this.checked;
-            ctx.mozImageSmoothingEnabled = this.checked;
-            ctx.webkitImageSmoothingEnabled = this.checked;
-            ctx.msImageSmoothingEnabled = this.checked;
+            if (ctx.imageSmoothingEnabled)
+                ctx.imageSmoothingEnabled = antialiasbtn.checked;
+            else if (ctx.mozImageSmoothingEnabled)
+                ctx.mozImageSmoothingEnabled = antialiasbtn.checked;
+            else if (ctx.webkitImageSmoothingEnabled)
+                ctx.webkitImageSmoothingEnabled = antialiasbtn.checked;
+            else if (ctx.msImageSmoothingEnabled)
+                ctx.msImageSmoothingEnabled = antialiasbtn.checked;
+            else
+                antialiasbtn.removeEventListener("change", toggleAntialias, false);
         };
-        antialiasbtn.addEventListener('change', toggleAntialias, false);
+        antialiasbtn.addEventListener("change", toggleAntialias, false);
 
-        var debugbtn = document.getElementById('isdebug');
+        var debugbtn = document.getElementById("isdebug");
         var debug = debugbtn.checked;
         function toggleDebug(event) {
             debug = debugbtn.checked;
         };
-        debugbtn.addEventListener('change', toggleDebug, false);
+        debugbtn.addEventListener("change", toggleDebug, false);
 
 
         //setInterval(update, 1);
