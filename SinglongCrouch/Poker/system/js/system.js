@@ -2,14 +2,14 @@ function cnvs_getCoordinates(x, y) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
-    var x1 = ctx.canvas.offsetParent.offsetLeft;
-    var y1 = ctx.canvas.offsetParent.offsetTop;
-    var x2 = ctx.canvas.offsetLeft;
-    var y2 = ctx.canvas.offsetTop;
-    var sl = document.documentElement.scrollLeft;
-    var st = document.documentElement.scrollTop;
-    mouse.centerX = Math.round(x - x1 - x2 + sl);
-    mouse.centerY = Math.round(y - y1 - y2 + st);
+    //var x1 = ctx.canvas.offsetParent.offsetLeft;
+    //var y1 = ctx.canvas.offsetParent.offsetTop;
+    //var x2 = ctx.canvas.offsetLeft;
+    //var y2 = ctx.canvas.offsetTop;
+    //var sl = document.documentElement.scrollLeft;
+    //var st = document.documentElement.scrollTop;
+    mouse.centerX = Math.round(x);// - x1 - x2 + sl
+    mouse.centerY = Math.round(y);// - y1 - y2 + st
 
     //if (ctestswitch == 1) {
     //    ctxtest.clearRect(0, 0, ctest.width, ctest.height);
@@ -134,7 +134,7 @@ mainphase.prototype.gamephasecontroller = function () {
 
             switch (this.gamephase) {
                 case "g_nowloading":
-                    var nld = new interfaceobject(this, 640, 310, 0, 0, 1, "nowloading");
+                    var nld = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "nowloading");
                     objectif.push(nld);//载入进度条
                     break;
                 case "g_title":
@@ -148,9 +148,9 @@ mainphase.prototype.gamephasecontroller = function () {
                     }
                     d.show();
                     delete d;
-                    var gt = new interfaceobject(this, 640, 310, 0, 0, 1, "gametitle");
+                    var gt = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2 - 100, 0, 0, 1, "gametitle");
                     objectif.push(gt);//载入游戏标题
-                    var psb = new interfaceobject(this, 640, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
+                    var psb = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
                     objectif.push(psb);//载入press start button
                     break;
                 case "g_menu":
@@ -650,7 +650,6 @@ function sound(o, f, s) {
 
 //判断是否支持触摸事件
 function isTouchDevice() {
-    document.getElementById("version").innerHTML = navigator.appVersion;
     try {
         document.createEvent("TouchEvent");
         document.getElementById("demo16").innerHTML = "TouchEvent ok!";

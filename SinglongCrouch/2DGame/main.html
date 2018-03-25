@@ -1,0 +1,913 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<title>超屌游戏！</title>
+</head>
+
+<body onload="start2()">
+
+<!-- onload="getExplorer()"-->
+
+
+
+<div id="framediv" style="position: absolute;left: 50%;margin-left: -400px;background:#ffff00;width:800px;height:600px;top: 0px">
+<canvas id="cvsblack" width=800 height=600 style="border:0px solid #c3c3c3;background:black;position:absolute;left: 0;"></canvas>
+<canvas id="cvsbg" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+<canvas id="cvs" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;"></canvas>
+<canvas id="interface" width=800 height=600 style="border:0px solid #c3c3c3;position:absolute;left: 0;cursor:none;"></canvas>
+<!--cursor:crosshair;-->
+<div id="bstate" style="font-size:10px;line-height:20px;position: absolute;left: 50%;margin-left: -400px;background:#ffff00;height:20px;top: 580px">
+</div> 
+
+</div> 
+
+<div style="position: absolute;background:#ffff00;top: 75%;left: 0%;">
+<div>
+<button id="playstop" onClick="ssstop()">▎▎</button>
+<button id="playgoon" onClick="gggoon()"> ▶ </button>
+<button id="playgoonstop" onClick="gggoonstop()">▎▶</button>
+</div>
+<div id="xywh">blank</div>
+<canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:black;"></canvas>
+</div>
+
+<div id="divframe" style="position: absolute;background:#ffff00;top: 20%;left: 0%;" >
+<canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
+<div id="demo"></div>
+<div id="demo2"></div>
+<div id="demo3"></div>
+<div id="demo4"></div>
+<div id="demo5"></div>
+<div id="demo6"></div>
+<div id="demo7"></div>
+<div id="demo8"></div>
+<div id="demo9"></div>
+<div id="demo10"></div>
+<div id="demo11"></div>
+<div id="demo12"></div>
+<div id="demo14"></div>
+<div id="demo13"></div>
+<div id="demo14"></div>
+<div id="demo15"></div>
+<div id="demo16"></div>
+<div id="demo17"></div>
+<div id="demo18"></div>
+<div></div>
+<div></div>
+</div>
+
+<script type="text/javascript" src="system/js/craft.js"></script>
+<script type="text/javascript" src="system/js/bullet.js"></script>
+
+<script type="text/javascript" charset="gb2312" src="system/js/effect.js"></script>
+<script type="text/javascript" charset="gb2312" src="system/js/interface.js"></script>
+<script type="text/javascript" src="system/js/ai.js"></script>
+
+<!--<script type="text/javascript" src="system/js/keycode.js"></script>-->
+
+<script type="text/javascript" src="system/js/bg.js"></script>
+
+<script type="text/javascript">
+var gametitle = "超屌2d游戏！";
+var gamesize = {width: 800,height: 600}
+var cload=document.getElementById("cvsload");
+var ctxload=cload.getContext("2d");
+var cbg=document.getElementById("cvsbg");
+var ctxbg=cbg.getContext("2d");
+var c=document.getElementById("cvs");
+var ctx=c.getContext("2d");
+var cif=document.getElementById("interface");
+var ctxif=cif.getContext("2d");
+var totaldata = 19;
+var loadeddata = 0;
+var object = new Array();
+var objectif = new Array();
+var objectbg = new Array();
+var objectsound = new Array();
+var previous = [];
+var mainloop = true;
+var intervalID = -1;
+var requestId;
+var clear = 0;
+var GameFPS;
+var gamevolume = 1;
+
+var thisexplorer = "Unknown";
+
+var vg = 1;
+var vf = 0.001;
+
+var visualswitch = false;
+var visualobject;
+var visualX = 0;
+var visualY = 0;
+
+var rdlu = [0,90,180,270];
+var g_p;
+
+var mouse={centerX:0,centerY:0};
+
+var sysobject = {
+	identity: "system"
+};
+
+var player = {
+	identity: "player",
+	target: mouse
+};
+
+var enemy = {
+	identity: "computer",
+	target: player
+};
+
+document.documentElement.style.overflow='hidden';
+document.body.style.overflow='hidden';
+//取消滚动条
+
+var ctest=document.getElementById("cvstest");
+var ctxtest=ctest.getContext("2d");
+
+function getExplorer() {
+var explorer = window.navigator.userAgent ;
+	//ie 
+	if (explorer.indexOf("MSIE") >= 0) {
+	thisexplorer = "IE";
+	}
+	//firefox 
+	else if (explorer.indexOf("Firefox") >= 0) {
+	thisexplorer = "Firefox";
+	}
+	//Chrome
+	else if(explorer.indexOf("Chrome") >= 0){
+	thisexplorer = "Chrome";
+	}
+	//Opera
+	else if(explorer.indexOf("Opera") >= 0){
+	thisexplorer = "Opera";
+	}
+	//Safari
+	else if(explorer.indexOf("Safari") >= 0){
+	thisexplorer = "Safari";
+	}
+}
+
+function cnvs_getCoordinates(e)
+{
+var x1 = c.offsetParent.offsetLeft;
+var y1 = c.offsetParent.offsetTop;
+var x2 = c.offsetLeft;
+var y2 = c.offsetTop;
+var sl = document.documentElement.scrollLeft;
+var st = document.documentElement.scrollTop;
+mouse.centerX=e.clientX - x1 - x2 +sl;
+mouse.centerY=e.clientY - y1 - y2 +st;
+if(mouse.centerX < 0)
+{
+mouse.centerX=0;
+}
+else if(mouse.centerX > 800)
+{
+mouse.centerX=800;
+}
+if(mouse.centerY < 0)
+{
+mouse.centerY=0;
+}
+else if(mouse.centerY > 600)
+{
+mouse.centerY=600;
+}
+
+document.getElementById("demo5").innerHTML="Coordinates:(" + mouse.centerX + "," + mouse.centerY + ")";
+}
+
+var gameplay = 0;
+function ssstop()
+{
+gameplay = 2;
+}
+
+function gggoon()
+{
+gameplay = 0;
+}
+
+function gggoonstop()
+{
+gameplay = 1;
+}
+
+
+function computeFPS(){
+
+        if (previous.length > 60) {
+            previous.splice(0, 1);
+        }
+        var start = (new Date).getTime();
+        previous.push(start);
+		var sum = 0;
+		
+        for (var id = 0; id < previous.length - 1; id++) {
+            sum += previous[id + 1] - previous[id];
+        }
+
+        var diff = 1000.0 / (sum / previous.length);
+		GameFPS = diff.toFixed();
+		if(clear >= 1)
+		{
+		clear = 0 ;
+		for (var ic=0; ic<object.length; ic++)
+		if (object[ic] == undefined)
+		{
+		object.splice(ic,1);
+		}
+		for (var icbg=0; icbg<objectbg.length; icbg++)
+		if (objectbg[icbg] == undefined)
+		{
+		objectbg.splice(icbg,1);
+		}
+		for (var icif=0; icif<objectif.length; icif++)
+		if (objectif[icif] == undefined)
+		{
+		objectif.splice(icif,1);
+		}
+		for (var ics=0; ics<objectsound.length; ics++)
+		if (objectsound[ics] == undefined)
+		{
+		objectsound.splice(ics,1);
+		}
+//		for (var ic=0; ic<object.length; ic++)
+//		if (object[ic] == undefined)
+//		{
+//		object.splice(ic,1);
+//		}
+		}
+		clear += 1;
+		document.getElementById("bstate").innerHTML="FPS: " + GameFPS + " / " + clear.toFixed();
+}
+
+
+function QueueNewFrame() {
+        if (window.requestAnimationFrame)
+            requestId = window.requestAnimationFrame(renderingLoop);
+        else if (window.msRequestAnimationFrame)
+            requestId = window.msRequestAnimationFrame(renderingLoop);
+        else if (window.webkitRequestAnimationFrame)
+            requestId = window.webkitRequestAnimationFrame(renderingLoop);
+        else if (window.mozRequestAnimationFrame)
+            requestId = window.mozRequestAnimationFrame(renderingLoop);
+        else if (window.oRequestAnimationFrame)
+            requestId = window.oRequestAnimationFrame(renderingLoop);
+        else
+        {
+            function QueueNewFrame() {
+            };
+            intervalID = window.setInterval(renderingLoop, 1000/60);
+        }
+};
+
+var startx = 400;
+var starty = 300;
+var g_player;
+var g_enemy;
+var temp1;
+function getCookie(c_name)
+{
+if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_name + "=")
+  if (c_start!=-1)
+    { 
+    c_start=c_start + c_name.length+1 
+    c_end=document.cookie.indexOf(";",c_start)
+    if (c_end==-1) c_end=document.cookie.length
+    return unescape(document.cookie.substring(c_start,c_end))
+    } 
+  }
+return ""
+}
+
+function setCookie(c_name,value,expiredays)
+{
+var exdate=new Date()
+exdate.setDate(exdate.getDate()+expiredays)
+document.cookie=c_name+ "=" +escape(value)+
+((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+}
+
+function checkCookie()
+{
+username=getCookie('username')
+if (username!=null && username!="")
+  {
+//  alert('Welcome again '+username+'!')
+  }
+else 
+  {
+  username=prompt('Please enter your name:',"")
+  if (username!=null && username!="")
+    {
+    setCookie('username',username,1)
+	setCookie('hangar0',"",1)
+    }
+  }
+}
+
+function h0()
+{
+return 'g_hangar[0].shipname = "带鱼一号";'+
+'g_hangar[0].block.push({block: core1,identity: player,px: 400,py: 300,rotate: 0,alpha: 1,state: "show"});'+
+'g_hangar[0].block.push({block: cannon1,identity: g_player,px: 0,py: -1,rotate: 0,alpha: 1,state: "show"});'+
+'g_hangar[0].block.push({block: cannon1,identity: g_player,px: 0,py: 1,rotate: 0,alpha: 1,state: "show"});'+
+'g_hangar[0].block.push({block: propeller1,identity: g_player,px: -1,py: 0,rotate: 0,alpha: 1,state: "show"});';
+}
+
+function removec()
+{
+setCookie('username',"",0);
+setCookie('hangar0',"",0);
+}
+function getBytesLength(str)
+{
+// 在GBK编码里，除了ASCII字符，其它都占两个字符宽
+return str.replace(/[^\x00-\xff]/g, 'xx').length;
+}
+var g_hangar = new Array();
+function start()
+{
+checkCookie();
+//removec();
+
+player_name = getCookie("username");
+
+document.getElementById("demo14").innerHTML="";
+
+
+
+g_hangar[0] = getCookie('hangar0');
+//g_hangar[1] = new hangar(sysobject,"normal",1);
+//g_hangar[2] = new hangar(sysobject,"normal",2);
+//g_hangar[3] = new hangar(sysobject,"normal",3);
+//g_hangar[4] = new hangar(sysobject,"normal",4);
+
+//MYhangar = g_hangar[0];
+
+//document.getElementById("demo16").innerHTML=getCookie('hangar0');
+
+g_cursor = new cursor(sysobject,400,300,0,0,0,1,"arrow");
+
+g_bg = new bg(this,0,0,0,0,0,1,"space");
+
+	g_mb1 = new button(sysobject,400,25,1,"battle_start");//主按钮
+	
+//	g_bp1 = );//后退按钮1
+//	
+//	g_bn1 = ;//前进按钮1
+
+//	g_hangar[0].shipname = "带鱼一号"
+//
+//	g_hangar[0].block.push({block: core1,identity: player,px: 400,py: 300,rotate: 0,alpha: 1,state: "show"});
+//	
+//	g_hangar[0].block.push({block: cannon1,identity: g_player,px: 0,py: -1,rotate: 0,alpha: 1,state: "show"});
+//	
+//	g_hangar[0].block.push({block: cannon1,identity: g_player,px: 0,py: 1,rotate: 0,alpha: 1,state: "show"});
+//	
+//	g_hangar[0].block.push({block: propeller1,identity: g_player,px: -1,py: 0,rotate: 0,alpha: 1,state: "show"});
+
+objectif.push(new gameprocess(sysobject,"menu"));
+
+}
+
+function start2()
+{
+objectif.push(new startthegame());
+}
+
+function pushobject(o)
+{
+
+}
+
+function sound(o,f,s,multiShot)
+{
+	if(o.counter == f || f == "none")
+	{
+		if(multiShot)
+		{
+			for (var i=0; i<objectsound.length; i++)
+			{
+				if(objectsound[i] != undefined && objectsound[i].id == s)
+				{
+					objectsound[i].ms = false;
+				}
+			}
+		}
+	objectsound.push(new playsound(document.getElementById(s)));
+	}
+}
+
+function playsound(p,l) 
+{
+	this.status = "sound";
+	this.counter = 0;
+	this.ms = true;
+	this.id = p.id;
+	this.audio = document.createElement("audio");
+	this.audio.src = p.src;
+	this.audio.autoplay = "autoplay";
+	this.end = p.duration;
+	this.audio.volume = gamevolume;
+    document.body.appendChild(this.audio);
+	
+	this.exist = true
+} 
+playsound.prototype.render = function()
+{
+
+	if (this.audio.ended || !this.ms || this.counter >= this.end*60)
+	{
+	document.body.removeChild(this.audio);
+	this.exist = false;
+	}
+
+	this.counter += 1;
+
+return this.exist;
+}	
+
+function drawtext(canvas,text,x,y,sizefont,color,align,baseline,alpha)
+{
+canvas.save();
+if(canvas != ctxif)
+{
+canvas.translate(Math.round(-visualX), Math.round(-visualY));
+}
+canvas.beginPath();
+canvas.font=sizefont;
+canvas.textAlign=align;
+canvas.textBaseline=baseline;
+canvas.fillStyle=color;
+canvas.globalAlpha = alpha;
+canvas.fillText(text,Math.round(x),Math.round(y));
+canvas.restore();
+}
+
+function drawpic(o,canvas)
+{
+if(o.pic != undefined)
+{
+var canvas = canvas;
+canvas.save();
+if(canvas != ctxif)
+{
+canvas.translate(Math.round(-visualX), Math.round(-visualY));
+
+}
+canvas.globalAlpha = o.Alpha;
+//	if(o.direction == 1)
+//	{
+	canvas.drawImage(o.pic, Math.round(o.centerX - o.myX), Math.round(o.centerY - o.myY)); 
+//	}
+//	else
+//	{
+//	canvas.translate(c.width, 0);
+//	canvas.scale(-1, 1);
+//        //画图
+//
+//	canvas.drawImage(o.pic, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY)); 
+//      //翻转回来
+//
+//	canvas.translate(c.width, 0); 
+//	canvas.scale(-1, 1);
+//	}
+//}
+
+
+
+canvas.restore();
+}
+}
+
+function pushtocanvas(o,c,t)
+{
+var canvas = o;
+t.c = c;
+canvas.push(t);
+}
+
+function frameplay(o,p,acx,acy,myX,myY)
+{
+
+		o.pic = document.getElementById(p);
+		o.myX = myX;
+		o.myY = myY;
+	
+		o.dvy += acy;
+	
+		o.centerX += o.dvx;
+		o.centerY += o.dvy;
+}
+
+
+function cased(o,a,b)
+{
+	if(o.counter >= a && o.counter <= b)
+	{
+		return o.counter;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+function nextstate(o,s,f1,f2)
+{
+	if(o.counter >= f1 && f2 >= 1000)
+	{
+		o.exist = false;
+	}
+	else if(o.counter >= f1 && f2 < 999)
+	{
+			o.state = s;
+			o.counter = f2 - 1;
+	}
+}
+
+function myrotation(o)
+{
+var dx = o.centerX - o.core.centerX;
+var dy = o.centerY - o.core.centerY;
+
+var r = Math.atan2(dy,dx)/(Math.PI/180);//计算相对core的朝向
+
+if(r < 0)
+{
+	r += 360;
+}
+return r;
+}
+
+function core_rotation_change(o,r1,r2,speed)
+{
+if(r1 - r2 < -180)
+{
+	r1 += 360;
+}
+else if(r1 - r2 > 180)
+{
+	r1 -= 360;
+}
+if(r1 > r2)
+{
+	if(r1 - r2 >= speed)
+	{
+	r1 -= speed;
+	}
+	else
+	{
+	r1 -= r1 - r2;
+	}
+}
+else if(r1 < r2)
+{
+	if(r2 - r1 >= speed)
+	{
+	r1 += speed;
+	}
+	else
+	{
+	r1 += r2 - r1;
+	}
+}
+
+return r1;
+}
+
+function detection(ax1,ay1,ax2,ay2, bx1,by1,bx2,by2)
+{
+if ( ax1 < bx1 )
+{
+if ( ax2 < bx1 )
+return false;
+else
+{
+if (ay1 < by1)
+{
+if (ay2 < by1)
+return false;
+else
+return true;
+}
+else
+{
+if ( ay1 > by2 )
+return false;
+else
+return true;
+}
+}
+}
+else
+{
+if (ax1 > bx2)
+return false;
+else
+{
+if ( ay1 < by1 )
+{
+if (ay2 < by1)
+ return false;
+else
+return true;
+}
+else
+{
+if (ay1 > by2)
+return false;
+else
+return true;
+
+}
+}
+}
+}
+
+function skillkeydown(o,s,c,key)
+{
+if (key in keysDown)
+	{
+	o.counter = c - 1;
+	o.state = s;
+	}
+}
+
+function skillkeyup(o,s,c,key)
+{
+if (!(key in keysDown))
+	{
+	o.counter = c - 1;
+	o.state = s;
+	}
+}
+
+    var keysDown = {};  
+    addEventListener("keydown", function (e) {  
+         keysDown[e.keyCode] = true;  
+    }, false);  
+    addEventListener("keyup", function (e) {  
+         delete keysDown[e.keyCode];  
+    }, false);  
+    addEventListener("mousemove", function (e) {  
+		cnvs_getCoordinates(e);
+    }, false);  
+//Firefox火狐浏览器另外再说,ie too;
+    addEventListener("mousedown", function (e) {  
+		keysDown[e.button] = true; 
+    }, false);  
+    addEventListener("mouseup", function (e) {  
+		delete keysDown[e.button]; 
+    }, false);  
+    addEventListener("mousewheel", function (e) {  
+	if(e.wheelDelta > 0)//向上滚
+	{
+		for(var i=0; i<object.length; i++)
+		{
+			if(object[i] != undefined && object[i].state == "manufacture")
+			{
+				object[i].rotate -= 90;
+			}
+		}
+	}
+	else if(e.wheelDelta < 0)//向下滚
+	{
+		for(var i=0; i<object.length; i++)
+		{
+			if(object[i] != undefined && object[i].state == "manufacture")
+			{
+				object[i].rotate += 90;
+			}
+		}
+	}
+    }, false);  
+
+function picloader(name,r,c,l,sw,sh)
+{
+
+loadeddata += 1;
+var picwidth = (name.width - l*r)/r;
+var picheight = (name.height - l*c)/c;
+cload.width = picwidth * sw/100;
+cload.height = picheight * sh/100;
+var i = 0;
+	for(var y=0; y<c; y++)
+	{
+	for(var x=0; x<r; x++)
+	{
+	var h = document.getElementById("hidden");
+	var image = document.createElement("img");
+	image.id = name.id + "_" + i;
+	image.style.position = "absolute";
+	ctxload.drawImage(name,x*(picwidth + l),y*(picheight + l),picwidth,picheight,0,0,picwidth * sw/100,picheight * sh/100);
+	image.src = cload.toDataURL("image/png");  
+	ctxload.clearRect(0,0,cload.width,cload.height);
+	h.appendChild(image);
+	i += 1;
+	}
+	}
+h.removeChild(name);
+
+}
+
+function audioloader(name)
+{
+loadeddata += 1;
+}
+
+function renderingLoop()
+{
+objectif.sort(function(a, b){return a.z_index - b.z_index;});
+object.sort(function(a, b){return a.z_index - b.z_index;});
+
+ctxtest.clearRect(0,0,ctest.width,ctest.height);
+
+if(gameplay == 0 || gameplay == 1)
+{
+		if(mainloop)
+		{
+
+ctxbg.clearRect(0,0,cbg.width,cbg.height);
+ctx.clearRect(0,0,c.width,c.height);
+ctxif.clearRect(0,0,cif.width,cif.height);
+
+	for (var ibg=0; ibg<objectbg.length; ibg++)
+	{
+//判断object[ibg]是否存在，是就绘制，否就删除
+if (objectbg[ibg] != undefined)
+{
+	if(!objectbg[ibg].render())
+	{
+	delete objectbg[ibg];
+	}
+}
+	}
+
+
+
+	for (var i1=0; i1<object.length; i1++)
+	{
+//判断object[i1]是否存在，是就绘制，否就删除
+if (object[i1] != undefined)
+{
+	if(!object[i1].render())
+	{
+	delete object[i1];
+	}
+}
+	}
+
+
+	for (var iif=0; iif<objectif.length; iif++)
+	{
+//判断objectif[iif]是否存在，是就绘制，否就删除
+if (objectif[iif] != undefined)
+{
+	if(!objectif[iif].render())
+	{
+	delete objectif[iif];
+	}
+}
+	}	
+		}
+		
+	for (var is=0; is<objectsound.length; is++)
+	{
+//判断objectsound是否存在，是就绘制，否就删除
+if (objectsound[is] != undefined)
+{
+	if(!objectsound[is].render())
+	{
+	delete objectsound[is];
+	}
+}
+	}
+
+if(gameplay == 1)
+{
+gameplay = 2;
+}
+
+}
+
+document.getElementById("demo").innerHTML= "object数量：" + object.length;
+document.getElementById("demo2").innerHTML= "objectbg数量：" + objectbg.length;
+document.getElementById("demo3").innerHTML= "objectif数量：" + objectif.length;
+document.getElementById("demo4").innerHTML= "objectsound数量：" + objectsound.length;
+document.getElementById("demo17").innerHTML= "loadeddata:" + loadeddata;
+
+//mainloop
+
+//holdkey();
+computeFPS();
+QueueNewFrame();
+}
+
+
+
+
+
+//setInterval(update, 1);
+QueueNewFrame();
+</script>
+
+<div id="hidden" style="position: absolute;visibility:hidden;">
+
+<img id="ui1"
+     src="system/pic/ui1.png"
+     onload="picloader(this,1,1,0,100,100)">
+
+<!--<img id="ui2"
+     src="system/pic/ui2.png"
+     onload="picloader(this,6,1,1,100,100)">-->
+	 
+<img id="ui3"
+     src="system/pic/ui3.png"
+     onload="picloader(this,1,1,0,100,100)">
+	 
+<img id="button1"
+     src="system/pic/button1.png"
+     onload="picloader(this,1,2,1,100,100)">
+
+<img id="button2"
+     src="system/pic/button2.png"
+     onload="picloader(this,1,2,1,100,100)">
+
+<img id="button3"
+     src="system/pic/button3.png"
+     onload="picloader(this,3,5,1,100,100)">
+
+
+
+<img id="cursor"
+     src="system/pic/cursor.png"
+     onload="picloader(this,3,2,1,100,100)">
+
+<img id="bg1"
+     src="system/pic/bg1.png"
+     onload="picloader(this,1,1,0,100,100)">
+
+<img id="blockstate"
+     src="system/pic/blockstate.png"
+     onload="picloader(this,1,4,1,100,100)">
+
+<img id="prototypeblock"
+     src="system/pic/prototypeblock.png"
+     onload="picloader(this,2,1,1,100,100)"> 
+<img id="core1"
+     src="system/pic/core1.png"
+     onload="picloader(this,1,1,0,100,100)">
+<img id="block1"
+     src="system/pic/block1.png"
+     onload="picloader(this,1,1,0,100,100)">
+<img id="propeller1"
+     src="system/pic/propeller1.png"
+     onload="picloader(this,5,1,1,100,100)">
+<img id="cannon1"
+     src="system/pic/cannon1.png"
+     onload="picloader(this,5,1,1,100,100)">
+<img id="eps1"
+     src="system/pic/eps1.png"
+     onload="picloader(this,3,1,1,100,100)">
+<img id="supercannon1"
+     src="system/pic/supercannon1.png"
+     onload="picloader(this,5,1,1,100,100)">
+
+<img id="bullet1"
+     src="system/pic/bullet1.png"
+     onload="picloader(this,1,1,0,100,100)">
+<img id="bullet2"
+     src="system/pic/bullet2.png"
+     onload="picloader(this,3,1,0,100,100)">
+	 
+<img id="fire1"
+     src="system/pic/fire1.png"
+     onload="picloader(this,10,1,0,100,100)">
+
+<img id="explosion1"
+     src="system/pic/explosion1.png"
+     onload="picloader(this,7,1,1,100,100)">
+</div>
+
+<audio id="ok" src="system/se/ok.mp3" oncanplaythrough="audioloader()" ></audio>
+<audio id="cancel" src="system/se/cancel.mp3" oncanplaythrough="audioloader()" ></audio>
+
+<audio id="cannon1" src="system/se/cannon1.mp3" oncanplaythrough="audioloader()" ></audio>
+<audio id="supercannon1" src="system/se/supercannon1.mp3" oncanplaythrough="audioloader()" ></audio>
+<audio id="hit1" src="system/se/hit1.mp3" oncanplaythrough="audioloader()" ></audio>
+<audio id="explosion1" src="system/se/explosion1.mp3" oncanplaythrough="audioloader()" ></audio>
+
+</body>
+
+</html>

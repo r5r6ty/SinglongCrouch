@@ -171,13 +171,13 @@ interfaceobject.prototype.mainmenu = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            var _arcade = new interfaceobject(this, 640, 300, 0, 0, 1, "arcade");
+            var _arcade = new interfaceobject(this, ctx.canvas.width / 2, 300, 0, 0, 1, "arcade");
             objectif.push(_arcade);//载入arcade
-            var _story = new interfaceobject(this, 640, 330, 0, 0, 1, "story");
+            var _story = new interfaceobject(this, ctx.canvas.width / 2, 360, 0, 0, 1, "story");
             objectif.push(_story);//载入story
-            var _vs_cpu = new interfaceobject(this, 640, 360, 0, 0, 1, "vs_cpu");
+            var _vs_cpu = new interfaceobject(this, ctx.canvas.width / 2, 420, 0, 0, 1, "vs_cpu");
             objectif.push(_vs_cpu);//载入arcade
-            var _vs_player = new interfaceobject(this, 640, 390, 0, 0, 1, "vs_player");
+            var _vs_player = new interfaceobject(this, ctx.canvas.width / 2, 480, 0, 0, 1, "vs_player");
             objectif.push(_vs_player);//载入arcade
 
             this.centerX = 640;
@@ -240,21 +240,21 @@ interfaceobject.prototype.mainmenu = function () {
 interfaceobject.prototype.arcade = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
             break;
         case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
@@ -269,21 +269,21 @@ interfaceobject.prototype.arcade = function () {
 interfaceobject.prototype.story = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
             break;
         case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
@@ -298,21 +298,21 @@ interfaceobject.prototype.story = function () {
 interfaceobject.prototype.vs_cpu = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
             break;
         case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
@@ -327,21 +327,21 @@ interfaceobject.prototype.vs_cpu = function () {
 interfaceobject.prototype.vs_player = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "red", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
             break;
         case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 75, 15);
-            this.bdy.push(new bdyrange(this, 0, 0, 150, 30));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "20px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 75, this.centerY - 15, 150, 30, "crimson", 0.5);
+            frameplay(this, "", 0, 0, 150, 30);
+            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
+            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
@@ -359,7 +359,7 @@ interfaceobject.prototype.gametitle = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 50px Verdana", "red", "center", "middle", 1, "red", 10);
+            drawtext(ctx, gametitle, this.centerX, this.centerY, "italic 150px Verdana", "red", "center", "middle", 1, "red", 10);
 
             //for (var i = 0; i < object.length; i++) {
             //    object[i].exist = false;
@@ -395,7 +395,7 @@ interfaceobject.prototype.pressstartbutton = function () {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, ctx.canvas.width / 2, ctx.canvas.height / 2);
             this.bdy.push(new bdyrange(this, 0, 0, ctx.canvas.width, ctx.canvas.height));
-            drawtext(ctx, "Click anywhere to start", this.centerX, this.centerY, "20px Verdana", "red", "center", "middle", 1);
+            drawtext(ctx, "Click anywhere to start", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
 
             if (mousejudge(this)) {
                 if (ismouseclick(0)) {
@@ -484,7 +484,7 @@ interfaceobject.prototype.fade_out = function () {
 
     ctx.beginPath();
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, 1280, 720);
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.globalAlpha = 1;
 
     nextstate(this, "", 10, 1000);
@@ -530,7 +530,7 @@ interfaceobject.prototype.fade_in = function () {
 
     ctx.beginPath();
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, 1280, 720);
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.globalAlpha = 1;
 
     nextstate(this, "", 10, 1000);
@@ -543,10 +543,10 @@ interfaceobject.prototype.selectcharacter = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            g_player1 = new arcadeobject(player1, 200, 700, 0, 0, 1, "normal");
+            g_player1 = new arcadeobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
             objectif.push(g_player1);//载入玩家1；
 
-            g_player2 = new arcadeobject(player2, 200, 20, 0, 0, 1, "normal");
+            g_player2 = new arcadeobject(player2, 200, 30, 0, 0, 1, "normal");
             objectif.push(g_player2);//载入玩家2；
 
             var g_controller = new arcadeobject(this, 0, 0, 0, 0, 1, "controller");

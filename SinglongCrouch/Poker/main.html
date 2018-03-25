@@ -1,17 +1,14 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+<html oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="target-densitydpi=640,width=1280,user-scalable=no">
+    <!--<meta name="viewport" content="target-densitydpi=640,width=1280,user-scalable=no">-->
     <title>超屌扑克牌游戏</title>
 </head>
 
 <body onload="dominit()">
 
-    <div id="framediv" style="position: absolute;left: 50%;margin-left: -640px;background:#000000;width:1280px;height:720px;top: 0px">
-        <canvas id="cvs" width=1280 height=720 style="border:0px solid #c3c3c3;position:absolute;left:0;cursor:auto;"></canvas>
-        <div id="version" style="position:absolute;top:720px"></div>
-    </div>
+    <canvas id="cvs" style="background:black;width:100%;height:100%;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);cursor:auto;"></canvas>
 
     <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.3;bottom: 0%;left: 0%;" onmouseover="(function(){style.opacity=1.0;})()" onmouseout="(function(){style.opacity=0.3;})()">
         <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
@@ -52,8 +49,8 @@
                 <option>lv.10</option>
             </select>
         </div>
-        <input type="range" id="testrange" min="0" max="52">
-        <div></div>
+        <!--<input type="range" id="testrange" min="0" max="52">
+        <div></div>-->
         <input type="text" id="com" value="电脑">电脑的名字
         <div></div>
         <input type="text" id="player" value="玩家">你的名字
@@ -108,6 +105,9 @@
         var gamesize = { width: 1280, height: 720 }
         var ctxload = document.getElementById("cvsload").getContext("2d");
         var ctx = document.getElementById("cvs").getContext("2d");
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+        document.title += "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
         var totaldata = 999;
         var loadeddata = 0;
         var object = new Array();
