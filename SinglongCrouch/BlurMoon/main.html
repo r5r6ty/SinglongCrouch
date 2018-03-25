@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>朧月</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body scroll="no">
+    <!--<canvas width="2560" height="1000" style="min-width:1000px;width:100%;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:black"></canvas>-->
+    <canvas id="canvas" style="background:black"></canvas>
+    <!--<script src="test.js"></script>-->
+    <script src="src/utils/constant.js"></script>
+    <script src="src/utils/vector3.js"></script>
+    <script src="src/graphics/osobject.js"></script>
+    <script src="src/graphics/camera.js"></script>
+    <script src="src/graphics/scene.js"></script>
+    <script>
+        let ctx = document.getElementById("canvas").getContext("2d");
+        //ctx.canvas.style.bacground = "black";
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+        let gametitle = document.title;
+        document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+
+        window.onresize = function () {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        };
+
+        CONTEXTLIST.push(ctx);
+
+        var gamescence = new Scene(ctx);
+
+        gamescence.add(createCamera());
+
+        for (var i = 0; i < 1000; i++) {
+            var s = createSprite();
+            s.position = new Vector3(Math.random() * ctx.canvas.width, Math.random() * ctx.canvas.height, 0);
+            gamescence.add(s);
+        }
+
+        var intervalID = window.setInterval(renderingLoop, 1000 / 60);
+        function renderingLoop() {
+            gamescence.osobjects.sort(function (a, b) { return a.renderQueue - b.renderQueue });
+            for (var i = 0; i < gamescence.osobjects.length; i++) {
+                for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
+                    gamescence.osobjects[i].components[j].update();
+                }
+                gamescence.osobjects[i].update();
+            }
+
+            for (var i = 0; i < gamescence.osobjects.length; i++) {
+                for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
+                    gamescence.osobjects[i].components[j].render();
+
+                    //console.log(gamescence.osobjects[i].components[j]);
+                }
+                gamescence.osobjects[i].render();
+            }
+        }
+
+    </script>
+</body>
+</html>

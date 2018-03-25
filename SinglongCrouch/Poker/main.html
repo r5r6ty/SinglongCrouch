@@ -4,11 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="target-densitydpi=640,width=1280,user-scalable=no">
     <title>超屌扑克牌游戏</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 
 <body onload="dominit()">
 
-    <canvas id="cvs" style="background:black;width:100%;height:100%;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);cursor:auto;"></canvas>
+    <canvas id="cvs" style="background:black;cursor:auto;"></canvas>
 
     <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.3;bottom: 0%;left: 0%;" onmouseover="(function(){style.opacity=1.0;})()" onmouseout="(function(){style.opacity=0.3;})()">
         <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
