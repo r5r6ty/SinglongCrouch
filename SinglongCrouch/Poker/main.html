@@ -107,7 +107,7 @@
         var ctx = document.getElementById("cvs").getContext("2d");
         ctx.canvas.width = window.innerWidth;
         ctx.canvas.height = window.innerHeight;
-        document.title += "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
         var totaldata = 999;
         var loadeddata = 0;
         var object = new Array();
@@ -234,6 +234,12 @@
         //刚压下=2
         //压下中=3
         //单击（刚放开）=5
+
+        window.onresize = function () {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        };
 
         var debug;
         var level;
