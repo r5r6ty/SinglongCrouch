@@ -12,7 +12,6 @@
     <canvas id="cvs" style="background:black;cursor:auto;"></canvas>
 
     <div id="divframe" style="position: absolute;background:#ffff00;opacity:0.3;bottom: 0%;left: 0%;" onmouseover="(function(){style.opacity=1.0;})()" onmouseout="(function(){style.opacity=0.3;})()">
-        <canvas id="cvsload" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;"></canvas>
         <div id="demo"></div>
         <div id="demo10"></div>
         <div id="demo11"></div>
@@ -64,10 +63,10 @@
     <canvas id="cvstest" width=100 height=100 style="border:0px solid #c3c3c3;background:blue;" onmousemove="cnvs_getCoordinates(event)" onclick="ctestcc()"></canvas>-->
     </div>
 
-    <div id="resource" style="position: absolute;visibility:hidden;">
+    <div id="resource" style="position: absolute;visibility:hidden">
     </div>
 
-    <div id="hidden" style="position: absolute;visibility:hidden;">
+    <div id="hidden" style="position: absolute;visibility:hidden">
         <img id="poker,13,5,1"
              src="system/pic/poker.png">
         <img id="bg1,1,1,0"
@@ -106,7 +105,7 @@
     <script type="text/javascript">
         var gametitle = document.title;
         var gamesize = { width: 1280, height: 720 }
-        var ctxload = document.getElementById("cvsload").getContext("2d");
+
         var ctx = document.getElementById("cvs").getContext("2d");
         var CVSMode;
         setSize();
@@ -263,7 +262,6 @@
 
         document.getElementById("antialias").addEventListener("change", function (e) {
             ctx.imageSmoothingEnabled = this.checked;
-            ctxload.imageSmoothingEnabled = this.checked;
         }, false);
 
         document.getElementById("isdebug").addEventListener("change", function (e) {
@@ -293,6 +291,9 @@
 
         totaldata = h.children.length;
 
+        var cvsload = document.createElement("canvas");
+        h.appendChild(cvsload);
+        var ctxload = cvsload.getContext("2d");
         var flag = setInterval(loadresource, 1 / GameFPS * 1000);
 
         function loadresource() {
@@ -337,8 +338,8 @@
 
             if (loadeddata >= totaldata) {
                 clearInterval(flag);
-                h.parentNode.removeChild(h);
                 ctxload.canvas.parentNode.removeChild(ctxload.canvas);
+                h.parentNode.removeChild(h);
             }
         }
     </script>
