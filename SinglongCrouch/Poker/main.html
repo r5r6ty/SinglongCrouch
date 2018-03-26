@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name="viewport" content="target-densitydpi=640,width=1280,user-scalable=no">
     <title>超屌扑克牌游戏</title>
     <link rel="stylesheet" type="text/css" href="main.css" />
@@ -70,12 +70,14 @@
     <div id="hidden" style="position: absolute;visibility:hidden;">
         <img id="poker,13,5,1"
              src="system/pic/poker.png">
+        <img id="bg1,1,1,0"
+             src="system/pic/bg1.png">
         <!--<img id="arrow"
-             src="system/pic/arrow.png"
-             onload="pictxload.canvaser(this,1,2,0,25,25);">
-        <img id="character_s"
-             src="system/pic/character_s.png"
-             onload="pictxload.canvaser(this,2,1,1,100,100);">-->
+         src="system/pic/arrow.png"
+         onload="pictxload.canvaser(this,1,2,0,25,25);">
+    <img id="character_s"
+         src="system/pic/character_s.png"
+         onload="pictxload.canvaser(this,2,1,1,100,100);">-->
 
         <audio id="ok"
                src="system/se/ok.mp3"></audio>
@@ -93,10 +95,10 @@
     <audio id="031" src="system/se/031.mp3" oncanplaythrough="audioloader();"></audio>
     <audio id="095" src="system/se/095.mp3" oncanplaythrough="audioloader();"></audio>-->
 
-    <script src="system/js/system.js"></script>
-    <script src="system/js/interface.js"></script>
-    <script src="system/js/card.js"></script>
-    <script src="system/js/arcade.js"></script>
+    <script type="text/javascript" src="system/js/system.js" charset="utf-8"></script>
+    <script type="text/javascript" src="system/js/interface.js" charset="utf-8"></script>
+    <script type="text/javascript" src="system/js/card.js" charset="utf-8"></script>
+    <script type="text/javascript" src="system/js/sksj.js" charset="utf-8"></script>
     <!--<script src="system/js/bg.js" charset="gbk"></script>
 
     <script src="system/js/beta.js" charset="gbk"></script>-->
@@ -106,9 +108,8 @@
         var gamesize = { width: 1280, height: 720 }
         var ctxload = document.getElementById("cvsload").getContext("2d");
         var ctx = document.getElementById("cvs").getContext("2d");
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-        document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        var CVSMode;
+        setSize();
         var totaldata = 999;
         var loadeddata = 0;
         var object = new Array();
@@ -237,10 +238,18 @@
         //单击（刚放开）=5
 
         window.onresize = function () {
+            setSize();
+        };
+        function setSize() {
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
-            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
-        };
+            if (ctx.canvas.width >= ctx.canvas.height) {
+                CVSMode = "vertical";
+            } else {
+                CVSMode = "horizon";
+            }
+            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + " " + CVSMode + ")";
+        }
 
         var debug;
         var level;

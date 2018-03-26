@@ -170,13 +170,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Poker\system\js\arcade.js" />
-    <Content Include="Poker\system\js\mainObject.js" />
+    <Content Include="Poker\system\js\sksj.js" />
     <Content Include="Poker\main.html" />
     <Content Include="Poker\system\js\card.js" />
     <Content Include="Poker\system\js\interface.js" />
     <Content Include="Poker\system\js\system.js" />
     <Content Include="Poker\main.css" />
+    <Content Include="Poker\system\pic\bg1.png" />
     <Content Include="Poker\system\pic\poker.png" />
     <Content Include="Poker\system\se\cancel.mp3" />
     <Content Include="Poker\system\se\ok.mp3" />

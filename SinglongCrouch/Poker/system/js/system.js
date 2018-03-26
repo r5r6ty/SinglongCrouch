@@ -1,4 +1,4 @@
-function cnvs_getCoordinates(x, y) {
+ï»¿function cnvs_getCoordinates(x, y) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
@@ -88,7 +88,7 @@ function mainphase(g, s) {
 mainphase.prototype.update = function () {
     switch (this.state) {
         case "gamephasecontroller":
-            this.gamephasecontroller();//ÓÎÏ·½ø³Ì¿ØÖÆ
+            this.gamephasecontroller();//æ¸¸æˆè¿›ç¨‹æ§åˆ¶
             break;
         default:
             break;
@@ -108,7 +108,7 @@ mainphase.prototype.gamephasecontroller = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             var f_o = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_out");
-            objectif.push(f_o);//ÔØÈëfade_out
+            objectif.push(f_o);//è½½å…¥fade_out
             break;
         case cased(this, 1, 10):
             break;
@@ -130,12 +130,12 @@ mainphase.prototype.gamephasecontroller = function () {
                     objectbg[ibg].exist = false;
                 }
             }
-            //Çå¿ÕËùÓĞÊı×é
+            //æ¸…ç©ºæ‰€æœ‰æ•°ç»„
 
             switch (this.gamephase) {
                 case "g_nowloading":
                     var nld = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "nowloading");
-                    objectif.push(nld);//ÔØÈë½ø¶ÈÌõ
+                    objectif.push(nld);//è½½å…¥è¿›åº¦æ¡
                     break;
                 case "g_title":
                     var d = new deck(0, 0, "Z_rolling");
@@ -149,19 +149,19 @@ mainphase.prototype.gamephasecontroller = function () {
                     d.show();
                     delete d;
                     var gt = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2 - 100, 0, 0, 1, "gametitle");
-                    objectif.push(gt);//ÔØÈëÓÎÏ·±êÌâ
+                    objectif.push(gt);//è½½å…¥æ¸¸æˆæ ‡é¢˜
                     var psb = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "pressstartbutton");
-                    objectif.push(psb);//ÔØÈëpress start button
+                    objectif.push(psb);//è½½å…¥press start button
                     break;
                 case "g_menu":
                     var mm = new interfaceobject(this, 0, 0, 0, 0, 1, "mainmenu");
-                    objectif.push(mm);//ÔØÈëvsÄ£Ê½°´Å¥
+                    objectif.push(mm);//è½½å…¥vsæ¨¡å¼æŒ‰é’®
                     break;
-                case "g_arcade":
+                case "g_sksj":
                     var sc = new interfaceobject(this, 0, 0, 0, 0, 1, "selectcharacter");
-                    objectif.push(sc);//ÔØÈëÑ¡ÈË½çÃæ
+                    objectif.push(sc);//è½½å…¥é€‰äººç•Œé¢
                     break;
-                case "g_story":
+                case "g_roulette":
                     break;
                 case "g_vs_cpu":
                     break;
@@ -169,7 +169,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     break;
                 case "g_battle":
                     var bi = new interfaceobject(this, 0, 0, 0, 0, 1, "battleinterface");
-                    objectif.push(bi);//ÔØÈë¶ÔÕ½»­Ãæ
+                    objectif.push(bi);//è½½å…¥å¯¹æˆ˜ç”»é¢
                     break;
                 case "g_gameover":
                     var go = new interfaceobject(this, ctx.canvas.width / 2, ctx.canvas.height / 2, 0, 0, 1, "gameover");
@@ -179,7 +179,7 @@ mainphase.prototype.gamephasecontroller = function () {
                     break;
             }
             var f_i = new interfaceobject(this, 0, 0, 0, 0, 1, "fade_in");
-            objectif.push(f_i);//ÔØÈëfade_in
+            objectif.push(f_i);//è½½å…¥fade_in
             break;
     }
     nextstate(this, "", 11, 1000);
@@ -202,7 +202,7 @@ function computeFPS() {
 
     var diff = 1000.0 / (sum / previous.length);
     GameFPS = diff.toFixed();
-    drawtext(ctx, "FPS: " + GameFPS + " " + pregp + " -> " + nowgp, 0, ctx.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
+    drawtext(ctx, "FPS: " + GameFPS + " " + pregp + " â†’ " + nowgp, 0, ctx.canvas.height, "15px Verdana", "white", "left", "bottom", 1);
 }
 
 
@@ -306,10 +306,10 @@ function drawpic(o) {
             else {
                 canvas.translate(c.width, 0);
                 canvas.scale(-1, 1);
-                //»­Í¼
+                //ç”»å›¾
 
                 canvas.drawImage(o.pic, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY));
-                //·­×ª»ØÀ´
+                //ç¿»è½¬å›æ¥
 
                 canvas.translate(c.width, 0);
                 canvas.scale(-1, 1);
@@ -515,7 +515,7 @@ function clnrange(o, x, y, w, h) {
 
 }
 
-function bdyrange(o, x, y, w, h) {
+function bdyrange(o, x, y, w, h, r) {
 
     if (o.direction == "1") {
         this.bx = o.centerX - o.myX + x;
@@ -530,6 +530,7 @@ function bdyrange(o, x, y, w, h) {
     this.by = o.centerY - o.myY + y;
     this.by += (h - h * o.scaleY) / 2;
     this.bh = h * o.scaleY;
+    this.rotation = r;
 }
 
 function itrrange(o, x, y, w, h) {
@@ -648,7 +649,7 @@ function sound(o, f, s) {
     }
 }
 
-//ÅĞ¶ÏÊÇ·ñÖ§³Ö´¥ÃşÊÂ¼ş
+//åˆ¤æ–­æ˜¯å¦æ”¯æŒè§¦æ‘¸äº‹ä»¶
 function isTouchDevice() {
     try {
         document.createEvent("TouchEvent");
@@ -748,8 +749,8 @@ function updategame(todraw) {
             if (mouseDown[m] > 4) {
                 delete mouseDown[m];
                 mouseDown.splice(m, 1);
-                m--;    //¸Ä±äÑ­»·±äÁ¿  
-                loop--;   //¸Ä±äÑ­»·´ÎÊı  
+                m--;    //æ”¹å˜å¾ªç¯å˜é‡  
+                loop--;   //æ”¹å˜å¾ªç¯æ¬¡æ•°  
             } else if (mouseDown[m] == 1 || mouseDown[m] == 2 || mouseDown[m] == 4) {
                 mouseDown[m] += 1;
             }
@@ -762,11 +763,18 @@ function updategame(todraw) {
 
     if (todraw) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        var bgpic = document.getElementById("bg1_0");
+        for (var by = 0; by < ctx.canvas.height; by += bgpic.height) {
+            for (var bx = 0; bx < ctx.canvas.width; bx += bgpic.width) {
+                ctx.drawImage(bgpic, bx, by, bgpic.width, bgpic.height);
+            }
+        }
     }
 
     var bglen = objectbg.length;
     for (var ibg = 0; ibg < bglen; ibg++) {
-        //ÅĞ¶Ïobject[ibg]ÊÇ·ñ´æÔÚ£¬ÊÇ¾Í¸üĞÂ£¬·ñ¾ÍÉ¾³ı
+        //åˆ¤æ–­object[ibg]æ˜¯å¦å­˜åœ¨ï¼Œæ˜¯å°±æ›´æ–°ï¼Œå¦å°±åˆ é™¤
         if (objectbg[ibg] != undefined) {
             if (!objectbg[ibg].update()) {
                 if (todraw) {
@@ -786,7 +794,7 @@ function updategame(todraw) {
 
     var len1 = object.length
     for (var i1 = 0; i1 < len1; i1++) {
-        //ÅĞ¶Ïobject[i1]ÊÇ·ñ´æÔÚ£¬ÊÇ¾Í¸üĞÂ£¬·ñ¾ÍÉ¾³ı
+        //åˆ¤æ–­object[i1]æ˜¯å¦å­˜åœ¨ï¼Œæ˜¯å°±æ›´æ–°ï¼Œå¦å°±åˆ é™¤
         if (object[i1] != undefined) {
             if (!object[i1].update()) {
                 if (todraw) {
@@ -806,7 +814,7 @@ function updategame(todraw) {
 
     var iflen = objectif.length;
     for (var iif = 0; iif < iflen; iif++) {
-        //ÅĞ¶Ïobjectif[iif]ÊÇ·ñ´æÔÚ£¬ÊÇ¾Í¸üĞÂ£¬·ñ¾ÍÉ¾³ı
+        //åˆ¤æ–­objectif[iif]æ˜¯å¦å­˜åœ¨ï¼Œæ˜¯å°±æ›´æ–°ï¼Œå¦å°±åˆ é™¤
         if (objectif[iif] != undefined) {
             if (!objectif[iif].update()) {
                 if (todraw) {

@@ -1,4 +1,4 @@
-function buttonnextstate(o, button, up, on, down) {
+ï»¿function buttonnextstate(o, button, up, on, down) {
     var state = up;
     if (mousejudge(o)) {
         if (ismouseondown(button) || o.button) {
@@ -42,68 +42,55 @@ function interfaceobject(id, cx, cy, acx, acy, alpha, s) {
 }
 
 interfaceobject.prototype.update = function () {
-    this.bdy.splice(0, this.bdy.length);//Çå¿Õbdy
-    this.itr.splice(0, this.itr.length);//Çå¿Õitr
+    this.bdy.splice(0, this.bdy.length);//æ¸…ç©ºbdy
+    this.itr.splice(0, this.itr.length);//æ¸…ç©ºitr
 
-    switch (this.state) {
+    var ste = this.state.split(",");
+    switch (ste[0]) {
         case "nowloading":
-            this.nowloading();//ÓÎÏ·ÔØÈë
+            this.nowloading();//æ¸¸æˆè½½å…¥
             break;
         case "gametitle":
-            this.gametitle();//±êÌâ
+            this.gametitle();//æ ‡é¢˜
             break;
         case "mainmenu":
-            this.mainmenu();//vsÄ£Ê½
+            this.mainmenu();//vsæ¨¡å¼
             break;
         case "pressstartbutton":
-            this.pressstartbutton();//°´¼ü½øÈëÓÎÏ·
+            this.pressstartbutton();//æŒ‰é”®è¿›å…¥æ¸¸æˆ
             break;
         case "selectcharacter":
-            this.selectcharacter();//Ñ¡Ôñ½ÇÉ«
+            this.selectcharacter();//é€‰æ‹©è§’è‰²
             break;
         case "battleinterface":
-            this.battleinterface();//°´¼ü½øÈëÓÎÏ·
+            this.battleinterface();//æŒ‰é”®è¿›å…¥æ¸¸æˆ
             break;
         case "gameover":
-            this.gameover();//±êÌâ
+            this.gameover();//æ ‡é¢˜
             break;
-    }
-    switch (this.state) {
+
         case "fade_in":
-            this.fade_in();//µ­Èë
+            this.fade_in();//æ·¡å…¥
             break;
         case "fade_out":
-            this.fade_out();//µ­³ö
+            this.fade_out();//æ·¡å‡º
             break;
-    }
-    switch (this.state) {
-        case "arcade":
-            this.arcade();//arcade
+
+        case "CVSButton":
+            this.CVSButton(ste[1], ste[2], ste[3]);//CVSButton
             break;
-        case "story":
-            this.story();//story
-            break;
-        case "vs_cpu":
-            this.vs_cpu();//vs_cpu
-            break;
-        case "vs_player":
-            this.vs_player();//vs_player
-            break;
-    }
-    switch (this.state) {
+
         case "choosecounter":
-            this.choosecounter();//Ñ¡Ïî¿ØÖÆÑÓÊ±Æ÷
+            this.choosecounter();//é€‰é¡¹æ§åˆ¶å»¶æ—¶å™¨
             break;
         case "windowvision":
             this.windowvision();//windowvision
             break;
-    }
-    switch (this.state) {
+
         case "s_davis":
-            this.s_davis();//Ñ¡davis
+            this.s_davis();//é€‰davis
             break;
-    }
-    switch (this.state) {
+
         case "p1_hp":
             this.p1_hp();
             break;
@@ -158,7 +145,7 @@ interfaceobject.prototype.nowloading = function () {
             ctx.fillStyle = "red";
             ctx.fillRect(this.centerX - this.myX, this.centerY - this.myY, 500 * per, 10);
 
-            if (loadeddata >= totaldata) {//µ±loadingÍê
+            if (loadeddata >= totaldata) {//å½“loadingå®Œ
                 objectif.push(new mainphase("g_title", "gamephasecontroller"));
             }
 
@@ -171,29 +158,25 @@ interfaceobject.prototype.mainmenu = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            var _arcade = new interfaceobject(this, ctx.canvas.width / 2, 300, 0, 0, 1, "arcade");
-            objectif.push(_arcade);//ÔØÈëarcade
-            var _story = new interfaceobject(this, ctx.canvas.width / 2, 360, 0, 0, 1, "story");
-            objectif.push(_story);//ÔØÈëstory
-            var _vs_cpu = new interfaceobject(this, ctx.canvas.width / 2, 420, 0, 0, 1, "vs_cpu");
-            objectif.push(_vs_cpu);//ÔØÈëarcade
-            var _vs_player = new interfaceobject(this, ctx.canvas.width / 2, 480, 0, 0, 1, "vs_player");
-            objectif.push(_vs_player);//ÔØÈëarcade
-
-            this.centerX = 640;
-            this.centerY = 300;
-            this.a = true;
-            this.p = false;
-
+            var _sinkeisuijyaku = new interfaceobject(this, ctx.canvas.width / 2, 300, 0, 0, 1, "CVSButton,ç¥çµŒè¡°å¼±,50,g_sksj");
+            objectif.push(_sinkeisuijyaku);//è½½å…¥CVSButton
+            var _story = new interfaceobject(this, ctx.canvas.width / 2, 360, 0, 0, 1, "CVSButton,24é€£è£…ãƒ­ã‚·ã‚¢ãƒ«ãƒ¬ãƒƒãƒˆ,50,g_story");
+            objectif.push(_story);//è½½å…¥CVSButton
+            var _vs_cpu = new interfaceobject(this, ctx.canvas.width / 2, 420, 0, 0, 1, "CVSButton,å°‘æ•°æ±º,50,g_story");
+            objectif.push(_vs_cpu);//è½½å…¥CVSButton
+            var _vs_player = new interfaceobject(this, ctx.canvas.width / 2, 480, 0, 0, 1, "CVSButton,E-Card,50,g_story");
+            objectif.push(_vs_player);//è½½å…¥CVSButton
+            var test = new interfaceobject(this, ctx.canvas.width / 2, 540, 0, 0, 1, "CVSButton,å°æœ‹å‹é½æ‰“äº¤,50,g_story");
+            objectif.push(test);//è½½å…¥CVSButton
             break;
 
         case cased(this, 1, 10):
             break;
 
         case cased(this, 11, 11):
-            //if(this.a)//ÑÓ³ÙËø
+            //if(this.a)//å»¶è¿Ÿé”
             //{
-            // if (87 in keysDown)//°´ÉÏ
+            // if (87 in keysDown)//æŒ‰ä¸Š
             // {
             //  if(this.centerY != 300)
             //  {
@@ -201,9 +184,9 @@ interfaceobject.prototype.mainmenu = function () {
             //  }
             //  this.a = false;
             //  var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //  pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //  pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             // }
-            // if (83 in keysDown)//°´ÏÂ
+            // if (83 in keysDown)//æŒ‰ä¸‹
             // {
             //  if(this.centerY != 390)
             //  {
@@ -211,16 +194,16 @@ interfaceobject.prototype.mainmenu = function () {
             //  }
             //  this.a = false;
             //  var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //  pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //  pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             // }
             //}
-            //if (0 in keysDown)//È·¶¨
+            //if (0 in keysDown)//ç¡®å®š
             //{
             //	sound(this,11,"ok");
             //	this.p = true;
             //	this.exist = false;
             //}
-            //if (2 in keysDown)//È¡Ïû
+            //if (2 in keysDown)//å–æ¶ˆ
             //{
             //	sound(this,11,"cancel");
             //	objectif.push(new mainphase("g_title","gamephasecontroller"));
@@ -237,123 +220,38 @@ interfaceobject.prototype.mainmenu = function () {
     nextstate(this, "mainmenu", 11, 11);
 }
 
-interfaceobject.prototype.arcade = function () {
+interfaceobject.prototype.CVSButton = function (t, s, g) {
+    var text = t;
+    var size = s;
+    ctx.font = size + "px Verdana";
+    var txtwidth = ctx.measureText(text).width;
     switch (this.counter) {
         case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
+            frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, size));
+            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
+            frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, size));
+            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "red", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - txtwidth / 2, this.centerY - size / 2, txtwidth, size, "red", 0.5);
             break;
         case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "ARCADE", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
+            frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
+            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, 50));
+            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "crimson", "center", "middle", 1);
+            drawfillrect(ctx, this.centerX - txtwidth / 2, this.centerY - size / 2, txtwidth, size, "crimson", 0.5);
 
             if (ismouseclick(0)) {
                 sound(this, 2, "ok");
-                objectif.push(new mainphase("g_arcade", "gamephasecontroller"));
+                objectif.push(new mainphase(g, "gamephasecontroller"));
                 this.button = false;
             }
             break;
     }
-    nextstate(this, "arcade", 0, buttonnextstate(this, 0, 0, 1, 2));
+    nextstate(this, this.state, 0, buttonnextstate(this, 0, 0, 1, 2));
 }
-
-interfaceobject.prototype.story = function () {
-    switch (this.counter) {
-        case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            break;
-        case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
-            break;
-        case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "STORY", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
-
-            if (ismouseclick(0)) {
-                sound(this, 2, "ok");
-                objectif.push(new mainphase("g_story", "gamephasecontroller"));
-                this.button = false;
-            }
-            break;
-    }
-    nextstate(this, "story", 0, buttonnextstate(this, 0, 0, 1, 2));
-}
-
-interfaceobject.prototype.vs_cpu = function () {
-    switch (this.counter) {
-        case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            break;
-        case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
-            break;
-        case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS CPU", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
-
-            if (ismouseclick(0)) {
-                sound(this, 2, "ok");
-                objectif.push(new mainphase("g_vs_cpu", "gamephasecontroller"));
-                this.button = false;
-            }
-            break;
-    }
-    nextstate(this, "vs_cpu", 0, buttonnextstate(this, 0, 0, 1, 2));
-}
-
-interfaceobject.prototype.vs_player = function () {
-    switch (this.counter) {
-        case cased(this, 0, 0):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            break;
-        case cased(this, 1, 1):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "red", 0.5);
-            break;
-        case cased(this, 2, 2):
-            frameplay(this, "", 0, 0, 150, 30);
-            this.bdy.push(new bdyrange(this, 0, 0, 300, 60));
-            drawtext(ctx, "VS PLAYER", this.centerX, this.centerY, "50px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - 150, this.centerY - 30, 300, 60, "crimson", 0.5);
-
-            if (ismouseclick(0)) {
-                sound(this, 2, "ok");
-                objectif.push(new mainphase("g_vs_player", "gamephasecontroller"));
-                this.button = false;
-            }
-            break;
-    }
-    nextstate(this, "vs_player", 0, buttonnextstate(this, 0, 0, 1, 2));
-}
-
-
 
 interfaceobject.prototype.gametitle = function () {
     switch (this.counter) {
@@ -543,23 +441,23 @@ interfaceobject.prototype.selectcharacter = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            g_player1 = new arcadeobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
-            objectif.push(g_player1);//ÔØÈëÍæ¼Ò1£»
+            g_player1 = new sksjobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
+            objectif.push(g_player1);//è½½å…¥ç©å®¶1ï¼›
 
-            g_player2 = new arcadeobject(player2, 200, 30, 0, 0, 1, "normal");
-            objectif.push(g_player2);//ÔØÈëÍæ¼Ò2£»
+            g_player2 = new sksjobject(player2, 200, 30, 0, 0, 1, "normal");
+            objectif.push(g_player2);//è½½å…¥ç©å®¶2ï¼›
 
-            var g_controller = new arcadeobject(this, 0, 0, 0, 0, 1, "controller");
-            objectif.push(g_controller);//¿ØÖÆÆ÷£»
+            var g_controller = new sksjobject(this, 0, 0, 0, 0, 1, "controller");
+            objectif.push(g_controller);//æ§åˆ¶å™¨ï¼›
 
             //var d1 = new interfaceobject(this,590,250,0,0,1,"s_davis");
-            //pushtocanvas(objectif,ctx,d1);//ÔØÈëÈËÎï1
+            //pushtocanvas(objectif,ctx,d1);//è½½å…¥äººç‰©1
             //var d2 = new interfaceobject(this,690,250,0,0,1,"s_davis");
-            //pushtocanvas(objectif,ctx,d2);//ÔØÈëÈËÎï2
+            //pushtocanvas(objectif,ctx,d2);//è½½å…¥äººç‰©2
             //var d3 = new interfaceobject(this,590,350,0,0,1,"s_davis");
-            //pushtocanvas(objectif,ctx,d3);//ÔØÈëÈËÎï3
+            //pushtocanvas(objectif,ctx,d3);//è½½å…¥äººç‰©3
             //var d4 = new interfaceobject(this,690,350,0,0,1,"s_davis");
-            //pushtocanvas(objectif, ctx, d4);//ÔØÈëÈËÎï4
+            //pushtocanvas(objectif, ctx, d4);//è½½å…¥äººç‰©4
 
             var d = new deck(ctx.canvas.width / 2, ctx.canvas.height / 2, "back");
             d.shuffle();
@@ -594,9 +492,9 @@ interfaceobject.prototype.selectcharacter = function () {
             //ctx.strokeRect(this.centerX - 50,this.centerY - 50,100,100);
             //drawtext(ctx,"SELECT CHARACTER",this.centerX,this.centerY - 60,"10px Verdana","red","center","middle",1);
 
-            //if(this.a)//ÑÓ³ÙËø
+            //if(this.a)//å»¶è¿Ÿé”
             //{
-            //	if (87 in keysDown)//°´ÉÏ
+            //	if (87 in keysDown)//æŒ‰ä¸Š
             //	{
             //		if(this.centerY != 250)
             //		{
@@ -604,9 +502,9 @@ interfaceobject.prototype.selectcharacter = function () {
             //		}
             //		this.a = false;
             //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //		pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //		pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             //	}
-            //	if (83 in keysDown)//°´ÏÂ
+            //	if (83 in keysDown)//æŒ‰ä¸‹
             //	{
             //		if(this.centerY != 350)
             //		{
@@ -614,9 +512,9 @@ interfaceobject.prototype.selectcharacter = function () {
             //		}
             //		this.a = false;
             //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //		pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //		pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             //	}
-            //	if (65 in keysDown)//°´×ó
+            //	if (65 in keysDown)//æŒ‰å·¦
             //	{
             //		if(this.centerX != 590)
             //		{
@@ -624,9 +522,9 @@ interfaceobject.prototype.selectcharacter = function () {
             //		}
             //		this.a = false;
             //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //		pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //		pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             //	}
-            //	if (68 in keysDown)//°´ÓÒ
+            //	if (68 in keysDown)//æŒ‰å³
             //	{
             //		if(this.centerX != 690)
             //		{
@@ -634,16 +532,16 @@ interfaceobject.prototype.selectcharacter = function () {
             //		}
             //		this.a = false;
             //		var _cc = new interfaceobject(this,0,0,0,0,1,"choosecounter");
-            //		pushtocanvas(objectif,ctx,_cc);//ÔØÈëÑÓ³ÙËø¼ÆÊ±Æ÷
+            //		pushtocanvas(objectif,ctx,_cc);//è½½å…¥å»¶è¿Ÿé”è®¡æ—¶å™¨
             //	}
             //}
-            //	if (0 in keysDown)//È·¶¨
+            //	if (0 in keysDown)//ç¡®å®š
             //	{
             //		sound(this,11,"ok");
             //		this.p = true;
             //		this.exist = false;
             //	}
-            //if (0 in keysDown)//È¡Ïû
+            //if (0 in keysDown)//å–æ¶ˆ
             //{   
             //	sound(this,11,"cancel");
             //	objectif.push(new mainphase("g_menu","gamephasecontroller"));
@@ -680,14 +578,14 @@ interfaceobject.prototype.battleinterface = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             gamebg = new bg(this, 0, 0, 0, 0, 1, "castle1412")
-            objectbg.push(gamebg);//ÔØÈë³¡¾°£»
+            objectbg.push(gamebg);//è½½å…¥åœºæ™¯ï¼›
 
             g_player1 = new beta(player1, 340, 520, 0, 0, 1, "standing");
-            object.push(g_player1);//ÔØÈëÍæ¼Ò1£»
+            object.push(g_player1);//è½½å…¥ç©å®¶1ï¼›
 
             g_player2 = new beta(player2, 940, 520, 0, 0, 1, "standing");
             g_player2.direction = -1;
-            object.push(g_player2);//ÔØÈëÍæ¼Ò2£»
+            object.push(g_player2);//è½½å…¥ç©å®¶2ï¼›
 
             var g_p1_hpgage = new interfaceobject(this, p1hpgage.x, p1hpgage.y, 0, 0, 1, "p1_hp")
             objectif.push(g_p1_hpgage);
@@ -695,13 +593,13 @@ interfaceobject.prototype.battleinterface = function () {
             var g_p2_hpgage = new interfaceobject(this, p2hpgage.x, p2hpgage.y, 0, 0, 1, "p2_hp")
             g_p2_hpgage.direction = -1;
             objectif.push(g_p2_hpgage);
-            //ÔØÈëÑªÌõ
+            //è½½å…¥è¡€æ¡
             var timer = new interfaceobject(this, 640, 61, 0, 0, 1, "battletimer")
-            objectif.push(timer);//ÔØÈë¼ÆÊ±Æ÷
+            objectif.push(timer);//è½½å…¥è®¡æ—¶å™¨
 
             var _wv = new interfaceobject(this, 0, 0, 0, 0, 1, "windowvision")
             _wv.visualobject = g_player1;
-            objectif.push(_wv);//ÔØÈëÊÓ½Ç¿ØÖÆÆ÷
+            objectif.push(_wv);//è½½å…¥è§†è§’æ§åˆ¶å™¨
             break;
     }
     nextstate(this, "", 0, 1000);
@@ -726,7 +624,7 @@ interfaceobject.prototype.windowvision = function () {
                         }
                     }
 
-                    if (object[i].centerY + object[i].dvy >= groundvalue && object[i].airland == "air")//ÂäµØ·´Ó¦
+                    if (object[i].centerY + object[i].dvy >= groundvalue && object[i].airland == "air")//è½åœ°ååº”
                     {
                         object[i].centerY = groundvalue;
                         object[i].airland = "land";

@@ -1,4 +1,4 @@
-﻿function arcadeobject(id, cx, cy, acx, acy, alpha, s) {
+﻿function sksjobject(id, cx, cy, acx, acy, alpha, s) {
     this.counter = 0;
     this.identity = id;
     this.pic;
@@ -27,7 +27,7 @@
     this.change = 0;
 }
 
-arcadeobject.prototype.update = function () {
+sksjobject.prototype.update = function () {
 
     switch (this.state) {
         case "normal":
@@ -42,11 +42,11 @@ arcadeobject.prototype.update = function () {
     return this.exist;
 }
 
-arcadeobject.prototype.render = function () {
+sksjobject.prototype.render = function () {
     drawpic(this);
 }
 
-arcadeobject.prototype.normal = function () {
+sksjobject.prototype.normal = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
@@ -66,7 +66,7 @@ arcadeobject.prototype.normal = function () {
 
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, this.identity.name + "获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, this.identity.name + "获得了" + s + "分", this.centerX, this.centerY, "50px Verdana", "red", "left", "middle", 1);
             } else {
                 var s = 0;
                 for (var i = 0; i < this.getcards.length; i++) {
@@ -75,7 +75,7 @@ arcadeobject.prototype.normal = function () {
                     this.getcards[i].centerY = Math.sin((this.getcards[i].angleZ - 90) * Math.PI / 180) * -1500 + this.centerY - 1500;
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, this.identity.name + "(Lv." + level + ")获得了" + s + "分", this.centerX, this.centerY, "20px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, this.identity.name + "(Lv." + level + ")获得了" + s + "分", this.centerX, this.centerY, "50px Verdana", "red", "left", "middle", 1);
             }
             this.identity.score = s;
             break;
@@ -83,7 +83,7 @@ arcadeobject.prototype.normal = function () {
     nextstate(this, "normal", 0, 0);
 }
 
-arcadeobject.prototype.controller = function () {
+sksjobject.prototype.controller = function () {
     var wait = 0;
     var p = undefined;
     switch (this.counter) {
