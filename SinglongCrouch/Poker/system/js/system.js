@@ -765,9 +765,11 @@ function updategame(todraw) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         var bgpic = document.getElementById("bg1_0");
-        for (var by = 0; by < ctx.canvas.height; by += bgpic.height) {
-            for (var bx = 0; bx < ctx.canvas.width; bx += bgpic.width) {
-                ctx.drawImage(bgpic, bx, by, bgpic.width, bgpic.height);
+        if (bgpic != undefined) {
+            for (var by = 0; by < ctx.canvas.height; by += bgpic.height) {
+                for (var bx = 0; bx < ctx.canvas.width; bx += bgpic.width) {
+                    ctx.drawImage(bgpic, bx, by, bgpic.width, bgpic.height);
+                }
             }
         }
     }
