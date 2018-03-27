@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas 3D Test</title>
+    <link rel="stylesheet" type="text/css" href="../Common/css/stylesheet.css" />
+</head>
+<body scroll="no">
+    <canvas id="cvs" style="background:black"></canvas>
+        <script>
+            var vertices = [
+                1.0, 1.0, 1.0, 0.0, 0.8, 0.0, 1.0,
+                -1.0, 1.0, 1.0, 0.0, 0.8, 0.0, 1.0,
+                -1.0, -1.0, 1.0, 0.0, 0.8, 0.0, 1.0,
+                1.0, -1.0, 1.0, 0.0, 0.8, 0.0, 1.0,
+                1.0, 1.0, -1.0, 0.6, 0.9, 1.0, 1.0,
+                -1.0, 1.0, -1.0, 0.6, 0.9, 0.0, 1.0,
+                -1.0, -1.0, -1.0, 0.6, 0.9, 0.0, 1.0,
+                1.0, -1.0, -1.0, 0.6, 0.9, 0.0, 1.0,
+                1.0, 1.0, -1.0, 1.0, 1.0, 0.0, 1.0,
+                -1.0, 1.0, -1.0, 1.0, 1.0, 0.0, 1.0,
+                -1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0,
+                1.0, -1.0, -1.0, 1.0, 0.5, 0.0, 1.0,
+                -1.0, -1.0, -1.0, 1.0, 0.5, 0.0, 1.0,
+                -1.0, -1.0, 1.0, 1.0, 0.5, 0.0, 1.0,
+                1.0, -1.0, 1.0, 1.0, 0.5, 0.0, 1.0,
+                1.0, 1.0, -1.0, 0.9, 0.0, 0.2, 1.0,
+                1.0, 1.0, 1.0, 0.9, 0.0, 0.2, 1.0,
+                1.0, -1.0, 1.0, 0.9, 0.0, 0.2, 1.0,
+                1.0, -1.0, -1.0, 0.9, 0.0, 0.2, 1.0,
+                -1.0, 1.0, -1.0, 0.6, 0.0, 0.6, 1.0,
+                -1.0, 1.0, 1.0, 0.6, 0.0, 0.6, 1.0,
+                -1.0, -1.0, 1.0, 0.6, 0.0, 0.6, 1.0,
+                -1.0, -1.0, -1.0, 0.6, 0.0, 0.6, 1.0
+            ];
+        </script>
+        <script>
+            var gametitle = document.title;
+            var ctx = document.getElementById("cvs").getContext("2d");
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+
+            window.onresize = function () {
+                ctx.canvas.width = window.innerWidth;
+                ctx.canvas.height = window.innerHeight;
+                document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+            };
+
+            function drawtext(canvas, text, x, y, sizefont, color, align, baseline, alpha, shadowColor, shadowBlur) {
+                canvas.save();
+                canvas.shadowBlur = shadowBlur;
+                canvas.shadowColor = shadowColor;
+                canvas.font = sizefont;
+                canvas.textAlign = align;
+                canvas.textBaseline = baseline;
+                canvas.fillStyle = color;
+                canvas.globalAlpha = alpha;
+                canvas.fillText(text, Math.round(x), Math.round(y));
+                canvas.restore();
+            }
+            function drawfillrect(canvas, x, y, width, height, color, alpha, shadowColor, shadowBlur) {
+                canvas.save();
+                canvas.shadowBlur = shadowBlur;
+                canvas.shadowColor = shadowColor;
+                canvas.fillStyle = color;
+                canvas.globalAlpha = alpha;
+                canvas.fillRect(x, y, width, height);
+                canvas.restore();
+            }
+            function Mat4(value) {
+                var result = new Array(16);
+                for (var y = 0; y < 4; y++) {
+                    for (var x = 0; x < 4; x++) {
+                        result[x + y * 4] = 0.0;
+                    }
+                    result[y + y * 4] = value;
+                }
+                return result;
+            }
+            function Mat4Mat4multiply(arrA, arrB) {
+                var result = new Array(16);
+                result[0] = arrA[0] * arrB[0] + arrA[1] * arrB[4] + arrA[2] * arrB[8] + arrA[3] * arrB[12];
+                result[1] = arrA[0] * arrB[1] + arrA[1] * arrB[5] + arrA[2] * arrB[9] + arrA[3] * arrB[13];
+                result[2] = arrA[0] * arrB[2] + arrA[1] * arrB[6] + arrA[2] * arrB[10] + arrA[3] * arrB[14];
+                result[3] = arrA[0] * arrB[3] + arrA[1] * arrB[7] + arrA[2] * arrB[11] + arrA[3] * arrB[15];
+                result[4] = arrA[4] * arrB[0] + arrA[5] * arrB[4] + arrA[6] * arrB[8] + arrA[7] * arrB[12];
+                result[5] = arrA[4] * arrB[1] + arrA[5] * arrB[5] + arrA[6] * arrB[9] + arrA[7] * arrB[13];
+                result[6] = arrA[4] * arrB[2] + arrA[5] * arrB[6] + arrA[6] * arrB[10] + arrA[7] * arrB[14];
+                result[7] = arrA[4] * arrB[3] + arrA[5] * arrB[7] + arrA[6] * arrB[11] + arrA[7] * arrB[15];
+                result[8] = arrA[8] * arrB[0] + arrA[9] * arrB[4] + arrA[10] * arrB[8] + arrA[11] * arrB[12];
+                result[9] = arrA[8] * arrB[1] + arrA[9] * arrB[5] + arrA[10] * arrB[9] + arrA[11] * arrB[13];
+                result[10] = arrA[8] * arrB[2] + arrA[9] * arrB[6] + arrA[10] * arrB[10] + arrA[11] * arrB[14];
+                result[11] = arrA[8] * arrB[3] + arrA[9] * arrB[7] + arrA[10] * arrB[11] + arrA[11] * arrB[15];
+                result[12] = arrA[12] * arrB[0] + arrA[13] * arrB[4] + arrA[14] * arrB[8] + arrA[15] * arrB[12];
+                result[13] = arrA[12] * arrB[1] + arrA[13] * arrB[5] + arrA[14] * arrB[9] + arrA[15] * arrB[13];
+                result[14] = arrA[12] * arrB[2] + arrA[13] * arrB[6] + arrA[14] * arrB[10] + arrA[15] * arrB[14];
+                result[15] = arrA[12] * arrB[3] + arrA[13] * arrB[7] + arrA[14] * arrB[11] + arrA[15] * arrB[15];
+                return result;
+            };
+            function Vector4Mat4multiply(arrA, arrB) {
+                var result = new Array(3);
+                result[0] = arrA[0] * arrB[0] + arrA[1] * arrB[4] + arrA[2] * arrB[8] + arrA[3] * arrB[12];
+                result[1] = arrA[0] * arrB[1] + arrA[1] * arrB[5] + arrA[2] * arrB[9] + arrA[3] * arrB[13];
+                result[2] = arrA[0] * arrB[2] + arrA[1] * arrB[6] + arrA[2] * arrB[10] + arrA[3] * arrB[14];
+                result[3] = arrA[0] * arrB[3] + arrA[1] * arrB[7] + arrA[2] * arrB[11] + arrA[3] * arrB[15];
+                return result;
+            }
+            function FVector3(x1, y1, z1) {
+                this.X = x1;
+                this.Y = y1;
+                this.Z = z1;
+                this.appInvSqrt = function (f) {
+                    return 1.0 / Math.sqrt(f);
+                }
+                this.Normalize = function () {
+                    var SquareSum = this.X * this.X + this.Y * this.Y + this.Z * this.Z;
+                    if (SquareSum < 0.000001) {
+                    }
+                    else {
+                        var Scale = this.appInvSqrt(SquareSum);
+                        this.X *= Scale;
+                        this.Y *= Scale;
+                        this.Z *= Scale;
+                    }
+                }
+                this.UNV = function (V) {
+                    var xxx = this.Y * V.Z - this.Z * V.Y;
+                    var yyy = this.Z * V.X - this.X * V.Z;
+                    var zzz = this.X * V.Y - this.Y * V.X;
+                    return new FVector3(xxx, yyy, zzz);
+                }
+                this.multiply = function (V) {
+                    var result = this.X * V.X + this.Y * V.Y + this.Z * V.Z;
+                    return result;
+                }
+            }
+            function LookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
+                var directMat = Mat4(1.0);
+                var fvDirect = new FVector3(centerX - eyeX, centerY - eyeY, centerZ - eyeZ);
+                fvDirect.Normalize();
+                var fvUpD = new FVector3(upX, upY, upZ);
+                fvUpD.Normalize();
+                var fvC = fvDirect.UNV(fvUpD);
+                fvC.Normalize();
+                var fvUp = fvC.UNV(fvDirect);
+                fvUp.Normalize();
+                fvDirect.X = -fvDirect.X;
+                fvDirect.Y = -fvDirect.Y;
+                fvDirect.Z = -fvDirect.Z;
+                directMat[0] = fvC.X;
+                directMat[4] = fvC.Y;
+                directMat[8] = fvC.Z;
+                directMat[1] = fvUp.X;
+                directMat[5] = fvUp.Y;
+                directMat[9] = fvUp.Z;
+                directMat[2] = fvDirect.X;
+                directMat[6] = fvDirect.Y;
+                directMat[10] = fvDirect.Z;
+                var eye = new FVector3(-eyeX, -eyeY, -eyeZ);
+                directMat[12] = -eye.multiply(fvC);
+                directMat[13] = -eye.multiply(fvUp);
+                directMat[14] = eye.multiply(fvDirect);
+                return directMat;
+            }
+            function Perspective(fov, aspect, near, far) {
+                var top = near * Math.tan(fov / 2);
+                var bottom = -top;
+                var right = top * aspect;
+                var left = -right;
+                var result = Mat4(1.0);
+                result[0] = (2 * near) / (right - left);
+                result[5] = (2 * near) / (top - bottom);
+                result[8] = (right + left) / (right - left);
+                result[9] = (top + bottom) / (top - bottom);
+                result[10] = -(far + near) / (far - near);
+                result[11] = -1;
+                result[14] = -(2 * near * far) / (far - near);
+                return result;
+            }
+            var lookpos = { x: 0.0, y: 0.0, z: -10.0 };
+            var mouse = { x: 0, y: 0 };
+            var perspective = Mat4(1.0);
+            var lookat = Mat4(1.0);
+            ctx.canvas.onmousemove = function (e) {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            }
+            document.onkeydown = function (e) {
+                if (e.keyCode == 87) {//W
+                    lookpos.y += 0.1;
+                }
+                if (e.keyCode == 83) {//S
+                    lookpos.y -= 0.1;
+                }
+                if (e.keyCode == 65) {//A
+                    lookpos.x -= 0.1;
+                }
+                if (e.keyCode == 68) {//D
+                    lookpos.x += 0.1;
+                }
+            }
+            document.onmousewheel = function (e) {
+                if (e.wheelDelta > 0) {
+                    lookpos.z -= 0.1;
+                } else if (e.wheelDelta < 0) {
+                    lookpos.z += 0.1;
+                }
+            }
+            var boxes = new Array();
+            for (var py = -5; py < 6; py++) {
+                for (var px = -5; px < 6; px++) {
+                    boxes.push({ x: px * (2 + 1), y: py * (2 + 1), z: 0 });
+                }
+            }
+            var flag = setInterval(render, 1000 / 60);
+            function render() {
+                perspective = Perspective(30, ctx.canvas.width / ctx.canvas.height, 0.1, 100);
+                var mdx = mouse.x - ctx.canvas.width / 2;
+                var mdy = mouse.y - ctx.canvas.height / 2;
+                lookat = LookAt(lookpos.x, lookpos.y, lookpos.z, lookpos.x - mdx / (ctx.canvas.width / 2), lookpos.y + (mdy / ctx.canvas.height / 2), lookpos.z - 1.0, 0.0, 1.0, 0.0);
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                //drawtext(ctx, lookat[0] + "," + lookat[1] + "," + lookat[2] + "," + lookat[3], 0, 15 * 1, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, lookat[4] + "," + lookat[5] + "," + lookat[6] + "," + lookat[7] + lookat[4], 0, 15 * 2, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, lookat[8] + "," + lookat[9] + "," + lookat[10] + "," + lookat[11] + lookat[4], 0, 15 * 3, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, lookat[12] + "," + lookat[13] + "," + lookat[14] + "," + lookat[15], 0, 15 * 4, "15px Verdana", "red", "left", "bottom", 1);
+                var pm = Mat4Mat4multiply(lookat, perspective);
+                //drawtext(ctx, pm[0] + "," + pm[1] + "," + pm[2] + "," + pm[3], 0, 15 * 1, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, pm[4] + "," + pm[5] + "," + pm[6] + "," + pm[7], 0, 15 * 2, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, pm[8] + "," + pm[9] + "," + pm[10] + "," + pm[11], 0, 15 * 3, "15px Verdana", "red", "left", "bottom", 1);
+                //drawtext(ctx, pm[12] + "," + pm[13] + "," + pm[14] + "," + pm[15], 0, 15 * 4, "15px Verdana", "red", "left", "bottom", 1);
+                for (var b = 0; b < boxes.length; b++) {
+                    for (var i = 0; i < vertices.length / 7; i++) {
+                        var v4 = [vertices[i * 7 + 0] + boxes[b].x, vertices[i * 7 + 1] + boxes[b].y, vertices[i * 7 + 2] + boxes[b].z, 1.0];
+                        var v4m = Vector4Mat4multiply(v4, pm);
+                        var x = v4m[0];
+                        var y = v4m[1];
+                        var z = v4m[2];
+                        var w = v4m[3];
+                        var dx = ctx.canvas.width / 2 + x / w * ctx.canvas.width / 2;
+                        var dy = ctx.canvas.height / 2 + y / w * ctx.canvas.height / 2;
+                        if (i % 4 == 0) {
+                            ctx.closePath();
+                            ctx.stroke();
+                            ctx.beginPath();
+                            ctx.lineWidth = "1";
+                            ctx.strokeStyle = "red";
+                            ctx.moveTo(dx, dy);
+                        } else {
+                            ctx.lineTo(dx, dy);
+                        }
+                        drawfillrect(ctx, dx - 15 * (1 / (z + 1)) / 2, dy - 15 * (1 / (z + 1)) / 2, 15 * (1 / (z + 1)), 15 * (1 / (z + 1)), "red", 1);
+                    }
+                }
+            }
+        </script>
+</body>
+</html>

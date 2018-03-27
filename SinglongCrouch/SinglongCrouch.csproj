@@ -123,7 +123,6 @@
     <Content Include="2DGame\system\t02082.png" />
     <Content Include="2DGame\system\t02183.png" />
     <Content Include="2DGame\system\venom-effect_0009.bmp" />
-    <Content Include="BlurMoon\main.css" />
     <Content Include="BlurMoon\src\graphics\scene.js" />
     <Content Include="BlurMoon\src\graphics\camera.js" />
     <Content Include="BlurMoon\src\graphics\osobject.js" />
@@ -160,7 +159,8 @@
     <Content Include="Lproject2\system\se\ok.mp3" />
     <Content Include="Lproject2\system\se\Parry.mp3" />
     <Content Include="Lproject2\system\se\ticktack.mp3" />
-    <Content Include="BlurMoon\main.html" />
+    <Content Include="BlurMoon\index.html" />
+    <Content Include="MVP\index.html" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -171,11 +171,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Poker\system\js\sksj.js" />
-    <Content Include="Poker\main.html" />
+    <Content Include="Poker\index.html" />
     <Content Include="Poker\system\js\card.js" />
     <Content Include="Poker\system\js\interface.js" />
     <Content Include="Poker\system\js\system.js" />
-    <Content Include="Poker\main.css" />
+    <Content Include="Common\css\stylesheet.css" />
     <Content Include="Poker\system\pic\bg1.png" />
     <Content Include="Poker\system\pic\poker.png" />
     <Content Include="Poker\system\se\cancel.mp3" />
