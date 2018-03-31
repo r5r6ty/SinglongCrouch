@@ -293,7 +293,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                             this.style.left = self.centerX - (ct / 2) * left + "px";
                         }
 
-                        bbb.onfocusout = function (e) {
+                        bbb.onblur = function (e) {
                             bbb.parentNode.removeChild(bbb);
                         }
                         break;
