@@ -50,7 +50,8 @@ sksjobject.prototype.normal = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
-
+            var self = this;
+            var display = objectif.filter(function (o) { return o.centerX === self.centerX && o.centerY === self.centerY })[0];
 
             //var www = (ctx.canvas.width - this.getcards.length * 20) / 2;
             if (this.identity == player1) {
@@ -66,7 +67,7 @@ sksjobject.prototype.normal = function () {
 
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, this.identity.name + "获得了" + s + "分", this.centerX, this.centerY, "50px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, "获得了" + s + "分", display.centerX + display.bdy[0].bw, display.centerY, "30px Verdana", "red", "left", "middle", 1);
             } else {
                 var s = 0;
                 for (var i = 0; i < this.getcards.length; i++) {
@@ -75,7 +76,7 @@ sksjobject.prototype.normal = function () {
                     this.getcards[i].centerY = Math.sin((this.getcards[i].angleZ - 90) * Math.PI / 180) * -1500 + this.centerY - 1500;
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, this.identity.name + "(Lv." + level + ")获得了" + s + "分", this.centerX, this.centerY, "50px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, "(Lv." + level + ")获得了" + s + "分", display.centerX + display.bdy[0].bw, display.centerY, "30px Verdana", "red", "left", "middle", 1);
             }
             this.identity.score = s;
             break;
@@ -90,24 +91,18 @@ sksjobject.prototype.controller = function () {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, 0, 0);
 
-            for (var i = 0; i < objectif.length; i++) {
-                if (objectif[i] != undefined && objectif[i].identity == player1) {
-                    p = objectif[i];
+            p = objectif.filter(function (o) { return o.identity === player1 })[0];
+
+            var ocard = object.filter(function (o) { return o.state === "open" });
+            for (var i = 0; i < ocard.length; i++) {
+                if (p.selectcards.first == undefined) {
+                    p.selectcards.first = ocard[i];
+                    break;
                 }
-            }
-            for (var i = 0; i < object.length; i++) {
-                if (object[i] != undefined) {
-                    if (object[i].state == "open") {
-                        if (p.selectcards.first == undefined) {
-                            p.selectcards.first = object[i];
-                            break;
-                        }
-                        if (p.selectcards.first != undefined && p.selectcards.second == undefined && object[i] != p.selectcards.first) {
-                            p.selectcards.second = object[i];
-                            lockinput(false);
-                            break;
-                        }
-                    }
+                if (p.selectcards.first != undefined && p.selectcards.second == undefined && ocard[i] != p.selectcards.first) {
+                    p.selectcards.second = ocard[i];
+                    lockinput(false);
+                    break;
                 }
             }
 
@@ -122,19 +117,10 @@ sksjobject.prototype.controller = function () {
         case cased(this, 1, 100):
             frameplay(this, "", 0, 0, 0, 0);
 
-            for (var i = 0; i < objectif.length; i++) {
-                if (objectif[i] != undefined && objectif[i].identity == player2) {
-                    p = objectif[i];
-                }
-            }
+            p = objectif.filter(function (o) { return o.identity === player2 })[0];
 
             if (this.counter == (10 + 1 - level) * 2 || this.counter == (10 + 1 - level) * 4) {
-                var arr = new Array();
-                for (var i = 0; i < object.length; i++) {
-                    if (object[i] != undefined && object[i].state == "back") {
-                        arr.push(object[i]);
-                    }
-                }
+                var arr = object.filter(function (o) { return o.state === "back" });
                 if (arr.length > 0) {
                     if (p.selectcards.first != undefined) {
 
@@ -160,20 +146,16 @@ sksjobject.prototype.controller = function () {
             }
 
 
-
-            for (var i = 0; i < object.length; i++) {
-                if (object[i] != undefined) {
-                    if (object[i].state == "open") {
-                        if (p.selectcards.first == undefined) {
-                            p.selectcards.first = object[i];
-                            break;
-                        }
-                        if (p.selectcards.first != undefined && p.selectcards.second == undefined && object[i] != p.selectcards.first) {
-                            p.selectcards.second = object[i];
-                            lockinput(false);
-                            break;
-                        }
-                    }
+            var ocard = object.filter(function (o) { return o.state === "open" });
+            for (var i = 0; i < ocard.length; i++) {
+                if (p.selectcards.first == undefined) {
+                    p.selectcards.first = ocard[i];
+                    break;
+                }
+                if (p.selectcards.first != undefined && p.selectcards.second == undefined && ocard[i] != p.selectcards.first) {
+                    p.selectcards.second = ocard[i];
+                    lockinput(false);
+                    break;
                 }
             }
 

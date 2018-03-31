@@ -77,7 +77,7 @@ interfaceobject.prototype.update = function () {
             break;
 
         case "CVSButton":
-            this.CVSButton(ste[1], ste[2], ste[3]);//CVSButton
+            this.CVSButton(Number(ste[1]), Number(ste[2]), ste[3], Number(ste[4]), ste[5]);//CVSButton(left,top,text,size,event)
             break;
 
         case "choosecounter":
@@ -158,15 +158,15 @@ interfaceobject.prototype.mainmenu = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
 
-            var _sinkeisuijyaku = new interfaceobject(this, ctx.canvas.width / 2, 300, 0, 0, 1, "CVSButton,神経衰弱,50,g_sksj");
+            var _sinkeisuijyaku = new interfaceobject(this, ctx.canvas.width / 2, 300, 0, 0, 1, "CVSButton,1,1,神経衰弱,50,g_sksj");
             objectif.push(_sinkeisuijyaku);//载入CVSButton
-            var _story = new interfaceobject(this, ctx.canvas.width / 2, 360, 0, 0, 1, "CVSButton,24連装ロシアルレット,50,g_story");
+            var _story = new interfaceobject(this, ctx.canvas.width / 2, 360, 0, 0, 1, "CVSButton,1,1,24連装ロシアルレット,50,i_story");
             objectif.push(_story);//载入CVSButton
-            var _vs_cpu = new interfaceobject(this, ctx.canvas.width / 2, 420, 0, 0, 1, "CVSButton,少数決,50,g_story");
+            var _vs_cpu = new interfaceobject(this, ctx.canvas.width / 2, 420, 0, 0, 1, "CVSButton,1,1,少数決,50,i_story");
             objectif.push(_vs_cpu);//载入CVSButton
-            var _vs_player = new interfaceobject(this, ctx.canvas.width / 2, 480, 0, 0, 1, "CVSButton,E-Card,50,g_story");
+            var _vs_player = new interfaceobject(this, ctx.canvas.width / 2, 480, 0, 0, 1, "CVSButton,1,1,E-Card,50,i_story");
             objectif.push(_vs_player);//载入CVSButton
-            var test = new interfaceobject(this, ctx.canvas.width / 2, 540, 0, 0, 1, "CVSButton,小朋友齐打交,50,g_story");
+            var test = new interfaceobject(this, ctx.canvas.width / 2, 540, 0, 0, 1, "CVSButton,1,1,小朋友齐打交,50,i_story");
             objectif.push(test);//载入CVSButton
             break;
 
@@ -220,33 +220,85 @@ interfaceobject.prototype.mainmenu = function () {
     nextstate(this, "mainmenu", 11, 11);
 }
 
-interfaceobject.prototype.CVSButton = function (t, s, g) {
+interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
     var text = t;
     var size = s;
     ctx.font = size + "px Verdana";
     var txtwidth = ctx.measureText(text).width;
+
+    var bdyX = (txtwidth / 2) * -(left - 1);
+    var bdyY = (size / 2) * -(top - 1);
+    var offsetX = (txtwidth / 2) * left;
+    var offsetY = (size / 2) * top;
+    var cX = this.centerX - offsetX;
+    var cY = this.centerY - offsetY;
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
-            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, size));
-            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "red", "center", "middle", 1);
+            this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
+            drawtext(ctx, text, cX, cY, size + "px Verdana", "red", "left", "top", 1);
             break;
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
-            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, size));
-            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "red", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - txtwidth / 2, this.centerY - size / 2, txtwidth, size, "red", 0.5);
+            this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
+            drawtext(ctx, text, cX, cY, size + "px Verdana", "red", "left", "top", 1);
+            drawfillrect(ctx, cX, cY, txtwidth, size, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
-            this.bdy.push(new bdyrange(this, 0, 0, txtwidth, 50));
-            drawtext(ctx, text, this.centerX, this.centerY, size + "px Verdana", "crimson", "center", "middle", 1);
-            drawfillrect(ctx, this.centerX - txtwidth / 2, this.centerY - size / 2, txtwidth, size, "crimson", 0.5);
+            this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
+            drawtext(ctx, text, cX, cY, size + "px Verdana", "crimson", "left", "top", 1);
+            drawfillrect(ctx, cX, cY, txtwidth, size, "crimson", 0.5);
 
             if (ismouseclick(0)) {
-                sound(this, 2, "ok");
-                objectif.push(new mainphase(g, "gamephasecontroller"));
-                this.button = false;
+                var para = g.split("_", 2);
+                switch (para[0]) {
+                    case "g":
+                        sound(this, 2, "ok");
+                        objectif.push(new mainphase(g, "gamephasecontroller"));
+                        this.button = false;
+                        break;
+                    case "i":
+                        var bbb = document.createElement("input");
+                        bbb.type = "text";
+                        bbb.style.width = txtwidth + "px";
+                        bbb.style.height = size + "px";
+                        bbb.style.position = "absolute";
+                        bbb.style.left = cX + "px";
+                        bbb.style.top = cY + "px";
+                        document.getElementById("inter").appendChild(bbb);
+
+                        bbb.focus();
+                        bbb.value = t;
+
+                        this.button = false;
+
+                        var self = this;
+                        bbb.onchange = function (e) {
+                            var ss = self.state.split(",");
+                            if (this.value.length <= 0) {
+                                ss[3] = " ";
+                            } else {
+                                ss[3] = this.value;
+                            }
+                            self.state = ss.join(",");
+
+                            eval(para[1] + "=ss[3]");
+                        }
+
+                        bbb.oninput = function (e) {
+                            var ct = ctx.measureText(this.value).width;
+                            this.style.width = ct + "px";
+                            this.style.left = self.centerX - (ct / 2) * left + "px";
+                        }
+
+                        bbb.onfocusout = function (e) {
+                            bbb.parentNode.removeChild(bbb);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
             break;
     }
@@ -440,6 +492,8 @@ interfaceobject.prototype.fade_in = function () {
 interfaceobject.prototype.selectcharacter = function () {
     switch (this.counter) {
         case cased(this, 0, 0):
+            objectif.push(new interfaceobject(this, 200, ctx.canvas.height - 30, 0, 0, 1, "CVSButton,0,1," + player1.name + ",50,i_" + player1.constractor + ".name"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 200, 30, 0, 0, 1, "CVSButton,0,1," + player2.name + ",50,i_" + player2.constractor + ".name"));//载入CVSButton
 
             g_player1 = new sksjobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
             objectif.push(g_player1);//载入玩家1；

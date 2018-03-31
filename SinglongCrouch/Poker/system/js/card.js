@@ -14,8 +14,8 @@ function card(id, cx, cy, acx, acy, alpha, s, test) {
     this.status = "card";
     this.centerX = cx;
     this.centerY = cy;
-    this.myX = this.pic.width / 2;
-    this.myY = this.pic.height / 2;
+    this.myX = IMAGELIST[this.pic].width / 2;
+    this.myY = IMAGELIST[this.pic].height / 2;
     this.dvx = acx;
     this.dvy = acy;
     this.Alpha = alpha;
@@ -41,7 +41,7 @@ function card(id, cx, cy, acx, acy, alpha, s, test) {
 
         if (sine < 0) {
             if (this.pic == this.test) {
-                this.pic = document.getElementById("poker_64");
+                this.pic = "poker_64";
             }
             sine = Math.abs(sine);
         }
@@ -197,7 +197,7 @@ function deck(cx, cy, s) {
     this.cards = new Array();
     for (var i = 0; i < numerals.length * suits.length; i++)// + jokers.length
     {
-        var xxx = new card(player1, cx, cy, 0, 0, 1, s, document.getElementById("poker_" + i));
+        var xxx = new card(player1, cx, cy, 0, 0, 1, s, "poker_" + i);
         xxx.name = "poker_" + i;
         this.cards.push(xxx);
     }

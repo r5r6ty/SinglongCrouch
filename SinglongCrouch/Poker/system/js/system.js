@@ -1,4 +1,7 @@
-﻿function cnvs_getCoordinates(x, y) {
+﻿var IMAGELIST = [];
+var SOUNDLIST = [];
+
+function cnvs_getCoordinates(x, y) {
 
     //Math.pow(mouse.x - g_player1,2)
     //if ()
@@ -286,7 +289,8 @@ function drawfillrect(canvas, x, y, width, height, color, alpha, shadowColor, sh
 
 function drawpic(o) {
     var canvas = ctx;
-    if (o.pic != undefined) {
+    var picture = IMAGELIST[o.pic];
+    if (picture != undefined) {
         var canvas = canvas;
         canvas.save();
         //if (canvas != ctx) {
@@ -298,17 +302,17 @@ function drawpic(o) {
             canvas.shadowColor = o.shadowColor;
             canvas.translate(o.centerX, o.centerY);
             canvas.rotate(o.angleZ * Math.PI / 180);
-            canvas.drawImage(o.pic, Math.round(-o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(-o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
+            canvas.drawImage(picture, Math.round(-o.myX) + (picture.width - picture.width * o.scaleX) / 2, Math.round(-o.myY), picture.width * o.scaleX, picture.height * o.scaleY);
         } else {
             if (o.direction == 1) {
-                canvas.drawImage(o.pic, Math.round(o.centerX - o.myX) + (o.pic.width - o.pic.width * o.scaleX) / 2, Math.round(o.centerY - o.myY), o.pic.width * o.scaleX, o.pic.height * o.scaleY);
+                canvas.drawImage(picture, Math.round(o.centerX - o.myX) + (picture.width - picture.width * o.scaleX) / 2, Math.round(o.centerY - o.myY), picture.width * o.scaleX, picture.height * o.scaleY);
             }
             else {
                 canvas.translate(c.width, 0);
                 canvas.scale(-1, 1);
                 //画图
 
-                canvas.drawImage(o.pic, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY));
+                canvas.drawImage(picture, Math.round(-1 * o.centerX - o.myX + c.width), Math.round(o.centerY - o.myY));
                 //翻转回来
 
                 canvas.translate(c.width, 0);
@@ -376,7 +380,7 @@ function drawpic(o) {
 
 function frameplay(o, p, acx, acy, myX, myY) {
 
-    o.pic = document.getElementById(p);
+    o.pic = p;
     o.myX = myX;
     o.myY = myY;
 
@@ -645,7 +649,7 @@ function skillkeyup(o, s, c, key) {
 
 function sound(o, f, s) {
     if (o.counter == f) {
-        objectif.push(new playsound(document.getElementById(s)));
+        objectif.push(new playsound(SOUNDLIST[s]));
     }
 }
 
@@ -653,11 +657,11 @@ function sound(o, f, s) {
 function isTouchDevice() {
     try {
         document.createEvent("TouchEvent");
-        document.getElementById("demo16").innerHTML = "TouchEvent ok!";
+        //document.getElementById("demo16").innerHTML = "TouchEvent ok!";
 
         return true;
     } catch (e) {
-        document.getElementById("demo16").innerHTML = "TouchEvent ng!";
+        //document.getElementById("demo16").innerHTML = "TouchEvent ng!";
         return false;
     }
 }

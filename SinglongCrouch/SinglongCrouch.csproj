@@ -129,6 +129,7 @@
     <Content Include="BlurMoon\src\utils\constant.js" />
     <Content Include="BlurMoon\src\utils\vector3.js" />
     <Content Include="BlurMoon\test.js" />
+    <Content Include="index.html" />
     <Content Include="Lproject2\main.html" />
     <Content Include="Lproject2\system\js\beta.js" />
     <Content Include="Lproject2\system\js\bg.js" />
@@ -178,8 +179,8 @@
     <Content Include="Common\css\stylesheet.css" />
     <Content Include="Poker\system\pic\bg1.png" />
     <Content Include="Poker\system\pic\poker.png" />
-    <Content Include="Poker\system\se\cancel.mp3" />
-    <Content Include="Poker\system\se\ok.mp3" />
+    <Content Include="Common\se\cancel.mp3" />
+    <Content Include="Common\se\ok.mp3" />
     <Content Include="SinglongCrouch\js\bg.js" />
     <Content Include="SinglongCrouch\js\davis.js" />
     <Content Include="SinglongCrouch\js\effect.js" />
@@ -209,6 +210,7 @@
   <ItemGroup>
     <Folder Include="BlurMoon\src\audios\" />
     <Folder Include="BlurMoon\src\shaders\" />
+    <Folder Include="Poker\system\se\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
