@@ -236,18 +236,18 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
             this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
-            drawtext(ctx, text, cX, cY, size + "px Verdana", "red", "left", "top", 1);
+            drawtext(ctx, text, this.centerX + bdyX, this.centerY + bdyY, size + "px Verdana", "red", "center", "middle", 1);
             break;
         case cased(this, 1, 1):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
             this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
-            drawtext(ctx, text, cX, cY, size + "px Verdana", "red", "left", "top", 1);
+            drawtext(ctx, text, this.centerX + bdyX, this.centerY + bdyY, size + "px Verdana", "red", "center", "middle", 1);
             drawfillrect(ctx, cX, cY, txtwidth, size, "red", 0.5);
             break;
         case cased(this, 2, 2):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
             this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
-            drawtext(ctx, text, cX, cY, size + "px Verdana", "crimson", "left", "top", 1);
+            drawtext(ctx, text, this.centerX + bdyX, this.centerY, size + "px Verdana", "crimson", "center", "middle", 1);
             drawfillrect(ctx, cX, cY, txtwidth, size, "crimson", 0.5);
 
             if (ismouseclick(0)) {
@@ -261,11 +261,10 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                     case "i":
                         var bbb = document.createElement("input");
                         bbb.type = "text";
-                        bbb.style.width = txtwidth + "px";
-                        bbb.style.height = size + "px";
+                        bbb.style.width = window.innerWidth + "px";
                         bbb.style.position = "absolute";
-                        bbb.style.left = cX + "px";
-                        bbb.style.top = cY + "px";
+                        bbb.style.left = "0px";
+                        bbb.style.top = "0px";
                         document.getElementById("inter").appendChild(bbb);
 
                         bbb.focus();
@@ -274,7 +273,12 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         this.button = false;
 
                         var self = this;
-                        bbb.onchange = function (e) {
+
+                        window.onresize = function () {
+                            bbb.style.width = window.innerWidth + "px";
+                        }
+
+                        bbb.oninput = function (e) {
                             var ss = self.state.split(",");
                             if (this.value.length <= 0) {
                                 ss[3] = " ";
@@ -284,13 +288,10 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                             self.state = ss.join(",");
 
                             eval(para[1] + "=ss[3]");
-                            bbb.parentNode.removeChild(bbb);
                         }
 
-                        bbb.oninput = function (e) {
-                            var ct = ctx.measureText(this.value).width;
-                            this.style.width = ct + "px";
-                            this.style.left = self.centerX - (ct / 2) * left + "px";
+                        bbb.onchange = function (e) {
+                            bbb.parentNode.removeChild(bbb);
                         }
 
                         bbb.onblur = function (e) {

@@ -67,7 +67,7 @@ sksjobject.prototype.normal = function () {
 
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, "获得了" + s + "分", display.centerX + display.bdy[0].bw, display.centerY, "30px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, "获得了" + s + "分", display.centerX + display.bdy[0].bw, this.centerY, "50px Verdana", "red", "left", "middle", 1);
             } else {
                 var s = 0;
                 for (var i = 0; i < this.getcards.length; i++) {
@@ -76,7 +76,7 @@ sksjobject.prototype.normal = function () {
                     this.getcards[i].centerY = Math.sin((this.getcards[i].angleZ - 90) * Math.PI / 180) * -1500 + this.centerY - 1500;
                     s += (Number(this.getcards[i].name.split("_", 2)[1]) % 13 + 1);
                 }
-                drawtext(ctx, "(Lv." + level + ")获得了" + s + "分", display.centerX + display.bdy[0].bw, display.centerY, "30px Verdana", "red", "left", "middle", 1);
+                drawtext(ctx, "(Lv." + level + ")获得了" + s + "分", display.centerX + display.bdy[0].bw, this.centerY, "50px Verdana", "red", "left", "middle", 1);
             }
             this.identity.score = s;
             break;
