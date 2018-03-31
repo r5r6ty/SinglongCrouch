@@ -33,9 +33,9 @@
         <div id="demo17"></div>
         <div id="demo18"></div>
         <div></div>
-        <input id="isdebug" type="checkbox">Debug line
+        <!--<input id="isdebug" type="checkbox">Debug line
         <div></div>
-        <input id="antialias" type="checkbox">Anti-alias
+        <input id="antialias" type="checkbox">Anti-alias-->
         <div>
             AI强度（1~10）：
             <select id="test_AI">
@@ -247,30 +247,30 @@
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
             if (ctx.canvas.width >= ctx.canvas.height) {
-                CVSMode = "vertical";
-            } else {
                 CVSMode = "horizon";
+            } else {
+                CVSMode = "vertical";
             }
             document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + " " + CVSMode + ")";
         }
 
-        var debug;
+        var debug = false;
         var level;
         function dominit() {
-            ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
-            debug = document.getElementById("isdebug").checked;
+            //ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
+            //debug = document.getElementById("isdebug").checked;
             //player1.name = document.getElementById("player").value;
             //player2.name = document.getElementById("com").value;
             level = document.getElementById("test_AI").value.split(".", 2)[1];
         }
 
-        document.getElementById("antialias").addEventListener("change", function (e) {
-            ctx.imageSmoothingEnabled = this.checked;
-        }, false);
+        //document.getElementById("antialias").addEventListener("change", function (e) {
+        //    ctx.imageSmoothingEnabled = this.checked;
+        //}, false);
 
-        document.getElementById("isdebug").addEventListener("change", function (e) {
-            debug = this.checked;
-        }, false);
+        //document.getElementById("isdebug").addEventListener("change", function (e) {
+        //    debug = this.checked;
+        //}, false);
 
         //document.getElementById("player").addEventListener("change", function (e) {
         //    player1.name = this.value;

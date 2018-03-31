@@ -79,6 +79,10 @@ interfaceobject.prototype.update = function () {
         case "CVSButton":
             this.CVSButton(Number(ste[1]), Number(ste[2]), ste[3], Number(ste[4]), ste[5]);//CVSButton(left,top,text,size,event)
             break;
+        case "CVSLabel":
+            this.CVSLabel(Number(ste[1]), Number(ste[2]), ste[3], Number(ste[4]));//CVSButton(left,top,text,size)
+            break;
+
 
         case "choosecounter":
             this.choosecounter();//选项控制延时器
@@ -251,7 +255,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
             drawfillrect(ctx, cX, cY, txtwidth, size, "crimson", 0.5);
 
             if (ismouseclick(0)) {
-                var para = g.split("_", 2);
+                var para = g.split("_");
                 switch (para[0]) {
                     case "g":
                         sound(this, 2, "ok");
@@ -268,7 +272,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         document.getElementById("inter").appendChild(bbb);
 
                         bbb.focus();
-                        bbb.value = t;
+                        bbb.value = text;
 
                         this.button = false;
 
@@ -290,8 +294,57 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                             eval(para[1] + "=ss[3]");
                         }
 
-                        bbb.onchange = function (e) {
+                        //bbb.onchange = function (e) {
+                        //    bbb.parentNode.removeChild(bbb);
+                        //}
+
+                        bbb.onblur = function (e) {
                             bbb.parentNode.removeChild(bbb);
+                        }
+                        break;
+                    case "c":
+                        var ss = this.state.split(",");
+
+                        if (text.substr(0, 1) == "☒") {
+                            eval(para[1] + "=true");
+                            ss[3] = "☑" + text.substr(1, text.length - 1);
+                        } else if (text.substr(0, 1) == "☑") {
+                            eval(para[1] + "=false");
+                            ss[3] = "☒" + text.substr(1, text.length - 1);
+                        }
+                        this.state = ss.join(",");
+
+                        this.button = false;
+                        break;
+                    case "r":
+                        var bbb = document.createElement("input");
+                        bbb.type = "range";
+                        var minmax = para[2].split("~", 2);
+                        bbb.min = minmax[0];
+                        bbb.max = minmax[1];
+                        bbb.style.width = window.innerWidth + "px";
+                        bbb.style.position = "absolute";
+                        bbb.style.left = "0px";
+                        bbb.style.top = "0px";
+                        document.getElementById("inter").appendChild(bbb);
+
+                        bbb.focus();
+                        bbb.value = text;
+
+                        this.button = false;
+
+                        var self = this;
+
+                        window.onresize = function () {
+                            bbb.style.width = window.innerWidth + "px";
+                        }
+
+                        bbb.onchange = function (e) {
+                            var ss = self.state.split(",");
+                            ss[3] = this.value;
+                            self.state = ss.join(",");
+
+                            eval(para[1] + "=ss[3]");
                         }
 
                         bbb.onblur = function (e) {
@@ -305,6 +358,29 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
             break;
     }
     nextstate(this, this.state, 0, buttonnextstate(this, 0, 0, 1, 2));
+}
+
+interfaceobject.prototype.CVSLabel = function (left, top, t, s) {
+    var text = t;
+    var size = s;
+    ctx.font = size + "px Verdana";
+    var txtwidth = ctx.measureText(text).width;
+
+    var bdyX = (txtwidth / 2) * -(left - 1);
+    var bdyY = (size / 2) * -(top - 1);
+    var offsetX = (txtwidth / 2) * left;
+    var offsetY = (size / 2) * top;
+    var cX = this.centerX - offsetX;
+    var cY = this.centerY - offsetY;
+    switch (this.counter) {
+        case cased(this, 0, 0):
+            frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
+            this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
+            drawtext(ctx, text, this.centerX + bdyX, this.centerY + bdyY, size + "px Verdana", "red", "center", "middle", 1);
+            break;
+            break;
+    }
+    nextstate(this, this.state, 0, 0);
 }
 
 interfaceobject.prototype.gametitle = function () {
@@ -496,6 +572,13 @@ interfaceobject.prototype.selectcharacter = function () {
         case cased(this, 0, 0):
             objectif.push(new interfaceobject(this, 200, ctx.canvas.height - 30, 0, 0, 1, "CVSButton,0,1," + player1.name + ",50,i_" + player1.constractor + ".name"));//载入CVSButton
             objectif.push(new interfaceobject(this, 200, 30, 0, 0, 1, "CVSButton,0,1," + player2.name + ",50,i_" + player2.constractor + ".name"));//载入CVSButton
+
+            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 - 25, 0, 0, 1, "CVSButton,0,1," + (debug ? "☑" : "☒") + "Debug line,25,c_debug"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 + 0, 0, 0, 1, "CVSButton,0,1," + (ctx.imageSmoothingEnabled ? "☑" : "☒") + "Anti-alias,25,c_ctx.imageSmoothingEnabled"));//载入CVSButton
+
+            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSLabel,0,1,AI Lv.,25"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 50 + 80, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSButton,0,1," + level + ",25,r_level_1~10"));//载入CVSButton
+
 
             g_player1 = new sksjobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
             objectif.push(g_player1);//载入玩家1；
