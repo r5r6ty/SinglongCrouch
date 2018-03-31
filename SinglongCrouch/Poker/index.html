@@ -36,7 +36,7 @@
         <!--<input id="isdebug" type="checkbox">Debug line
         <div></div>
         <input id="antialias" type="checkbox">Anti-alias-->
-        <div>
+        <!--<div>
             AI强度（1~10）：
             <select id="test_AI">
                 <option>lv.1</option>
@@ -50,7 +50,7 @@
                 <option>lv.9</option>
                 <option>lv.10</option>
             </select>
-        </div>
+        </div>-->
         <!--<input type="range" id="testrange" min="0" max="52">
     <div></div>
     <input type="text" id="com" value="电脑">电脑的名字
@@ -255,14 +255,14 @@
         }
 
         var debug = false;
-        var level;
-        function dominit() {
-            //ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
-            //debug = document.getElementById("isdebug").checked;
-            //player1.name = document.getElementById("player").value;
-            //player2.name = document.getElementById("com").value;
-            level = document.getElementById("test_AI").value.split(".", 2)[1];
-        }
+        var level = 1;
+        //function dominit() {
+        //    //ctx.imageSmoothingEnabled = document.getElementById("antialias").checked;
+        //    //debug = document.getElementById("isdebug").checked;
+        //    //player1.name = document.getElementById("player").value;
+        //    //player2.name = document.getElementById("com").value;
+        //    //level = document.getElementById("test_AI").value.split(".", 2)[1];
+        //}
 
         //document.getElementById("antialias").addEventListener("change", function (e) {
         //    ctx.imageSmoothingEnabled = this.checked;
@@ -280,13 +280,9 @@
         //    player2.name = this.value;
         //}, false);
 
-        document.getElementById("test_AI").addEventListener("change", function (e) {
-            level = this.value.split(".", 2)[1];
-        }, false);
-
-        function sets(a, b) {
-            a = b;
-        };
+        //document.getElementById("test_AI").addEventListener("change", function (e) {
+        //    level = this.value.split(".", 2)[1];
+        //}, false);
 
         //setInterval(update, 1);
         QueueNewFrame();
