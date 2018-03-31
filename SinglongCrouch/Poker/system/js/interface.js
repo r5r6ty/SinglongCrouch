@@ -284,6 +284,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                             self.state = ss.join(",");
 
                             eval(para[1] + "=ss[3]");
+                            bbb.parentNode.removeChild(bbb);
                         }
 
                         bbb.oninput = function (e) {
