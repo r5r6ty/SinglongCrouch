@@ -132,7 +132,7 @@ interfaceobject.prototype.nowloading = function () {
     switch (this.counter) {
         case cased(this, 0, 360):
 
-            var width = 1500;
+            var width = 1000;
             var height = 50;
 
             frameplay(this, "", 0, 0, width / 2, height / 2);
@@ -596,8 +596,8 @@ interfaceobject.prototype.selectcharacter = function () {
             objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 - 25, 0, 0, 1, "CVSButton,0,1," + (debug ? "☑" : "☒") + "Debug line,25,c_debug"));//载入CVSButton
             objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 + 0, 0, 0, 1, "CVSButton,0,1," + (ctx.imageSmoothingEnabled ? "☑" : "☒") + "Anti-alias,25,c_ctx.imageSmoothingEnabled"));//载入CVSButton
 
-            objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSLabel,0,1,AI Lv.,25"));//载入CVSButton
-            objectif.push(new interfaceobject(this, 0 + 80, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSButton,0,1," + level + ",25,r_level_1~10"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSLabel,0,1,AI (1~10) Lv.,25"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0 + 170, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSButton,0,1," + level + ",25,r_level_1~10"));//载入CVSButton
 
 
             g_player1 = new sksjobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
