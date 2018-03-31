@@ -130,24 +130,27 @@ interfaceobject.prototype.choosecounter = function () {
 
 interfaceobject.prototype.nowloading = function () {
     switch (this.counter) {
-        case cased(this, 0, 0):
+        case cased(this, 0, 360):
 
-            this.myX = 250;
-            this.myY = 5;
+            var width = 1500;
+            var height = 50;
+
+            frameplay(this, "", 0, 0, width / 2, height / 2);
 
             var per = loadeddata / totaldata;
 
-            ctx.fillStyle = "red";
-            ctx.textAlign = "left";
-            ctx.fillText("Now loading..." + (per * 100).toFixed(0) + "%" + "(" + loadeddata + "/" + totaldata + ")", this.centerX - this.myX, this.centerY - 10);
-            ctx.beginPath();
-            ctx.rect(this.centerX - this.myX, this.centerY - this.myY, 500, 10);
+            var dot = "";
+            for (var i = 0; i < Math.round(this.counter % 36 / 6); i++) {
+                dot += ".";
+            }
+            drawtext(ctx, "Now loading" + dot + (per * 100).toFixed(0) + "%" + "(" + loadeddata + "/" + totaldata + ")", this.centerX - this.myX, this.centerY - 50 / 2, "50 px Verdana", "red", "left", "bottom", 1);
+
+            ctx.rect(this.centerX - this.myX, this.centerY - this.myY, width, height);
             ctx.strokeStyle = "red";
             ctx.stroke();
             ctx.stroke();
-            ctx.beginPath();
             ctx.fillStyle = "red";
-            ctx.fillRect(this.centerX - this.myX, this.centerY - this.myY, 500 * per, 10);
+            ctx.fillRect(this.centerX - this.myX, this.centerY - this.myY, width * per, height);
 
             if (loadeddata >= totaldata) {//当loading完
                 objectif.push(new mainphase("g_title", "gamephasecontroller"));
@@ -155,7 +158,7 @@ interfaceobject.prototype.nowloading = function () {
 
             break;
     }
-    nextstate(this, "nowloading", 0, 0);
+    nextstate(this, "nowloading", 360, 0);
 }
 
 interfaceobject.prototype.mainmenu = function () {
@@ -263,43 +266,51 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         this.button = false;
                         break;
                     case "i":
-                        var bbb = document.createElement("input");
-                        bbb.type = "text";
-                        bbb.style.width = window.innerWidth + "px";
-                        bbb.style.position = "absolute";
-                        bbb.style.left = "0px";
-                        bbb.style.top = "0px";
-                        document.getElementById("inter").appendChild(bbb);
-
-                        bbb.focus();
-                        bbb.value = text;
-
-                        this.button = false;
-
-                        var self = this;
-
-                        window.onresize = function () {
+                        var interdiv = document.getElementById("inter");
+                        if (interdiv.children.length <= 0) {
+                            var bbb = document.createElement("input");
+                            bbb.type = "text";
                             bbb.style.width = window.innerWidth + "px";
-                        }
+                            bbb.style.height = "50px";
+                            bbb.style.position = "absolute";
+                            bbb.style.left = "0px";
+                            bbb.style.top = "0px";
+                            interdiv.appendChild(bbb);
 
-                        bbb.oninput = function (e) {
-                            var ss = self.state.split(",");
-                            if (this.value.length <= 0) {
-                                ss[3] = " ";
-                            } else {
-                                ss[3] = this.value;
+                            bbb.focus();
+                            bbb.value = text;
+
+                            this.button = false;
+
+                            var self = this;
+
+                            window.onresize = function () {
+                                bbb.style.width = window.innerWidth + "px";
                             }
-                            self.state = ss.join(",");
 
-                            eval(para[1] + "=ss[3]");
-                        }
+                            bbb.oninput = function (e) {
+                                var ss = self.state.split(",");
+                                if (this.value.length <= 0) {
+                                    ss[3] = " ";
+                                } else {
+                                    ss[3] = this.value;
+                                }
+                                self.state = ss.join(",");
 
-                        //bbb.onchange = function (e) {
-                        //    bbb.parentNode.removeChild(bbb);
-                        //}
+                                eval(para[1] + "=ss[3]");
+                            }
 
-                        bbb.onblur = function (e) {
-                            bbb.parentNode.removeChild(bbb);
+                            bbb.onchange = function (e) {
+                                bbb.parentNode.removeChild(bbb);
+                            }
+
+                            bbb.onblur = function (e) {
+                                if (!mousejudge(self)) {
+                                    bbb.parentNode.removeChild(bbb);
+                                } else {
+                                    bbb.focus();
+                                }
+                            }
                         }
                         break;
                     case "c":
@@ -317,38 +328,47 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         this.button = false;
                         break;
                     case "r":
-                        var bbb = document.createElement("input");
-                        bbb.type = "range";
-                        var minmax = para[2].split("~", 2);
-                        bbb.min = minmax[0];
-                        bbb.max = minmax[1];
-                        bbb.style.width = window.innerWidth + "px";
-                        bbb.style.position = "absolute";
-                        bbb.style.left = "0px";
-                        bbb.style.top = "0px";
-                        document.getElementById("inter").appendChild(bbb);
-
-                        bbb.focus();
-                        bbb.value = text;
-
-                        this.button = false;
-
-                        var self = this;
-
-                        window.onresize = function () {
+                        var interdiv = document.getElementById("inter");
+                        if (interdiv.children.length <= 0) {
+                            var bbb = document.createElement("input");
+                            bbb.type = "range";
+                            bbb.value = Number(text);
+                            var minmax = para[2].split("~", 2);
+                            bbb.min = minmax[0];
+                            bbb.max = minmax[1];
                             bbb.style.width = window.innerWidth + "px";
-                        }
+                            bbb.style.height = "50px";
+                            bbb.style.position = "absolute";
+                            bbb.style.left = "0px";
+                            bbb.style.top = "0px";
+                            interdiv.appendChild(bbb);
 
-                        bbb.onchange = function (e) {
-                            var ss = self.state.split(",");
-                            ss[3] = this.value;
-                            self.state = ss.join(",");
+                            bbb.focus();
+                            bbb.value = text;
 
-                            eval(para[1] + "=ss[3]");
-                        }
+                            this.button = false;
 
-                        bbb.onblur = function (e) {
-                            bbb.parentNode.removeChild(bbb);
+                            var self = this;
+
+                            window.onresize = function () {
+                                bbb.style.width = window.innerWidth + "px";
+                            }
+
+                            bbb.onchange = function (e) {
+                                var ss = self.state.split(",");
+                                ss[3] = this.value;
+                                self.state = ss.join(",");
+
+                                eval(para[1] + "=ss[3]");
+                            }
+
+                            bbb.onblur = function (e) {
+                                if (!mousejudge(self)) {
+                                    bbb.parentNode.removeChild(bbb);
+                                } else {
+                                    bbb.focus();
+                                }
+                            }
                         }
                         break;
                     default:
@@ -573,11 +593,11 @@ interfaceobject.prototype.selectcharacter = function () {
             objectif.push(new interfaceobject(this, 200, ctx.canvas.height - 30, 0, 0, 1, "CVSButton,0,1," + player1.name + ",50,i_" + player1.constractor + ".name"));//载入CVSButton
             objectif.push(new interfaceobject(this, 200, 30, 0, 0, 1, "CVSButton,0,1," + player2.name + ",50,i_" + player2.constractor + ".name"));//载入CVSButton
 
-            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 - 25, 0, 0, 1, "CVSButton,0,1," + (debug ? "☑" : "☒") + "Debug line,25,c_debug"));//载入CVSButton
-            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 + 0, 0, 0, 1, "CVSButton,0,1," + (ctx.imageSmoothingEnabled ? "☑" : "☒") + "Anti-alias,25,c_ctx.imageSmoothingEnabled"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 - 25, 0, 0, 1, "CVSButton,0,1," + (debug ? "☑" : "☒") + "Debug line,25,c_debug"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 + 0, 0, 0, 1, "CVSButton,0,1," + (ctx.imageSmoothingEnabled ? "☑" : "☒") + "Anti-alias,25,c_ctx.imageSmoothingEnabled"));//载入CVSButton
 
-            objectif.push(new interfaceobject(this, 50, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSLabel,0,1,AI Lv.,25"));//载入CVSButton
-            objectif.push(new interfaceobject(this, 50 + 80, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSButton,0,1," + level + ",25,r_level_1~10"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSLabel,0,1,AI Lv.,25"));//载入CVSButton
+            objectif.push(new interfaceobject(this, 0 + 80, ctx.canvas.height / 2 + 25, 0, 0, 1, "CVSButton,0,1," + level + ",25,r_level_1~10"));//载入CVSButton
 
 
             g_player1 = new sksjobject(player1, 200, ctx.canvas.height - 30, 0, 0, 1, "normal");
