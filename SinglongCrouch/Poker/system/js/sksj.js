@@ -111,6 +111,7 @@ sksjobject.prototype.controller = function () {
                 this.change = 1;
                 lockinput(false);
             } else if (jd == 1) {
+                sound(this, 0, "Decision2");
                 lockinput(true);
             }
             break;
@@ -135,9 +136,13 @@ sksjobject.prototype.controller = function () {
                                 break;
                             }
                         }
+                        sound(this, (10 + 1 - level) * 2, "click_move");
+                        sound(this, (10 + 1 - level) * 4, "click_move");
                         c.state = "open";
                         c.counter = 0 - 1;
                     } else {
+                        sound(this, (10 + 1 - level) * 2, "click_move");
+                        sound(this, (10 + 1 - level) * 4, "click_move");
                         var c = arr[random(0, arr.length - 1)];
                         c.state = "open";
                         c.counter = 0 - 1;
@@ -165,6 +170,7 @@ sksjobject.prototype.controller = function () {
                 this.change = 0;
                 lockinput(true);
             } else if (jd == 1) {
+                sound(this, this.counter, "Decision2");
                 wait = 100;
                 this.counter = 1 - 1;
             } else {

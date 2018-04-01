@@ -152,6 +152,7 @@ card.prototype.back = function () {
                     this.centerX += Math.random() * 2 - 1;
                     this.centerY += Math.random() * 2 - 1;
                     if (ismouseclick(0)) {
+                        sound(this, 0, "click_move");
                         this.state = "open";
                         this.counter = 0 - 1;
 

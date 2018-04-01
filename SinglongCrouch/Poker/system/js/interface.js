@@ -143,7 +143,7 @@ interfaceobject.prototype.nowloading = function () {
             for (var i = 0; i < Math.round(this.counter % 36 / 6); i++) {
                 dot += ".";
             }
-            drawtext(ctx, "Now loading" + dot + (per * 100).toFixed(0) + "%" + "(" + loadeddata + "/" + totaldata + ")", this.centerX - this.myX, this.centerY - 50 / 2, "50 px Verdana", "red", "left", "bottom", 1);
+            drawtext(ctx, "Now loading" + dot + (per * 100).toFixed(0) + "%" + "(" + loadeddata + "/" + totaldata + ")", this.centerX - this.myX, this.centerY - 50 / 2, "50px Verdana", "red", "left", "bottom", 1);
 
             ctx.rect(this.centerX - this.myX, this.centerY - this.myY, width, height);
             ctx.strokeStyle = "red";
@@ -266,6 +266,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         this.button = false;
                         break;
                     case "i":
+                        sound(this, 2, "click_move");
                         var interdiv = document.getElementById("inter");
                         if (interdiv.children.length <= 0) {
                             var bbb = document.createElement("input");
@@ -314,6 +315,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         }
                         break;
                     case "c":
+                        sound(this, 2, "click_move");
                         var ss = this.state.split(",");
 
                         if (text.substr(0, 1) == "☒") {
@@ -328,6 +330,7 @@ interfaceobject.prototype.CVSButton = function (left, top, t, s, g) {
                         this.button = false;
                         break;
                     case "r":
+                        sound(this, 2, "click_move");
                         var interdiv = document.getElementById("inter");
                         if (interdiv.children.length <= 0) {
                             var bbb = document.createElement("input");
@@ -388,16 +391,11 @@ interfaceobject.prototype.CVSLabel = function (left, top, t, s) {
 
     var bdyX = (txtwidth / 2) * -(left - 1);
     var bdyY = (size / 2) * -(top - 1);
-    var offsetX = (txtwidth / 2) * left;
-    var offsetY = (size / 2) * top;
-    var cX = this.centerX - offsetX;
-    var cY = this.centerY - offsetY;
     switch (this.counter) {
         case cased(this, 0, 0):
             frameplay(this, "", 0, 0, txtwidth / 2, size / 2);
             this.bdy.push(new bdyrange(this, bdyX, bdyY, txtwidth, size));
             drawtext(ctx, text, this.centerX + bdyX, this.centerY + bdyY, size + "px Verdana", "red", "center", "middle", 1);
-            break;
             break;
     }
     nextstate(this, this.state, 0, 0);
