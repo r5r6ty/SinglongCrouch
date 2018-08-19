@@ -14,8 +14,7 @@ function renderScript(componet) {
         this.obj.position.y += Math.random() * 2 - 1;
     }
     componet.renderFunc = function () {
-        CONTEXTLIST[0].fillStyle = this.color;
-        CONTEXTLIST[0].fillRect(this.obj.position.x - 5, this.obj.position.y - 5, 10, 10);
+
     }
 }
 

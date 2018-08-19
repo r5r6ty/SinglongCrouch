@@ -733,7 +733,6 @@ function renderingLoop() {
     //document.getElementById("demo11").innerHTML = "objectbg: " + objectbg.length;
     //document.getElementById("demo14").innerHTML = "objectif: " + objectif.length;
 
-
     //mainloop
 
     //holdkey();

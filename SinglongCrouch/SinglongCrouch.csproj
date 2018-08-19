@@ -67,6 +67,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2DGame4\Build\UnityLoader.js" />
+    <Content Include="2DGame4\Build\webgl.data.unityweb" />
+    <Content Include="2DGame4\Build\webgl.json" />
+    <Content Include="2DGame4\Build\webgl.wasm.code.unityweb" />
+    <Content Include="2DGame4\Build\webgl.wasm.framework.unityweb" />
+    <Content Include="2DGame4\index.html" />
+    <Content Include="2DGame4\TemplateData\favicon.ico" />
+    <Content Include="2DGame4\TemplateData\fullscreen.png" />
+    <Content Include="2DGame4\TemplateData\progressEmpty.Dark.png" />
+    <Content Include="2DGame4\TemplateData\progressEmpty.Light.png" />
+    <Content Include="2DGame4\TemplateData\progressFull.Dark.png" />
+    <Content Include="2DGame4\TemplateData\progressFull.Light.png" />
+    <Content Include="2DGame4\TemplateData\progressLogo.Dark.png" />
+    <Content Include="2DGame4\TemplateData\progressLogo.Light.png" />
+    <Content Include="2DGame4\TemplateData\style.css" />
+    <Content Include="2DGame4\TemplateData\UnityProgress.js" />
+    <Content Include="2DGame4\TemplateData\webgl-logo.png" />
     <Content Include="2DGame\main.html" />
     <Content Include="2DGame\system\axl-effect_0011.bmp" />
     <Content Include="2DGame\system\axl-effect_0012.bmp" />
@@ -163,6 +180,7 @@
     <Content Include="BlurMoon\index.html" />
     <Content Include="MVP\index.html" />
     <Content Include="packages.config" />
+    <Content Include="Server\home\app\learning\input.txt.gz" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -181,6 +199,24 @@
     <Content Include="Poker\system\pic\poker.png" />
     <Content Include="Common\se\cancel.mp3" />
     <Content Include="Common\se\ok.mp3" />
+    <Content Include="Server\home\app\learning\buffer.js" />
+    <Content Include="Server\home\app\learning\compress.js" />
+    <Content Include="Server\home\app\learning\decompress.js" />
+    <Content Include="Server\home\app\learning\error.js" />
+    <Content Include="Server\home\app\learning\event.js" />
+    <Content Include="Server\home\app\learning\event2.js" />
+    <Content Include="Server\home\app\learning\get.js" />
+    <Content Include="Server\home\app\learning\hello.js" />
+    <Content Include="Server\home\app\learning\input.txt" />
+    <Content Include="Server\home\app\learning\main.js" />
+    <Content Include="Server\home\app\learning\main2.js" />
+    <Content Include="Server\home\app\learning\main3.js" />
+    <Content Include="Server\home\app\learning\main4.js" />
+    <Content Include="Server\home\app\learning\main5.js" />
+    <Content Include="Server\home\app\learning\main6.js" />
+    <Content Include="Server\home\app\learning\output.txt" />
+    <Content Include="Server\home\app\learning\post.html" />
+    <Content Include="Server\home\app\learning\post.js" />
     <Content Include="SinglongCrouch\js\bg.js" />
     <Content Include="SinglongCrouch\js\davis.js" />
     <Content Include="SinglongCrouch\js\effect.js" />
@@ -202,6 +238,7 @@
     <Content Include="SinglongCrouch\sys\spark2.png" />
     <Content Include="SinglongCrouch\sys\spark3.png" />
     <Content Include="SinglongCrouch\sys\spark4.png" />
+    <Content Include="Test\test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BlurMoon\src\audios\" />
-    <Folder Include="BlurMoon\src\shaders\" />
+    <Folder Include="BlurMoon\src\shaders\common\" />
     <Folder Include="Poker\system\se\" />
   </ItemGroup>
   <PropertyGroup>

@@ -6,58 +6,99 @@
     <link rel="stylesheet" type="text/css" href="../Common/css/stylesheet.css" />
 </head>
 <body scroll="no">
-    <!--<canvas width="2560" height="1000" style="min-width:1000px;width:100%;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:black"></canvas>-->
-    <canvas id="canvas" style="background:black"></canvas>
+    <!--<canvas id="canvas" style="background:black"></canvas>-->
+
+    <script src="https://unpkg.com/mathjs@4.0.1/dist/math.min.js"></script>
+    <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+    <script src="https://rawgithub.com/mrdoob/stats.js/master/build/stats.js"></script>
+
     <!--<script src="test.js"></script>-->
-    <script src="src/utils/constant.js"></script>
+    <!--<script src="src/utils/constant.js"></script>
     <script src="src/utils/vector3.js"></script>
     <script src="src/graphics/osobject.js"></script>
     <script src="src/graphics/camera.js"></script>
-    <script src="src/graphics/scene.js"></script>
+    <script src="src/graphics/scene.js"></script>-->
     <script>
-        let ctx = document.getElementById("canvas").getContext("2d");
-        //ctx.canvas.style.bacground = "black";
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-        let gametitle = document.title;
-        document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        //var ctx = document.getElementById("canvas").getContext("2d");
+        ////ctx.canvas.style.bacground = "black";
+        //ctx.canvas.width = window.innerWidth;
+        //ctx.canvas.height = window.innerHeight;
+        //var gametitle = document.title;
+        //document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
 
-        window.onresize = function () {
-            ctx.canvas.width = window.innerWidth;
-            ctx.canvas.height = window.innerHeight;
-            document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
-        };
+        //window.onresize = function () {
+        //    ctx.canvas.width = window.innerWidth;
+        //    ctx.canvas.height = window.innerHeight;
+        //    document.title = gametitle + "(" + ctx.canvas.width + "x" + ctx.canvas.height + ")";
+        //};
 
-        CONTEXTLIST.push(ctx);
+        //CONTEXTLIST.push(ctx);
 
-        var gamescence = new Scene(ctx);
+        //var gamescence = new Scene(ctx);
 
-        gamescence.add(createCamera());
+        //gamescence.add(createCamera());
 
-        for (var i = 0; i < 1000; i++) {
-            var s = createSprite();
-            s.position = new Vector3(Math.random() * ctx.canvas.width, Math.random() * ctx.canvas.height, 0);
-            gamescence.add(s);
+        //for (var i = 0; i < 1000; i++) {
+        //    var s = createSprite();
+        //    s.position = new Vector3(Math.random() * ctx.canvas.width, Math.random() * ctx.canvas.height, 0);
+        //    gamescence.add(s);
+        //}
+
+        //var intervalID = window.setInterval(renderingLoop, 1000 / 60);
+        //function renderingLoop() {
+        //    gamescence.osobjects.sort(function (a, b) { return a.renderQueue - b.renderQueue });
+        //    for (var i = 0; i < gamescence.osobjects.length; i++) {
+        //        for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
+        //            gamescence.osobjects[i].components[j].update();
+        //        }
+        //        gamescence.osobjects[i].update();
+        //    }
+
+        //    for (var i = 0; i < gamescence.osobjects.length; i++) {
+        //        for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
+        //            gamescence.osobjects[i].components[j].render();
+        //        }
+        //        gamescence.osobjects[i].render();
+        //    }
+        //}
+
+        var scene = new THREE.Scene();  // 场景
+        var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);// 透视相机
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });   // 渲染器
+        renderer.setSize(window.innerWidth, window.innerHeight);    // 设置渲染器的大小为窗口的内宽度，也就是内容区的宽度
+        document.body.appendChild(renderer.domElement);
+
+        var stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '0px';
+        stats.domElement.style.top = '0px';
+        document.body.appendChild(stats.domElement);
+
+        var geometry = new THREE.CubeGeometry(1, 1, 1);
+        var material = new THREE.MeshLambertMaterial({ color: 0x880000 });
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        var light = new THREE.AmbientLight(0xff0000);
+        scene.add(light);
+
+        var light2 = new THREE.PointLight(0xffff00, 1.0, 10);
+        light2.position.set(0, 2, 0);
+        scene.add(light2);
+
+        camera.position.z = 5;
+        function render() {
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+
+            stats.update();
         }
 
-        var intervalID = window.setInterval(renderingLoop, 1000 / 60);
-        function renderingLoop() {
-            gamescence.osobjects.sort(function (a, b) { return a.renderQueue - b.renderQueue });
-            for (var i = 0; i < gamescence.osobjects.length; i++) {
-                for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
-                    gamescence.osobjects[i].components[j].update();
-                }
-                gamescence.osobjects[i].update();
-            }
-
-            for (var i = 0; i < gamescence.osobjects.length; i++) {
-                for (var j = 0; j < gamescence.osobjects[i].components.length; j++) {
-                    gamescence.osobjects[i].components[j].render();
-                }
-                gamescence.osobjects[i].render();
-            }
-        }
-
+        render();
     </script>
 </body>
 </html>
