@@ -181,6 +181,10 @@
     <Content Include="MVP\index.html" />
     <Content Include="packages.config" />
     <Content Include="Server\home\app\learning\input.txt.gz" />
+    <Content Include="Tetris\Build\build.data.unityweb" />
+    <Content Include="Tetris\Build\build.json" />
+    <Content Include="Tetris\Build\build.wasm.code.unityweb" />
+    <Content Include="Tetris\Build\build.wasm.framework.unityweb" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -239,6 +243,19 @@
     <Content Include="SinglongCrouch\sys\spark3.png" />
     <Content Include="SinglongCrouch\sys\spark4.png" />
     <Content Include="Test\test.html" />
+    <Content Include="Tetris\Build\UnityLoader.js" />
+    <Content Include="Tetris\index.html" />
+    <Content Include="Tetris\TemplateData\favicon.ico" />
+    <Content Include="Tetris\TemplateData\fullscreen.png" />
+    <Content Include="Tetris\TemplateData\progressEmpty.Dark.png" />
+    <Content Include="Tetris\TemplateData\progressEmpty.Light.png" />
+    <Content Include="Tetris\TemplateData\progressFull.Dark.png" />
+    <Content Include="Tetris\TemplateData\progressFull.Light.png" />
+    <Content Include="Tetris\TemplateData\progressLogo.Dark.png" />
+    <Content Include="Tetris\TemplateData\progressLogo.Light.png" />
+    <Content Include="Tetris\TemplateData\style.css" />
+    <Content Include="Tetris\TemplateData\UnityProgress.js" />
+    <Content Include="Tetris\TemplateData\webgl-logo.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
