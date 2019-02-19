@@ -181,10 +181,10 @@
     <Content Include="MVP\index.html" />
     <Content Include="packages.config" />
     <Content Include="Server\home\app\learning\input.txt.gz" />
-    <Content Include="Tetris\Build\build.data.unityweb" />
-    <Content Include="Tetris\Build\build.json" />
-    <Content Include="Tetris\Build\build.wasm.code.unityweb" />
-    <Content Include="Tetris\Build\build.wasm.framework.unityweb" />
+    <Content Include="Tetris\Build\Tetris.data.unityweb" />
+    <Content Include="Tetris\Build\Tetris.json" />
+    <Content Include="Tetris\Build\Tetris.wasm.code.unityweb" />
+    <Content Include="Tetris\Build\Tetris.wasm.framework.unityweb" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
