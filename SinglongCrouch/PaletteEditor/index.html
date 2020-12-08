@@ -1,0 +1,858 @@
+<html>
+
+<head>
+    <title>Palette Editor</title>
+    <style>
+        DIV#editable {
+            width: 330px;
+            height: 330px;
+            border: 1px dashed blue;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #header {
+            background-color:black;
+            color:white;
+            text-align:center;
+            padding:5px;
+        }
+        #nav {
+            /* line-height:30px; */
+            /* background-color:#eeeeee; */
+            /* height:100%; */
+            /* width:300px; */
+            float:left;
+            padding:5px;
+            /* position: absolute;
+            top: 52px;
+            bottom: 87px;
+            left: 0px; */
+        }
+        #section {
+            margin-left:340px;
+            padding:10px;	
+            /* background-color:#9a9a9a; */
+        }
+        #footer {
+            background-color:black;
+            color:white;
+            clear:both;
+            text-align:center;
+            padding:5px;	 	 
+        }
+    </style>
+
+    <script src="system/js/UPNG.js"></script>
+    <script src="system/js/gl-matrix-min.js"></script>
+    <script type="text/javascript">
+        var mat4 = glMatrix.mat4
+        var vec3 = glMatrix.vec3
+        // var PNGReader = require('png.js');
+        window.onload = function() {
+
+            var pals = [];
+
+            var p = document.getElementById("palette")
+                
+            for (var y = 0; y < 16; y++) {
+                var new_dive = document.createElement("div");
+                p.appendChild(new_dive);
+                for (var x = 0; x < 16; x++) {
+                    var new_block = document.createElement("canvas");
+                    // new_block.setAttribute("name", "p");
+                    new_block.setAttribute("id", "pal_" + (x + y * 16));
+                    // new_block.setAttribute("src", url);
+                    new_block.setAttribute("width", 16);
+                    new_block.setAttribute("height", 16);
+                    new_block.setAttribute("style", "background: black");
+                    new_block.onclick = function(){
+                            
+                            
+                            // var pos = getLocation(this);
+
+                            var cp = document.getElementById("color_pick");
+                            
+                            // cp.style.left = pos.x;
+                            // cp.style.top = pos.y;
+
+                            
+                            
+
+                            var aColor = this.style.background.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+
+                            var strHex = "#";
+                            for(var i=0; i<aColor.length; i++){
+                                var hex = Number(aColor[i]).toString(16);
+                                if(hex.length == 1){
+                                        hex = "0" + hex;    
+                                }
+                                strHex += hex;
+                            }
+
+                            cp.value = strHex;
+
+                            cp.click();
+
+                            var p = this;
+
+                            cp.onchange = function()
+                            {
+                                p.style.background = cp.value;
+
+                                var arr = p.id.split("_");
+
+                                var index = parseInt(arr[1])
+
+                                var color = colorRgb(cp.value);
+                                pals[index * 4 + 0] = color[0];
+                                pals[index * 4 + 1] = color[1];
+                                pals[index * 4 + 2] = color[2];
+                                if (index == 255)
+                                {
+                                    pals[index * 4 + 3] = 0
+                                }
+                                else
+                                {
+                                    pals[index * 4 + 3] = 255
+                                }
+                                loadPaletteAndCreateTextureInfo(pals)
+                            }
+
+                        }
+                    new_dive.appendChild(new_block);
+                }
+            }
+
+            function resetPal()
+            {
+                var buff = [];
+                for (var i = 0; i < 256; i++) {
+                    buff.push(0)
+                    buff.push(0)
+                    buff.push(0)
+                    if (i == 255)
+                    {
+                        buff.push(0)
+                    }
+                    else
+                    {
+                        buff.push(255)
+                    }
+
+                    document.getElementById("pal_" + i).style.backgroundColor = "black";
+                }
+                pals = buff;
+            }
+
+
+            var makeImage = function(url) {
+                var edit = document.getElementById("editable")
+                var len = edit.getElementsByTagName("img").length + 1;
+                var new_img = document.createElement("img");
+                new_img.setAttribute("name", "imgPic");
+                new_img.setAttribute("id", "imgPic" + len);
+                new_img.setAttribute("src", url);
+                new_img.setAttribute("width", url.width);
+                new_img.setAttribute("height", url.height);
+                edit.appendChild(new_img);
+
+                // new_img.onload = function(){
+                //     changevertices(new_img.width, new_img.height);
+                //     loadImageAndCreateTextureInfo(new_img.src);
+                // }
+                
+                
+                // document.getElementById("editable").removeChild(new_img)
+            }
+
+            var makeTexture = function(buff) {
+                var byts = new Uint8Array(buff);
+
+                var png  = UPNG.decode(byts);
+
+                // console.log(png)
+                // var rgba = UPNG.toRGBA8(png)[0];
+
+                if (png.ctype != 3)
+                {
+                    message2.innerHTML = "上传的文件不是索引图片，请重试！"
+                    return
+                }
+                var bytarr = [];
+                for (var i = 0; i < png.data.length; i++) {
+                    bytarr.push(png.data[i])
+                    bytarr.push(255)
+                    bytarr.push(255)
+                    bytarr.push(255)
+                }
+
+                changevertices(png.width, png.height);
+                loadImageAndCreateTextureInfo2(png.width, png.height, bytarr);
+
+                pals = [];
+                for (var i = 0; i < png.tabs.PLTE.length; i+=3) {
+                    pals.push(png.tabs.PLTE[i + 0])
+                    pals.push(png.tabs.PLTE[i + 1])
+                    pals.push(png.tabs.PLTE[i + 2])
+                    if (i == 255 * 3)
+                    {
+                        pals.push(0)
+                    }
+                    else
+                    {
+                        pals.push(255)
+                    }
+
+                    document.getElementById("pal_" + i / 3).style.backgroundColor = "rgba("+png.tabs.PLTE[i + 0]+","+png.tabs.PLTE[i + 1]+","+png.tabs.PLTE[i + 2]+")";
+                }
+
+                loadPaletteAndCreateTextureInfo(pals)
+            }
+
+            function paste_img(e)
+            {
+                if (e.clipboardData.items)
+                {
+                    // google-chrome 
+                    //alert("support clipboardData.items(chrome ...)");
+                    ele = e.clipboardData.items
+                    for (var i = 0; i < ele.length; ++i) {
+
+                        if (ele[i].kind == "file" && ele[i].type.indexOf("image/") != -1) {
+                            var blob = ele[i].getAsFile();
+                            // console.log(ele[i].type);
+                            readBlobAsDataURL(blob, makeImage, makeTexture)
+                        }
+                    }
+                }
+                else
+                {
+                    alert("non - chrome");
+                }
+            }
+
+            document.getElementById("editable").onpaste = function()
+            {
+                message2.innerHTML = "";
+                paste_img(event);
+                return false;
+            }
+
+            var c = document.getElementById("canvas");
+            var gl = c.getContext('webgl');
+            if (!gl) {
+                message.innerHTML = "WebGL Failed";
+                return;
+            }
+
+            var message = document.getElementById("message");
+            var message2 = document.getElementById("message2");
+
+
+            var VSHADER_SOURCE =
+                "attribute vec3 m_position;" +
+                "attribute vec3 m_normal;" +
+                "attribute vec2 m_uv;" +
+                "attribute vec4 m_color;" +
+                "uniform mat4 modelviewmatrix;" +
+                "uniform mat4 projectionMatrix;" +
+                "varying vec4 vcolor;" +
+                // "varying vec4 iiivertexpos;" +
+
+                "varying vec3 fragNormal;" +
+                "varying vec2 fragUV;" +
+                "void main(){" +
+                // "fragNormal = m_normal;" +
+                "fragUV = m_uv;" +
+                "gl_Position = projectionMatrix * modelviewmatrix * vec4(m_position,1.0);" +
+                "vcolor = m_color;" +
+                // "iiivertexpos = vec4(m_position,1.0);" +
+                "}";
+
+                /*projectionMatrix * modelviewmatrix * */
+
+            var FSHADER_SOURCE =
+                "precision highp float;" +
+                // "uniform vec3 lightpos;" +
+                "uniform mat4 normalMatrix;" +
+                "uniform sampler2D diffuseMap;" +
+                "uniform sampler2D palette;" +
+                "varying vec4 vcolor;" +
+                "varying vec3 fragNormal;" +
+                "varying vec2 fragUV;" +
+                // "varying vec4 iiivertexpos;" +
+                "void main(){" +
+                // "float i = length(iiivertexpos.xyz - lightpos);" +
+                // "float intensity = 1.0 / i;" +
+                // "gl_FragColor = vec4(0.2,0.3,0.8,1);" +
+                // "gl_FragColor = vec4(1,1,1,1);" +
+                "vec4 r8 = texture2D(diffuseMap, fragUV);" +
+                "vec4 materialColor = texture2D(palette, vec2(r8.r,0));" +
+                "gl_FragColor = materialColor;" +
+                "}";
+
+            var vertShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(vertShader, VSHADER_SOURCE);
+            gl.compileShader(vertShader);
+
+            var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(fragShader, FSHADER_SOURCE);
+            gl.compileShader(fragShader);
+
+            shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertShader);
+            gl.attachShader(shaderProgram, fragShader);
+            gl.linkProgram(shaderProgram);
+            gl.useProgram(shaderProgram);
+
+            message.innerHTML = "WebGL Success";
+
+            // var g = LookAt(0.0, 0.0, -10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+            // message.innerHTML = g[0] + " , " + g[1] + " , " + g[2] + " , " + g[3] + " , " + g[4] + " , " + g[5] + " , " + g[6] + " , " + g[7] + " , " + g[8] + " , " + g[9] + " , " + g[10] + " , " + g[11] + " , " + g[12] + " , " + g[13] + " , " + g[14] + " , " + g[15];
+            // gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "modelviewmatrix"), false, g);
+
+            var look_x = 0;
+            var look_y = 0;
+
+            var cameraMatrix = mat4.create();
+            mat4.lookAt(cameraMatrix, vec3.fromValues(look_x,look_y,10), vec3.fromValues(look_x,look_y,0), vec3.fromValues(0,1,0));
+            gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "modelviewmatrix"), false, cameraMatrix);
+
+            // var g2 = Perspective(30, c.width / c.height, 0.1, 100);
+            // message2.innerHTML = g2[0] + " , " + g2[1] + " , " + g2[2] + " , " + g2[3] + " , " + g2[4] + " , " + g2[5] + " , " + g2[6] + " , " + g2[7] + " , " + g2[8] + " , " + g2[9] + " , " + g2[10] + " , " + g2[11] + " , " + g2[12] + " , " + g2[13] + " , " + g2[14] + " , " + g2[15];
+            // gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "projectionMatrix"), false, g2);
+
+            var zoom = 1
+            var size = c.height / 100 / 2 * (1 / zoom)
+            var orthoProjectionMatrix = mat4.create();
+            mat4.ortho(orthoProjectionMatrix, -c.width / c.height * size, c.width / c.height * size, -size, size, -100, 100);
+            gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "projectionMatrix"), false, orthoProjectionMatrix);
+
+            // var gllk = new Array(0.0, 0.0, 2.0);
+            // gl.uniform3fv(gl.getUniformLocation(shaderProgram, "lightpos"), gllk);
+
+            var vertices = [
+                -0.5, -0.5, 0.0, 0.0, 0.8, 0.0, 1.0,
+                -0.5, 0.5, 0.0, 0.0, 0.8, 0.0, 1.0,
+                0.5, 0.5, 0.0, 0.0, 0.8, 0.0, 1.0,
+                0.5, -0.5, 0.0, 0.0, 0.8, 0.0, 1.0
+            ];
+
+            vertices[0] = 0
+            vertices[7] = 0
+            vertices[14] = 0
+            vertices[21] = 0
+
+            vertices[1] = 0
+            vertices[8] = 0
+            vertices[15] = 0
+            vertices[22] = 0
+
+            function changevertices(width, height)
+            {
+                vertices[0] = -width / 2 / 100
+                vertices[7] = -width / 2 / 100
+                vertices[14] = width / 2 / 100
+                vertices[21] = width / 2 / 100
+
+                vertices[1] = -height / 2 / 100
+                vertices[8] = height / 2 / 100
+                vertices[15] = height / 2 / 100
+                vertices[22] = -height / 2 / 100
+
+                var vertexBuffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+                var aVertexPosition = gl.getAttribLocation(shaderProgram, "m_position");
+                gl.vertexAttribPointer(aVertexPosition, 3, gl.FLOAT, false, 7 * 4, 0 * 4);
+                gl.enableVertexAttribArray(aVertexPosition);
+
+                // message2.innerHTML = "width: " + width + ",height: " + height;
+            }
+
+            var vertexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+            var aVertexPosition = gl.getAttribLocation(shaderProgram, "m_position");
+            gl.vertexAttribPointer(aVertexPosition, 3, gl.FLOAT, false, 7 * 4, 0 * 4);
+            gl.enableVertexAttribArray(aVertexPosition);
+
+            var aVertexColor = gl.getAttribLocation(shaderProgram, "m_color");
+            gl.vertexAttribPointer(aVertexColor, 4, gl.FLOAT, false, 7 * 4, 3 * 4);
+            gl.enableVertexAttribArray(aVertexColor);
+
+            var indices = [
+                0, 2, 1,
+                0, 3, 2
+            ];
+
+            var indexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(indices), gl.STATIC_DRAW);
+
+            var uvs = [
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0
+            ];
+
+            var uvBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uvs), gl.STATIC_DRAW)
+
+            var uvLoc = gl.getAttribLocation(shaderProgram, "m_uv");
+            gl.vertexAttribPointer(uvLoc, 2, gl.FLOAT, false, 2 * 4, 0 * 4);
+            gl.enableVertexAttribArray(uvLoc);
+
+            function loadImageAndCreateTextureInfo(url) {
+                var tex = gl.createTexture();
+                //1.对纹理图像进行Y轴反转
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                // Fill the texture with a 1x1 blue pixel.
+                // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+                            // new Uint8Array([0, 0, 255, 255]));
+
+                // let's assume all images are not a power of 2
+                // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+                var textureInfo = {
+                width: 1,   // we don't know the size until it loads
+                height: 1,
+                texture: tex,
+                };
+                var img = new Image();
+                img.addEventListener('load', function() {
+                    textureInfo.width = img.width;
+                    textureInfo.height = img.height;
+
+                    gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                });
+                requestCORSIfNotSameOrigin(img, url);
+                img.src = url;
+
+                return textureInfo;
+            }
+
+            function loadImageAndCreateTextureInfo2(width, height, buffer) {
+                var diffuseLoc = gl.getUniformLocation(shaderProgram, "diffuseMap");
+                var tex = gl.createTexture();
+                //1.对纹理图像进行Y轴反转
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+                gl.activeTexture(gl.TEXTURE0)
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                // Fill the texture with a 1x1 blue pixel.
+                // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+                            // new Uint8Array([0, 0, 255, 255]));
+
+                // let's assume all images are not a power of 2
+                // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+                // gl.bindTexture(gl.TEXTURE_2D, tex);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(buffer));
+
+                gl.uniform1i(diffuseLoc, 0);
+            }
+
+            function loadPaletteAndCreateTextureInfo(buffer) {
+                var diffuseLoc = gl.getUniformLocation(shaderProgram, "palette");
+                
+                var tex = gl.createTexture();
+                //1.对纹理图像进行Y轴反转
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+                gl.activeTexture(gl.TEXTURE1)
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                // Fill the texture with a 1x1 blue pixel.
+                // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+                            // new Uint8Array([0, 0, 255, 255]));
+
+                // let's assume all images are not a power of 2
+                // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+                // gl.bindTexture(gl.TEXTURE_2D, tex);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(buffer));
+
+                gl.uniform1i(diffuseLoc, 1);
+            }
+
+            function requestCORSIfNotSameOrigin(img, url) {
+                if ((new URL(url, window.location.href)).origin != window.location.origin) {
+                img.crossOrigin = "";
+                }
+            }
+
+            gl.enable(gl.ALPHA_TEST);
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+            // gl.enable(gl.DEPTH_TEST);
+            //gl.enable(gl.CULL_FACE);
+            gl.clearColor(0.5, 0.5, 0.5, 1.0);
+
+            var drawmain = function ()
+            {
+                var str = document.getElementById("color").value
+                var color = colorRgb(str);
+                gl.clearColor(color[0] / 255, color[1] / 255, color[2] / 255, 1.0);
+
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+                gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_BYTE, 0);
+            }
+
+            setInterval(drawmain, 1);
+
+            c.onmousewheel = function(event)
+            {
+                var delta = 0;
+                if (!event) event = window.event;
+                if (event.wheelDelta) {//IE、chrome浏览器使用的是wheelDelta，并且值为“正负120”
+                    delta = event.wheelDelta/120; 
+                    if (window.opera) delta = -delta;//因为IE、chrome等向下滚动是负值，FF是正值，为了处理一致性，在此取反处理
+                } else if (event.detail) {//FF浏览器使用的是detail,其值为“正负3”
+                    delta = -event.detail/3;
+                }
+                if (delta)
+                    handle(delta);
+            }
+
+                //上下滚动时的具体处理函数
+            function handle(delta) {
+                if (delta <0){//向下滚动
+                    zoom -= 1
+                    if (zoom < 1){
+                        zoom = 1
+                    }
+                }else{//向上滚动
+                    zoom += 1
+                    if (zoom > 5){
+                        zoom = 5
+                    }
+                }
+                document.getElementById("zoom").innerHTML = zoom + "00%"
+                var size = c.height / 100 / 2 * (1 / zoom)
+                var orthoProjectionMatrix = mat4.create();
+                mat4.ortho(orthoProjectionMatrix, -c.width / c.height * size, c.width / c.height * size, -size, size, -100, 100);
+                gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "projectionMatrix"), false, orthoProjectionMatrix);
+            }
+
+
+            c.onmousedown = function (ev)
+            {
+                // var location = getLocation(e.clientX, e.clientY);
+                // //message.innerHTML = "x=" + location.x + ",y=" + location.y;
+                // var gc = LookAt((location.x - c.width / 2) / (c.width / 8), -(location.y - c.height / 2) / (c.width / 8), 1.8, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+                // gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "modelviewmatrix"), false, gc);
+
+                // var gllk = new Array((location.x - c.width / 2) / (c.width / 8), -(location.y - c.height / 2) / (c.width / 8), 1.2);
+                // gl.uniform3fv(gl.getUniformLocation(shaderProgram, "lightpos"), gllk);
+
+                var event = window.event || ev;
+
+                var dx = event.clientX; 
+                var dy = event.clientY;
+
+                var xx = 0
+                var yy = 0
+
+                document.onmousemove = function (ev) {
+                    var event = window.event || ev;
+                    // odiv.style.left = event.clientX - dx + 'px';
+                    // odiv.style.top = event.clientY - dy + 'px';
+
+                    // message2.innerHTML = delta.x
+
+                    var x = event.clientX - dx;
+                    var y = event.clientY - dy
+
+                    xx = look_x + -x / 100 / zoom
+                    yy = look_y + y / 100 / zoom
+
+                    var cameraMatrix = mat4.create();
+                    mat4.lookAt(cameraMatrix, vec3.fromValues(xx,yy,10), vec3.fromValues(xx,yy,0), vec3.fromValues(0,1,0));
+                    gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "modelviewmatrix"), false, cameraMatrix);
+                }
+
+                //抬起停止拖动
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+
+                    look_x = xx;
+                    look_y = yy;
+                }
+
+                
+            
+
+            }
+
+            document.getElementById("btnSave").onchange = function (e)
+            {
+                message2.innerHTML = "";
+                var ele = this.files
+                for(var i = 0; i < ele.length; ++i) {
+                    // message2.innerHTML = ele[i].kind
+                    if (ele[i].type.indexOf("image/") != -1) {
+                        var blob = ele[i];
+                        readBlobAsDataURL(blob, makeImage, makeTexture)
+                    }
+                }
+            }
+
+            document.getElementById("btnClear").onclick = function()
+            {
+                document.getElementById("editable").innerHTML=""
+                changevertices(0, 0)
+                resetPal()
+                document.getElementById("btnSave").value = ""
+                document.getElementById("loadPal").value = ""
+            }
+
+            document.getElementById("savePal").onclick = function()
+            {
+                // var a = new FileWriter();
+
+                var content = 'JASC-PAL' + "\r\n" + '0100' + "\r\n" + '256' + '\r\n';
+
+                for (var i = 0; i < 256; i++) {
+                    var aColor = document.getElementById("pal_" + i).style.background.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+
+                    content += aColor[0] + '' + aColor[1] + '' + aColor[2] + '\r\n';
+                }
+                
+                download(document.getElementById("file_name").value + ".pal", content)
+            }
+
+            document.getElementById("loadPal").onchange = function()
+            {
+                message2.innerHTML = "";
+                var ele = this.files[0];
+
+                var a = new FileReader();
+                a.addEventListener('load', function (e) {
+
+                    var str = e.target.result
+                    var lines = str.split("\r\n")
+                    if (lines[0] == 'JASC-PAL' && lines[1] == '0100' && lines[2] == '256')
+                    {
+                        pals = [];
+                        for (var i = 3; i < lines.length; i++) {
+
+                            var color = lines[i].split(' ')
+                            
+                            if (color.length == 3)
+                            {
+                                var r = parseInt(color[0])
+                                var g = parseInt(color[1])
+                                var b = parseInt(color[2])
+                                pals.push(r)
+                                pals.push(g)
+                                pals.push(b)
+                                if (i == 255 + 3)
+                                {
+                                    pals.push(0)
+                                }
+                                else
+                                {
+                                    pals.push(255)
+                                }
+
+                                document.getElementById("pal_" + (i - 3)).style.backgroundColor = "rgba("+r+","+g+","+b+")";
+                            }
+
+                        }
+                        loadPaletteAndCreateTextureInfo(pals)
+                    }
+                    else
+                    {
+                        message2.innerHTML = "上传的文件不是调色板图片，请重试！"
+                    }
+                });
+                a.readAsText(ele);
+            }
+        }
+
+        function download(filename, content) {
+            // var filename = 'a.txt';
+            // var content = 'hello world';
+
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            pom.setAttribute('download', filename);
+
+            if (document.createEvent) {
+                var event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                pom.dispatchEvent(event);
+            }
+            else {
+                pom.click();
+            }
+        }
+
+        function dataURLtoBlob(dataurl) {
+            var arr = dataurl.split(", ");
+            var mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            return new Blob([u8arr], { type: mime });
+        }
+
+        function readBlobAsDataURL(blob, callback1, callback2) {
+            var a = new FileReader();
+            a.addEventListener('load', function (e) {
+                callback1(e.target.result);
+            });
+            a.readAsDataURL(blob);
+
+            var reader = new FileReader();            
+            reader.onload = function (e) {        
+                callback2(e.target.result);     
+            }
+            reader.readAsArrayBuffer(blob);   
+        }
+
+        function colorRgb(string) {
+            // 16进制颜色值的正则
+            var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+            // 把颜色值变成小写
+            var color = string.toLowerCase();
+            if (reg.test(color)) {
+                // 如果只有三位的值，需变成六位，如：#fff => #ffffff
+                if (color.length === 4) {
+                var colorNew = "#";
+                for (var i = 1; i < 4; i += 1) {
+                    colorNew += color.slice(i, i + 1).concat(color.slice(i, i + 1));
+                }
+                color = colorNew;
+                }
+                // 处理六位的颜色值，转为RGB
+                var colorChange = [];
+                for (var i = 1; i < 7; i += 2) {
+                colorChange.push(parseInt("0x" + color.slice(i, i + 2)));
+                }
+                return colorChange
+            } else {
+                return color;
+            }
+        }
+
+        function colorHex(str){
+            var that = str;
+            if(/^(rgb|RGB)/.test(that)){
+                var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+                var strHex = "#";
+                for(var i=0; i<aColor.length; i++){
+                    var hex = Number(aColor[i]).toString(16);
+                    if(hex === "0"){
+                            hex += hex;    
+                    }
+                    strHex += hex;
+                }
+                if(strHex.length !== 7){
+                    strHex = that;    
+                }
+                return strHex;
+            }else if(reg.test(that)){
+                var aNum = that.replace(/#/,"").split("");
+                if(aNum.length === 6){
+                    return that;    
+                }else if(aNum.length === 3){
+                    var numHex = "#";
+                    for(var i=0; i<aNum.length; i+=1){
+                            numHex += (aNum[i]+aNum[i]);
+                    }
+                    return numHex;
+                }
+            }else{
+                return that;    
+            }
+        };
+
+        function getLocation(e){
+            var t=e.offsetTop;
+            var l=e.offsetLeft;
+            while(e=e.offsetParent){
+                t  +=e.offsetTop;
+                l   +=e.offsetLeft;
+            }
+            var pos = {
+                x: l,
+                y: t,
+                }
+            return pos
+        }
+    </script>
+</head>
+
+<body>
+    <div id="header">
+    <h1>群主旅儿调色器</h1>
+    </div>
+    
+    <div id="nav">
+        <p>原图片(Ctrl + v)：</p>
+        <div id="editable" contenteditable="true"></div>
+        <input id="btnSave" type="file" multiple="multiple" accept="image/png"/>
+        <input id="btnClear" type="button" value="清空图片" />
+        <HR>
+        <p>调色板：</p>
+        
+        <div id="palette"></div>
+        <input style="width:0px;height:0px;overflow:hidden;z-index: -99" type="color" id="color_pick"/>
+        <div>
+            <input id="loadPal" type="file" accept="pal"/>
+            <br/>
+            文件名：<input id="file_name" type="text" value="palette_0"/>
+            <input id="savePal" type="button" value="保存调色板" />
+        </div>
+
+        
+    </div>
+
+    
+
+    <div id="section">
+        <div style="text-align: center">
+            <p>
+                背景色：
+                <input id="color" type="color" value="#AAAAAA"/>
+                放大倍率：
+                <label id="zoom">100%<label>
+            </p>
+            
+            <canvas id="canvas" width="1280" height="720" style="border: 1px solid black"></canvas>
+            <p id="message"></p>
+            <p id="message2" style="color: red;"></p>
+        </div>
+    </div>
+
+
+    
+    <div id="footer">
+        超屌作者：屌
+    </div>
+
+</body>
+
+</html>
