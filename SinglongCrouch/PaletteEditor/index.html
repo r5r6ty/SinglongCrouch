@@ -58,16 +58,27 @@
                 
             for (var y = 0; y < 16; y++) {
                 var new_dive = document.createElement("div");
+                new_dive.setAttribute("style", "display: table");
                 p.appendChild(new_dive);
                 for (var x = 0; x < 16; x++) {
-                    var new_block = document.createElement("canvas");
-                    // new_block.setAttribute("name", "p");
+                    var new_block = document.createElement("textarea");
+                    // new_block.setAttribute("resize", false);
+                    // new_block.setAttribute("type", "text");
+                    // new_block.setAttribute("contenteditable", true);
                     new_block.setAttribute("id", "pal_" + (x + y * 16));
-                    // new_block.setAttribute("src", url);
-                    new_block.setAttribute("width", 16);
-                    new_block.setAttribute("height", 16);
-                    new_block.setAttribute("style", "background: black");
+
+                    
+                    
+                    new_block.setAttribute("style", "background: #000000;width: 16px;height: 16px;float: left;cursor: crosshair;resize: none;overflow-x:hidden;overflow-y:hidden;border: none");
+
+                    // new_block.setAttribute("value", '0 0 0');
+
+                    new_block.rows = 1
+                    new_block.cols = 1
+                    // new_block.value = "#000000"
+
                     new_block.onclick = function(){
+                            
                             
                             
                             // var pos = getLocation(this);
@@ -77,7 +88,7 @@
                             // cp.style.left = pos.x;
                             // cp.style.top = pos.y;
 
-                            
+                            document.getElementById("color_display").innerHTML = this.style.background
                             
 
                             var aColor = this.style.background.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
@@ -121,6 +132,61 @@
                             }
 
                         }
+                    new_block.oncopy = function(event)
+                    {
+                        event.clipboardData.setData("text", this.style.background);
+                        return false;
+                    }
+                    new_block.onpaste = function(event)
+                    {
+                        var p = this
+                        if (event.clipboardData.items)
+                        {
+                        // google-chrome 
+                        //alert("support clipboardData.items(chrome ...)");
+                        ele = event.clipboardData.items
+                            for (var i = 0; i < ele.length; ++i) {
+
+                                if (ele[i].kind == "string") {
+
+                                    ele[i].getAsString( function (str) {
+                                            // str 是获取到的字符串
+
+                                            if (/^(rgb|RGB)/.test(str))
+                                            {
+                                            // p.text = strHex;
+                                            p.style.background = str;
+
+                                            var arr = p.id.split("_");
+
+                                            var index = parseInt(arr[1])
+
+                                            var color = str.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+                                            
+                                            pals[index * 4 + 0] = Number(color[0]);
+                                            pals[index * 4 + 1] = Number(color[1]);
+                                            pals[index * 4 + 2] = Number(color[2]);
+                                            if (index == 255)
+                                            {
+                                                pals[index * 4 + 3] = 0
+                                            }
+                                            else
+                                            {
+                                                pals[index * 4 + 3] = 255
+                                            }
+                                            loadPaletteAndCreateTextureInfo(pals)
+                                            }
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                        else
+                        {
+                            alert("non - chrome");
+                        }
+                        return false;
+                    }
                     new_dive.appendChild(new_block);
                 }
             }
@@ -141,9 +207,11 @@
                         buff.push(255)
                     }
 
-                    document.getElementById("pal_" + i).style.backgroundColor = "black";
+                    document.getElementById("pal_" + i).style.backgroundColor = "#000000";
                 }
                 pals = buff;
+
+                document.getElementById("color_display").innerHTML = "rgb(0, 0, 0)"
             }
 
 
@@ -816,7 +884,9 @@
         <input id="btnSave" type="file" multiple="multiple" accept="image/png"/>
         <input id="btnClear" type="button" value="清空图片" />
         <HR>
-        <p>调色板：</p>
+        <p>调色板(按住鼠标Ctrl + c或Ctrl + v)：</p>
+
+        <p id = "color_display">rgb(0, 0, 0)</p>
         
         <div id="palette"></div>
         <input style="width:0px;height:0px;overflow:hidden;z-index: -99" type="color" id="color_pick"/>
