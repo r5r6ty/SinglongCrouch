@@ -77,10 +77,38 @@
                     new_block.cols = 1
                     // new_block.value = "#000000"
 
+                    new_block.ondblclick = function() {
+                        var cp = document.getElementById("color_pick");
+                        cp.click();
+
+
+                        var p = this;
+
+                        cp.onchange = function()
+                        {
+                            p.style.background = cp.value;
+
+                            var arr = p.id.split("_");
+
+                            var index = parseInt(arr[1])
+
+                            var color = colorRgb(cp.value);
+                            pals[index * 4 + 0] = color[0];
+                            pals[index * 4 + 1] = color[1];
+                            pals[index * 4 + 2] = color[2];
+                            if (index == 255)
+                            {
+                                pals[index * 4 + 3] = 0
+                            }
+                            else
+                            {
+                                pals[index * 4 + 3] = 255
+                            }
+                            loadPaletteAndCreateTextureInfo(pals)
+                        }
+                    }
+
                     new_block.onclick = function(){
-                            
-                            
-                            
                             // var pos = getLocation(this);
 
                             var cp = document.getElementById("color_pick");
@@ -103,34 +131,6 @@
                             }
 
                             cp.value = strHex;
-
-                            cp.click();
-
-                            var p = this;
-
-                            cp.onchange = function()
-                            {
-                                p.style.background = cp.value;
-
-                                var arr = p.id.split("_");
-
-                                var index = parseInt(arr[1])
-
-                                var color = colorRgb(cp.value);
-                                pals[index * 4 + 0] = color[0];
-                                pals[index * 4 + 1] = color[1];
-                                pals[index * 4 + 2] = color[2];
-                                if (index == 255)
-                                {
-                                    pals[index * 4 + 3] = 0
-                                }
-                                else
-                                {
-                                    pals[index * 4 + 3] = 255
-                                }
-                                loadPaletteAndCreateTextureInfo(pals)
-                            }
-
                         }
                     new_block.oncopy = function(event)
                     {
@@ -884,7 +884,7 @@
         <input id="btnSave" type="file" multiple="multiple" accept="image/png"/>
         <input id="btnClear" type="button" value="清空图片" />
         <HR>
-        <p>调色板(按住鼠标Ctrl + c或Ctrl + v)：</p>
+        <p>调色板(Ctrl + c/Ctrl + v/双击取色)：</p>
 
         <p id = "color_display">rgb(0, 0, 0)</p>
         
